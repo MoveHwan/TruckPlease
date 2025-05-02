@@ -7,8 +7,10 @@ public class LoadInGame : MonoBehaviour
 {
 
 
-    public void InGameLoad()
+    public void LoadStage(int StageNum)
     {
+        PlayerPrefs.SetInt("Stage", StageNum);
+
         SceneManager.LoadScene("InGame");
     }
 
