@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,18 +14,20 @@ public class GameManager : MonoBehaviour
     public int stage;
     public GameObject stageTruck;
     public GameObject stageWall;
+    public GameObject stageCheckBox;
     public GameObject[] boxes;
 
 
     void Awake()
     {
         Instance = this;
+
     }
 
     void Start()
     {
         SetStageData();
-        truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
+        GameStart();
     }
 
     // Update is called once per frame
@@ -33,17 +36,32 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void GameEnd()
-    {
-        truckAni.SetTrigger("GameEnd");
-    }
 
     void SetStageData()
     {
         stageTruck = stageData[stage - 1].truck;
         stageWall = stageData[stage - 1].stageWall;
-        boxes = stageData[stage - 1].boxes;
+        stageCheckBox = stageData[stage - 1].stageCheckBox;
+        BoxManager.Instance.box = stageData[stage - 1].boxes;
         Instantiate(stageTruck);
         Instantiate(stageWall);
+        Instantiate(stageCheckBox);
+
+        truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
+    }
+
+    public void GameStart()
+    {
+        BoxManager.Instance.NextBoxSpawn();
+    }
+
+    public void GameEnd()
+    {
+        truckAni.SetTrigger("GameEnd");
+    }
+
+    public void GoLobby()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }

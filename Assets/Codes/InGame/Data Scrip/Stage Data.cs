@@ -10,5 +10,10 @@ public class StageData : ScriptableObject
 
     public GameObject truck;
     public GameObject stageWall;
+    public GameObject stageCheckBox;
     public GameObject[] boxes;
+
+    public float firstStar;
+    public float secondStar;
+    public float thirdStar;
 }
