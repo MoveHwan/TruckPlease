@@ -149,7 +149,7 @@ public class ThrowBox : MonoBehaviour
     {
         throwDone = true;
         rotationBox.throwDone = true;
-        BoxManager.Instance.CalcBoxCur();
+        BoxManager.Instance.RemainBoxCal(gameObject);
         yield return new WaitForSeconds(0.5f);
         
         BoxManager.Instance.NextBoxSpawn();
@@ -158,15 +158,5 @@ public class ThrowBox : MonoBehaviour
     void SetWeight()
     {
         weight = boxData.Weight;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        
     }
 }

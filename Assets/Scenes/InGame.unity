@@ -157,7 +157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &129528079
 MonoBehaviour:
@@ -217,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4514877675840076200, guid: 816bcb0e5faf66e459e0aa582a033a1d,
         type: 3}
@@ -292,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &469551971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,14 +574,12 @@ MonoBehaviour:
   boxCountUi: {fileID: 1058964952}
   weightUi: {fileID: 129528079}
   inWeightUi: {fileID: 871507603}
-  box:
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  box: []
   remainBoxCount: 0
   remainBoxWeight: 0
   inBoxWeight: 0
   count: 0
+  spawnedBoxes: []
   GoaledBoxes: []
 --- !u!4 &784012772
 Transform:

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +16,16 @@ public class BoxManager : MonoBehaviour
     public Text inWeightUi;
 
     public GameObject[] box;
+    float totalWeight;              // 총 박스 무게
     public int remainBoxCount;      // 남은 박스 수
     public float remainBoxWeight;   // 남은 박스 무게
     public float inBoxWeight;   // 들어가 있는 박스 무게
     public int count = 0;
 
-    private List<GameObject> spawnedBoxes = new List<GameObject>();   // 스폰된 박스를 리스트에 넣어주기
+    public List<GameObject> spawnedBoxes = new List<GameObject>();   // 스폰된 박스를 리스트에 넣어주기
     public List<GameObject> GoaledBoxes = new List<GameObject>();   // 골인된 박스를 리스트에 넣어주기
+
+    GameObject curBox;      // 현재 스폰되어 있는 박스
 
     void Awake()
     {
@@ -41,36 +45,59 @@ public class BoxManager : MonoBehaviour
 
     public void NextBoxSpawn()
     {
-        GameObject newObj = Instantiate(box[count]);
-        spawnedBoxes.Add(newObj); 
-        
-        if (count < box.Length - 1) 
-        { 
+        curBox = Instantiate(box[count]);
+    }
+
+    public void RemainBoxCal(GameObject throwBox) 
+    {
+        spawnedBoxes.Add(throwBox);
+
+        if (count < box.Length - 1)
+        {
             count++;
         }
-        if(count == box.Length - 1)
+        if (count == box.Length - 1)
         {
             GameManager.Instance.GameEnd();
             Debug.Log("GameEnd");
         }
+        CalcBoxCur();
         CalcBoxCount();
     }
 
     public void DeleteBox()
     {
-        if (spawnedBoxes.Count >= 2)
+        if (spawnedBoxes.Count >= 1)
         {
-            int index = spawnedBoxes.Count - 2; // 뒤에서 두 번째
+            int index = spawnedBoxes.Count - 1; // 뒤에서 첫 번째
             GameObject objToDelete = spawnedBoxes[index];
             spawnedBoxes.RemoveAt(index);
+            GoaledBoxes.Remove(objToDelete);
             count--;
             Destroy(objToDelete);
+            Destroy(curBox);
+            NextBoxSpawn();
             CalcBoxCount();
             CalcBoxCur();
+            CalcBoxIn();
         }
     }
 
-    void CalcBoxCount()
+    public void CalcTotalWei()
+    {
+        foreach (GameObject obj in box)
+        {
+            ThrowBox script = obj.GetComponent<ThrowBox>();
+            if (script != null)
+            {
+                totalWeight += script.boxData.Weight;
+                Debug.Log("더해짐");
+            }
+        }
+        remainBoxWeight = totalWeight;
+    }
+
+    public void CalcBoxCount()
     {
         remainBoxCount = box.Length - count;
     }
@@ -78,16 +105,18 @@ public class BoxManager : MonoBehaviour
     // 현재 몇 kg이 생성됐는지
     public void CalcBoxCur()
     {
-        remainBoxWeight = 0f;
+        float minusBoxWeight = 0f;
 
         foreach (GameObject boxObj in spawnedBoxes)
         {
             ThrowBox info = boxObj.GetComponent<ThrowBox>();
             if (info != null)
             {
-                remainBoxWeight += info.weight;
+                minusBoxWeight += info.weight;
             }
         }
+
+        remainBoxWeight = totalWeight - minusBoxWeight; 
     }
 
     // 현재 몇 kg이 찼는지

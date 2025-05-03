@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         Instantiate(stageTruck);
         Instantiate(stageWall);
         Instantiate(stageCheckBox);
+        BoxManager.Instance.CalcTotalWei();
+        BoxManager.Instance.CalcBoxCount();
 
         truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
     }

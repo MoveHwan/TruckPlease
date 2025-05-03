@@ -20,10 +20,11 @@ MonoBehaviour:
     type: 3}
   boxes:
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
+  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   firstStar: 0
   secondStar: 0
   thirdStar: 0
