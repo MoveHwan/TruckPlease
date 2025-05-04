@@ -45,7 +45,7 @@ public class BoxManager : MonoBehaviour
 
     public void NextBoxSpawn()
     {
-        curBox = Instantiate(box[count]);
+        curBox = Instantiate(box[count],transform);
     }
 
     public void RemainBoxCal(GameObject throwBox) 
