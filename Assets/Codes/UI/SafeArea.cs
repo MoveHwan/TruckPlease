@@ -9,6 +9,9 @@ public class SafeArea : MonoBehaviour
     Vector2 minAnchor;
     Vector2 maxAnchor;
 
+    public RectTransform TopBar;
+    public RectTransform BottomBar;
+
     string deviceModel;
 
     private void Awake()
@@ -32,13 +35,26 @@ public class SafeArea : MonoBehaviour
 
         //인스펙터 프로퍼티에 집어넣을 수 있게 비율로 변환 및 할당
         minAnchor.x /= Screen.width;
-        minAnchor.y *= 0;
-        //minAnchor.y /= Screen.height;
+        minAnchor.y /= Screen.height;
         maxAnchor.x /= Screen.width;
         maxAnchor.y /= Screen.height;
 
         rectTransform.anchorMin = minAnchor;
         rectTransform.anchorMax = maxAnchor;
+
+        // 아이패드, 갤럭시 탭일 경우
+        if (TopBar && maxAnchor.y == 1)
+        {
+            TopBar.anchoredPosition = new Vector2(TopBar.anchoredPosition.x, 30);
+
+        }
+
+        if (BottomBar && minAnchor.y != 0)
+        {
+            BottomBar.anchoredPosition = new Vector2(BottomBar.anchoredPosition.x, -15);
+
+        }
+
 
 
 
