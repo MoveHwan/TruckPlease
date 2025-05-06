@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,11 +18,15 @@ public class GameManager : MonoBehaviour
     public GameObject stageCheckBox;
     public GameObject[] boxes;
 
+    public float firstStar;
+    public float secondStar;
+    public float thirdStar;
+
+    public bool gameEnd;
 
     void Awake()
     {
         Instance = this;
-
     }
 
     void Start()
@@ -42,6 +47,9 @@ public class GameManager : MonoBehaviour
         stageTruck = stageData[stage - 1].truck;
         stageWall = stageData[stage - 1].stageWall;
         stageCheckBox = stageData[stage - 1].stageCheckBox;
+        firstStar = stageData[stage - 1].firstStar;
+        secondStar = stageData[stage - 1].secondStar;
+        thirdStar = stageData[stage - 1].thirdStar;
         BoxManager.Instance.box = stageData[stage - 1].boxes;
         Instantiate(stageTruck);
         Instantiate(stageWall);
@@ -59,6 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void GameEnd()
     {
+        gameEnd = true;
         truckAni.SetTrigger("GameEnd");
     }
 

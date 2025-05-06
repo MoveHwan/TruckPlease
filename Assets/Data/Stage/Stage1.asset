@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   stage: 1
-  truck: {fileID: 4801427854381225216, guid: 6bc4b5e1e97281d418a8c2adb60fb2cc, type: 3}
+  truck: {fileID: 6156463510423527833, guid: 78888fd18a0b4404d976eb351010947d, type: 3}
   stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
     type: 3}
   boxes:
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
-  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   firstStar: 0
   secondStar: 0
-  thirdStar: 0
+  thirdStar: 1

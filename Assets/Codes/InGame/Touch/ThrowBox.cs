@@ -142,17 +142,15 @@ public class ThrowBox : MonoBehaviour
         dragStarted = false;
 
 
-        StartCoroutine(ThrowFinish());
+        ThrowFinish();
     }
 
-    IEnumerator ThrowFinish()
+    void ThrowFinish()
     {
         throwDone = true;
         rotationBox.throwDone = true;
         BoxManager.Instance.RemainBoxCal(gameObject);
-        yield return new WaitForSeconds(0.5f);
-        
-        BoxManager.Instance.NextBoxSpawn();
+        BoxManager.Instance.NextBoxSpawnWait();
     }
 
     void SetWeight()
