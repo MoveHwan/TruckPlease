@@ -158,6 +158,8 @@ public class BoxManager : MonoBehaviour
                 if (info != null)
                 {
                     inBoxWeight += info.weight;
+                    Debug.Log(inBoxWeight);
+
                 }
             }
         }

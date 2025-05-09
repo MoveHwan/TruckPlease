@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject stageTruck;
     public GameObject stageWall;
     public GameObject stageCheckBox;
+    public GameObject stageObstacle;
     public GameObject[] boxes;
 
     public float firstStar;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     public float thirdStar;
 
     public bool gameEnd;
+
+    public bool obstacleReady;
 
     void Awake()
     {
@@ -49,6 +52,11 @@ public class GameManager : MonoBehaviour
         stageTruck = stageData[stage - 1].truck;
         stageWall = stageData[stage - 1].stageWall;
         stageCheckBox = stageData[stage - 1].stageCheckBox;
+        if(stageData[stage - 1].stageObstacle != null)
+        {
+            stageObstacle = stageData[stage - 1].stageObstacle;
+            Instantiate(stageObstacle);
+        }
         firstStar = stageData[stage - 1].firstStar;
         secondStar = stageData[stage - 1].secondStar;
         thirdStar = stageData[stage - 1].thirdStar;
@@ -82,4 +90,26 @@ public class GameManager : MonoBehaviour
     {
         stage = stageSelect;
     }
+
+    public void ReadyToStart()
+    {
+        if (Ready())
+        {
+            BoxManager.Instance.CalcBoxIn();
+            Debug.Log("나 이거함");
+        }
+    }
+
+    bool Ready()
+    {
+        if (obstacleReady)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrowBox : MonoBehaviour
 {
@@ -8,16 +9,20 @@ public class ThrowBox : MonoBehaviour
 
     public BoxData boxData;
     public float weight;   //  상자 무게
+    float rbWeight;
 
     private Vector2 dragStartPos;
     private Vector2 dragEndPos;
     private float dragStartTime;
     private float dragEndTime;
     bool dragStarted;
-    bool throwDone;
+    public bool throwDone;
+    public Slider throwHeightSli;
+    float speed = 0.5f;   // 슬라이더가 움직이는 속도
+    private bool goingRight = true;
 
     private Rigidbody rb;
-    public float forceMultiplier = 5f;  // 전체 힘 조정
+    public float forceMultiplier;  // 전체 힘 조정
     public float zDirection=1f;
     private float screenHeight;
     private float screenWidth;
@@ -25,11 +30,12 @@ public class ThrowBox : MonoBehaviour
     void Awake()
     {
         rotationBox = GetComponent<RotationBox>();
+        throwHeightSli = GameObject.FindGameObjectWithTag("HeightSlider").GetComponent<Slider>();
+        SetWeight();
     }
 
     void Start()
     {
-        SetWeight();
         screenWidth = Screen.width;
         screenHeight = Screen.height; // 화면 높이
     }
@@ -67,6 +73,15 @@ public class ThrowBox : MonoBehaviour
                 dragEndTime = Time.time;
 
                 ThrowObject();
+                throwHeightSli.value = 0f;          // 슬라이더 값 초기화해주기
+            }
+        }
+
+        if (Input.GetMouseButton(0)) // 마우스 클릭 중
+        {
+            if (IsInTopScreen(Input.mousePosition)) // 화면 위쪽 70% 내에서만
+            {
+                MoveSlider();
             }
         }
     }
@@ -82,19 +97,28 @@ public class ThrowBox : MonoBehaviour
             {
                 if (IsInTopScreen(touch.position)) // 화면 위쪽 70% 내에서만
                 {
+                    dragStarted = true;
                     dragStartPos = touch.position;
                     dragStartTime = Time.time;
+
                 }
             }
             else if (touch.phase == TouchPhase.Ended)
             {
-                if (IsInTopScreen(touch.position)) // 화면 위쪽 70% 내에서만
+                if (IsInTopScreen(touch.position) && dragStarted) // 화면 위쪽 70% 내에서만
                 {
                     dragEndPos = touch.position;
                     dragEndTime = Time.time;
 
                     ThrowObject();
+                    throwHeightSli.value = 0f;          // 슬라이더 값 초기화해주기
+
                 }
+            }
+
+            if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+            {
+                MoveSlider();
             }
         }
     }
@@ -116,14 +140,20 @@ public class ThrowBox : MonoBehaviour
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
+            rb.mass = rbWeight;
         }
 
-        float dragDuration = dragEndTime - dragStartTime;
-        Debug.Log(dragDuration);
-        Debug.Log("dragVector"+ dragVector);
-        float clampedDuration = Mathf.Clamp(dragDuration, 0.5f, 3f);
-        float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
-
+        // 홀드 시간으로 높이 정하기
+        //float dragDuration = dragEndTime - dragStartTime;
+        //Debug.Log(dragDuration);
+        //Debug.Log("dragVector"+ dragVector);
+        //float clampedDuration = Mathf.Clamp(dragDuration, 0.5f, 3f);
+        //float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
+        
+        // 홀드 시간 슬라이더로 높이 정하기
+        float mappedDuration = Mathf.Lerp(0.5f, 3f, throwHeightSli.value);
+        Debug.Log("throwHeightSli.value : " + throwHeightSli.value);
+        Debug.Log("mappedDuration : "+ mappedDuration);
         // 1. 드래그 거리 정규화 (해상도 기준 비율)
         float normalizedDragY = dragVector.y / (screenHeight * 0.7f);
         // 3. 힘 계산: 정규화된 드래그 × 보정값
@@ -156,8 +186,27 @@ public class ThrowBox : MonoBehaviour
         BoxManager.Instance.NextBoxSpawnWait();
     }
 
+    void MoveSlider()
+    {
+        // 슬라이더 값 증가 또는 감소
+        if (goingRight)
+        {
+            throwHeightSli.value += speed * Time.deltaTime;
+            if (throwHeightSli.value >= throwHeightSli.maxValue)
+                goingRight = false;
+        }
+        else
+        {
+            throwHeightSli.value -= speed * Time.deltaTime;
+            if (throwHeightSli.value <= throwHeightSli.minValue)
+                goingRight = true;
+        }
+    }
+
     void SetWeight()
     {
         weight = boxData.Weight;
+        rbWeight = boxData.rbWeight;
+        forceMultiplier = boxData.forceMultiplier;
     }
 }

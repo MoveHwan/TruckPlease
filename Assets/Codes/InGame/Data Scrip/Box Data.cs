@@ -26,4 +26,42 @@ public class BoxData : ScriptableObject
             }
         }
     }
+
+    public float rbWeight
+    {
+        get
+        {
+            switch (boxType)
+            {
+                case BoxType.basicV:
+                    return 1f;
+                case BoxType.longV:
+                    return 1f;
+                case BoxType.bigV:
+                    return 2f;
+                default:
+                    return 1.0f;
+            }
+        }
+    }
+
+    public float forceMultiplier
+    {
+        get
+        {
+            switch (boxType)
+            {
+                case BoxType.basicV:
+                    return 12f;
+                case BoxType.longV:
+                    return 12f;
+                case BoxType.bigV:
+                    return 18f;
+                default:
+                    return 10f;
+            }
+        }
+    }
+
+
 }
