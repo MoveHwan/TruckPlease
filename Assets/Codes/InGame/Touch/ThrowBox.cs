@@ -108,15 +108,19 @@ public class ThrowBox : MonoBehaviour
     // 물체 던지기
     void ThrowObject()
     {
+
+        Vector2 dragVector = dragEndPos - dragStartPos;
+        if (dragVector.y < 0)
+            return;
+
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        Vector2 dragVector = dragEndPos - dragStartPos;
         float dragDuration = dragEndTime - dragStartTime;
         Debug.Log(dragDuration);
-        Debug.Log(dragVector);
+        Debug.Log("dragVector"+ dragVector);
         float clampedDuration = Mathf.Clamp(dragDuration, 0.5f, 3f);
         float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
 
@@ -140,7 +144,6 @@ public class ThrowBox : MonoBehaviour
         // 4. 힘 적용
         rb.AddForce(throwDirection * throwForce * forceMultiplier, ForceMode.Impulse);
         dragStarted = false;
-
 
         ThrowFinish();
     }

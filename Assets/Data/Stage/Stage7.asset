@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24a5b41a2f1e484a84410fb8369cdb5, type: 3}
+  m_Name: Stage7
+  m_EditorClassIdentifier: 
+  truck: {fileID: 6156463510423527833, guid: 78888fd18a0b4404d976eb351010947d, type: 3}
+  stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
+    type: 3}
+  stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
+    type: 3}
+  boxes:
+  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  firstStar: 6
+  secondStar: 7
+  thirdStar: 9

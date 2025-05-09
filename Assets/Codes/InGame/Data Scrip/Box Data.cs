@@ -16,11 +16,11 @@ public class BoxData : ScriptableObject
             switch (boxType)
             {
                 case BoxType.basicV:
-                    return 1.5f;
+                    return 1f;
                 case BoxType.longV:
                     return 2.0f;
                 case BoxType.bigV:
-                    return 3.5f;
+                    return 3f;
                 default:
                     return 1.0f;
             }

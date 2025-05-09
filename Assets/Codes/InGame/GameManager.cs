@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public StageData[] stageData;
 
     public int stage;
+    public int stageSelect;
     public GameObject stageTruck;
     public GameObject stageWall;
     public GameObject stageCheckBox;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     void SetStageData()
     {
+        SelectStage(); // °× Ãâ½Ã½Ã ÁÖ¼®¿ä¸Á
         stageTruck = stageData[stage - 1].truck;
         stageWall = stageData[stage - 1].stageWall;
         stageCheckBox = stageData[stage - 1].stageCheckBox;
@@ -74,5 +76,10 @@ public class GameManager : MonoBehaviour
     public void GoLobby()
     {
         SceneManager.LoadScene("Lobby");
+    }
+
+    void SelectStage()
+    {
+        stage = stageSelect;
     }
 }
