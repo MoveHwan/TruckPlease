@@ -36,7 +36,7 @@ public class BoxData : ScriptableObject
                 case BoxType.basicV:
                     return 1f;
                 case BoxType.longV:
-                    return 1f;
+                    return 1.5f;
                 case BoxType.bigV:
                     return 2f;
                 default:
@@ -54,7 +54,7 @@ public class BoxData : ScriptableObject
                 case BoxType.basicV:
                     return 12f;
                 case BoxType.longV:
-                    return 12f;
+                    return 15f;
                 case BoxType.bigV:
                     return 18f;
                 default:

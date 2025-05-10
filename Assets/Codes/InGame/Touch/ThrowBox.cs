@@ -208,5 +208,12 @@ public class ThrowBox : MonoBehaviour
         weight = boxData.Weight;
         rbWeight = boxData.rbWeight;
         forceMultiplier = boxData.forceMultiplier;
+
+        rb = GetComponent<Rigidbody>();
+        
+        if (rb != null)
+        {
+            rb.mass = rbWeight;
+        }
     }
 }

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24a5b41a2f1e484a84410fb8369cdb5, type: 3}
   m_Name: Stage5
   m_EditorClassIdentifier: 
-  stage: 2
   truck: {fileID: 6156463510423527833, guid: 78888fd18a0b4404d976eb351010947d, type: 3}
   stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
+    type: 3}
+  stageObstacle: {fileID: 7287101308698626873, guid: 2fc264f958022084a81917df4eba70d6,
     type: 3}
   boxes:
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
@@ -25,6 +26,6 @@ MonoBehaviour:
   - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
   - {fileID: 243642405857881829, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
-  firstStar: 6
+  firstStar: 10
   secondStar: 12
   thirdStar: 15

@@ -245,7 +245,7 @@ PrefabInstance:
     - target: {fileID: 6156463510423527833, guid: 78888fd18a0b4404d976eb351010947d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6790291743989480227, guid: 78888fd18a0b4404d976eb351010947d,
         type: 3}
@@ -1619,7 +1619,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8c9ea0f60aa3f242aa05fe166003a0d, type: 2}
   - {fileID: 11400000, guid: 7589f656c66a8394ca0933f6e9a3b856, type: 2}
   stage: 1
-  stageSelect: 5
+  stageSelect: 7
   stageTruck: {fileID: 0}
   stageWall: {fileID: 0}
   stageCheckBox: {fileID: 0}
