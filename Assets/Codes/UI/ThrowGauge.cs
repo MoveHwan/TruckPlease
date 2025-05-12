@@ -13,12 +13,17 @@ public class ThrowGauge : MonoBehaviour
 
     [SerializeField] float value;
     [SerializeField] float targetValue;
-    [SerializeField] float speed;
+    [SerializeField] float speed = 2;
 
 
     void Awake()
     {
         Instance = this;
+
+        PowerSlider.value = 0.5f;
+
+        targetValue = Random.Range(0, 2);
+
     }
 
     void Update()
@@ -33,15 +38,14 @@ public class ThrowGauge : MonoBehaviour
     {
         if (targetValue == 0 && PowerSlider.value <= targetValue)
         {
-            PowerSlider.value = 1;
             targetValue = 1;
         }
         else if (targetValue == 1 && PowerSlider.value >= targetValue) 
         {
-            PowerSlider.value = 0;
             targetValue = 0;
         }
 
+        PowerSlider.value = Mathf.MoveTowards(PowerSlider.value, targetValue, Time.deltaTime * speed);
 
     }
 
