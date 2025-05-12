@@ -5678,7 +5678,7 @@ GameObject:
   - component: {fileID: 4617475882189613549}
   - component: {fileID: 4869175183169708353}
   m_Layer: 5
-  m_Name: SafeArea
+  m_Name: UI_ver_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
