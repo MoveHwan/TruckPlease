@@ -20,7 +20,7 @@ public class Courier : MonoBehaviour
         {
             animator.SetTrigger("Idle");
         }
-        PushStart();
+        //PushStart();
     }
 
     void Update()
