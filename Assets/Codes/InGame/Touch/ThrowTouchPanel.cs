@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler , IDragHandler
 {
     public static ThrowTouchPanel Instance;
 
@@ -51,7 +51,7 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         Instance = this;
         
         rect = GetComponent<RectTransform>();
-        canvas = rect.GetComponent<Canvas>();
+        canvas = CircleIn.GetComponent<Canvas>();
         height = rect.rect.height;
     }
 
@@ -86,8 +86,12 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         isDragging = true;
 
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(CircleIn, eventData.position, canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null, out localPoint);
-
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            CircleIn,
+            eventData.position,
+            null, // Overlay 모드니까 무조건 null!
+            out localPoint
+        );
         startPos = localPoint;
 
         startCircle = Instantiate(startCirclePrefab, CircleIn);
@@ -109,6 +113,14 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             isPressing = false;
 
             Debug.Log("Pointer Up: " + dragEndPos);
+
+            isDragging = false;
+
+            if (startCircle) Destroy(startCircle);
+            if (endCircle) Destroy(endCircle);
+
+            foreach (var c in circlePool)
+                c.SetActive(false);
         }
     }
 
@@ -135,8 +147,12 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             return;
 
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(CircleIn, eventData.position, canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null, out localPoint);
-
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            CircleIn,
+            eventData.position,
+            null, // Overlay 모드니까 무조건 null!
+            out localPoint
+        );
         Vector2 endPos = localPoint;
         float dist = Vector2.Distance(startPos, endPos);
         int activeCount = Mathf.Clamp(Mathf.FloorToInt((dist / maxDistance) * maxCircleCount), 2, maxCircleCount);
