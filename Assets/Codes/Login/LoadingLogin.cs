@@ -12,8 +12,6 @@ public class LoadingLogin : MonoBehaviour
 {
     public GameObject slider;
     public GameObject unityLogin;
-    public GameObject nicknamePanel;
-    public TextMeshProUGUI nickName;
 
     Slider loadingSlider;
     float duration = 3f; // 3초 동안 채우기
@@ -25,11 +23,6 @@ public class LoadingLogin : MonoBehaviour
     void Awake()
     {
         loadingSlider = slider.GetComponent<Slider>();
-    }
-
-    void Start()
-    {
-        //CheckNickName();
     }
 
     // 닉네임이 있는지 확인
@@ -48,7 +41,18 @@ public class LoadingLogin : MonoBehaviour
 
     public void SignIn()
     {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            // 인터넷 연결 없음
+            Debug.Log("인터넷 연결에 연결되지 않았습니다.");
+            StartCoroutine(WaitLoadingSecond());    
+        }
+        else
+        {
+            // 인터넷 연결됨
+            Debug.Log("인터넷 연결에 연결되어 있습니다.");
+            PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        }
     }
 
 
@@ -58,26 +62,15 @@ public class LoadingLogin : MonoBehaviour
     {
         if (status == SignInStatus.Success)
         {
-            // Continue with Play Games Services
-            // Perfectly login success
-
             string name = PlayGamesPlatform.Instance.GetUserDisplayName();
             string id = PlayGamesPlatform.Instance.GetUserId();
             string ImgUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
 
-            //logText.text = "Success \n" + name;
             UnityConnect();
-            //클라우드 세이브 오류나서 일단 꺼둠
-            //DataConnectGP dataConnectGP = GetComponent<DataConnectGP>();
-            //dataConnectGP.LoadData();
         }
         else
         {
-            //logText.text = "Sign in Failed!";
-            // Disable your integration with Play Games Services or show a login button
-            // to ask users to sign-in. Clicking it should call
             PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
-            // Login failed
         }
     }
 
@@ -96,7 +89,9 @@ public class LoadingLogin : MonoBehaviour
 
     void UnityConnect()
     {
+        // 인터넷 연결됨
         unityLogin.SetActive(true);
+        
     }
 
     // 로딩 두번째

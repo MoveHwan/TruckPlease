@@ -8,12 +8,12 @@ public class InAppUpdateManager : MonoBehaviour
     AppUpdateManager appUpdateManager;
     public LoadingLogin loadingLogin;
 
-    private void Start()
+    void Start()
     {
 
         StartCoroutine(CheckForUpdate());
-        Debug.Log("³ª ½ÇÇàµÊ");
     }
+
     IEnumerator CheckForUpdate()
     {
         //¾Û ÃÊ±âÈ­

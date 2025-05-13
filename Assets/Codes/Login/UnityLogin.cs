@@ -22,8 +22,6 @@ public class UnityLogin : MonoBehaviour
     async void Awake()
     {
         await TryInitializeUnityServices();
-        //await InitializeUnityServices(); // Unity Services 초기화
-        //InitializeGooglePlayGames(); // Google Play Games 활성화
     }
 
     // 인터넷 체크 후 통과 
