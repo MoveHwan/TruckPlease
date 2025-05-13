@@ -5,6 +5,8 @@ using UnityEngine;
 public class DragEffect : MonoBehaviour
 {
     public RectTransform canvasRectTransform;
+    RectTransform touchAreaUI;
+
     public GameObject startCirclePrefab;
     public GameObject endCirclePrefab;
     public List<GameObject> circlePrefabs; // 크기별 프리팹 (작→큰) 8개
@@ -22,6 +24,11 @@ public class DragEffect : MonoBehaviour
 
     private float screenHeight;
     private float screenWidth;
+
+    void Awake()
+    {
+        touchAreaUI = GameObject.FindGameObjectWithTag("ThrowPanel").GetComponent<RectTransform>();
+    }
 
     void Start()
     {
@@ -53,10 +60,13 @@ public class DragEffect : MonoBehaviour
         }
         else
         {
-            inputPosition = Input.mousePosition;
-            inputDown = Input.GetMouseButtonDown(0);
-            inputHeld = Input.GetMouseButton(0);
-            inputUp = Input.GetMouseButtonUp(0);
+            if (IsInTouchArea(Input.mousePosition))
+            {
+                inputPosition = Input.mousePosition;
+                inputDown = Input.GetMouseButtonDown(0);
+                inputHeld = Input.GetMouseButton(0);
+                inputUp = Input.GetMouseButtonUp(0);
+            }
         }
 
         Vector2 localPoint;
@@ -127,4 +137,10 @@ public class DragEffect : MonoBehaviour
     {
         return position.y >= screenHeight * 0.3f;
     }
+
+    bool IsInTouchArea(Vector2 screenPos)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(touchAreaUI, screenPos, null);
+    }
+
 }

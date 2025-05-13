@@ -7,6 +7,7 @@ TagManager:
   - Truck
   - Box
   - HeightSlider
+  - ThrowPanel
   layers:
   - Default
   - TransparentFX

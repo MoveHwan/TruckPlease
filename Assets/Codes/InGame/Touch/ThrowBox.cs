@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ThrowBox : MonoBehaviour
 {
     RotationBox rotationBox;
+    RectTransform touchAreaUI;
 
     public BoxData boxData;
     public float weight;   //  상자 무게
@@ -30,7 +32,8 @@ public class ThrowBox : MonoBehaviour
     void Awake()
     {
         rotationBox = GetComponent<RotationBox>();
-        throwHeightSli = GameObject.FindGameObjectWithTag("HeightSlider").GetComponent<Slider>();
+        //throwHeightSli = GameObject.FindGameObjectWithTag("HeightSlider").GetComponent<Slider>();
+        touchAreaUI = GameObject.FindGameObjectWithTag("ThrowPanel").GetComponent<RectTransform>();
         SetWeight();
     }
 
@@ -44,42 +47,46 @@ public class ThrowBox : MonoBehaviour
     {
         if (throwDone)
             return;
-
-#if UNITY_EDITOR || UNITY_STANDALONE
-        HandleMouseInput();
-#elif UNITY_ANDROID || UNITY_IOS
-        HandleTouchInput();
-#endif
+        if (ThrowTouchPanel.Instance.throwAble)
+        {
+            ThrowObject();
+        }
+//#if UNITY_EDITOR || UNITY_STANDALONE
+//        HandleMouseInput();
+//#elif UNITY_ANDROID || UNITY_IOS
+//        HandleTouchInput();
+//#endif
     }
 
-    // 마우스 입력 처리
     void HandleMouseInput()
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 클릭 시작
+        if (Input.GetMouseButtonDown(0))
         {
-            if (IsInTopScreen(Input.mousePosition)) // 화면 위쪽 70% 내에서만
+            if (IsInTouchArea(Input.mousePosition))
             {
-                dragStarted = true;
-                dragStartPos = Input.mousePosition;
-                dragStartTime = Time.time;
+                if (IsInTopScreen(Input.mousePosition))
+                {
+                    dragStarted = true;
+                    dragStartPos = Input.mousePosition;
+                    dragStartTime = Time.time;
+                }
             }
         }
 
-        if (Input.GetMouseButtonUp(0)) // 마우스 클릭 해제
+        if (Input.GetMouseButtonUp(0))
         {
-            if (IsInTopScreen(Input.mousePosition) && dragStarted) // 화면 위쪽 70% 내에서만
+            if (IsInTopScreen(Input.mousePosition) && dragStarted)
             {
                 dragEndPos = Input.mousePosition;
                 dragEndTime = Time.time;
-
                 ThrowObject();
-                throwHeightSli.value = 0f;          // 슬라이더 값 초기화해주기
+                throwHeightSli.value = 0f;
             }
         }
 
-        if (Input.GetMouseButton(0)) // 마우스 클릭 중
+        if (Input.GetMouseButton(0))
         {
-            if (IsInTopScreen(Input.mousePosition)) // 화면 위쪽 70% 내에서만
+            if (IsInTopScreen(Input.mousePosition))
             {
                 MoveSlider();
             }
@@ -132,6 +139,8 @@ public class ThrowBox : MonoBehaviour
     // 물체 던지기
     void ThrowObject()
     {
+        dragStartPos = ThrowTouchPanel.Instance.dragStartPos;
+        dragEndPos = ThrowTouchPanel.Instance.dragEndPos;
 
         Vector2 dragVector = dragEndPos - dragStartPos;
         if (dragVector.y < 0)
@@ -151,11 +160,10 @@ public class ThrowBox : MonoBehaviour
         //float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
         
         // 홀드 시간 슬라이더로 높이 정하기
-        float mappedDuration = Mathf.Lerp(0.5f, 3f, throwHeightSli.value);
-        Debug.Log("throwHeightSli.value : " + throwHeightSli.value);
+        float mappedDuration = Mathf.Lerp(0.5f, 3f, ThrowTouchPanel.Instance.throwHeightSli.value);
         Debug.Log("mappedDuration : "+ mappedDuration);
         // 1. 드래그 거리 정규화 (해상도 기준 비율)
-        float normalizedDragY = dragVector.y / (screenHeight * 0.7f);
+        float normalizedDragY = dragVector.y / ThrowTouchPanel.Instance.height;
         // 3. 힘 계산: 정규화된 드래그 × 보정값
         float throwForce = normalizedDragY;
         throwForce = Mathf.Lerp(0.3f, 1f, throwForce);
@@ -182,6 +190,8 @@ public class ThrowBox : MonoBehaviour
     {
         throwDone = true;
         rotationBox.throwDone = true;
+        ThrowTouchPanel.Instance.throwAble = false;
+        ThrowTouchPanel.Instance.throwHeightSli.value = 0f;
         BoxManager.Instance.RemainBoxCal(gameObject);
         BoxManager.Instance.NextBoxSpawnWait();
     }
@@ -216,4 +226,10 @@ public class ThrowBox : MonoBehaviour
             rb.mass = rbWeight;
         }
     }
+
+    bool IsInTouchArea(Vector2 screenPos)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(touchAreaUI, screenPos, null);
+    }
+
 }
