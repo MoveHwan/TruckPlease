@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ScrollHelper : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     public Scrollbar scrollbar;
     public Transform TargetGroup;
@@ -37,11 +37,6 @@ public class ScrollHelper : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private void OnEnable()
     {
         scrollbar.value = pos[0];
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-
     }
 
     public void OnDrag(PointerEventData eventData)
