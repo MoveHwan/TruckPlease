@@ -8,7 +8,7 @@ public class Courier : MonoBehaviour
     public Transform courier;
     public Animator animator;
 
-    bool isClear, isPush;
+    public bool isClear, isPush;
 
     AnimatorStateInfo animStateInfo;
 
@@ -25,9 +25,11 @@ public class Courier : MonoBehaviour
 
     void Update()
     {
-        if (animStateInfo.IsName("Push"))
+        animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (animStateInfo.IsName("Push") && isPush)
         {
-            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 0.5f);
+            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 1.2f);
         }
     }
 
@@ -48,6 +50,11 @@ public class Courier : MonoBehaviour
     {
         animator.SetTrigger("Push");
         isPush = true;
+    }
+
+    public void PushStop()
+    {
+        isPush = false;
     }
 
     public void Reaction()
