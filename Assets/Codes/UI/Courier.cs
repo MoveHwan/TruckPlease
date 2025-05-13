@@ -5,20 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class Courier : MonoBehaviour
 {
+    public Transform courier;
     public Animator animator;
+
+    bool isClear, isPush;
+
+    AnimatorStateInfo animStateInfo;
 
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Lobby")
             animator.SetTrigger("Hello");
         else
+        {
             animator.SetTrigger("Idle");
+        }
+        PushStart();
     }
 
-    /*void Update()
+    void Update()
     {
-        
-    }*/
+        if (animStateInfo.IsName("Push"))
+        {
+            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 0.5f);
+        }
+    }
 
     public void ReHello()
     {
@@ -36,5 +47,15 @@ public class Courier : MonoBehaviour
     public void PushStart()
     {
         animator.SetTrigger("Push");
+        isPush = true;
+    }
+
+    public void Reaction()
+    {
+        if (isClear)
+            animator.SetTrigger("DDabong");
+        else
+            animator.SetTrigger("Shouting");
+
     }
 }
