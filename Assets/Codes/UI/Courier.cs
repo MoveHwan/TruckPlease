@@ -8,7 +8,7 @@ public class Courier : MonoBehaviour
     public Transform courier;
     public Animator animator;
 
-    public bool isClear, isPush;
+    public bool isClear, isPush, pushOn;
 
     AnimatorStateInfo animStateInfo;
 
@@ -20,16 +20,21 @@ public class Courier : MonoBehaviour
         {
             animator.SetTrigger("Idle");
         }
-        //PushStart();
     }
 
     void Update()
     {
+        if (!pushOn && GameManager.Instance && GameManager.Instance.gameEnd)
+        {
+            pushOn = true;
+            StartCoroutine(PushDelay());
+        }
+
         animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         if (animStateInfo.IsName("Push") && isPush)
         {
-            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 1.2f);
+            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 2);
         }
     }
 
@@ -50,6 +55,13 @@ public class Courier : MonoBehaviour
     {
         animator.SetTrigger("Push");
         isPush = true;
+    }
+
+    IEnumerator PushDelay()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        PushStart();
     }
 
     public void PushStop()
