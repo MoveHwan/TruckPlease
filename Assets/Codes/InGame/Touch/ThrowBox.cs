@@ -160,7 +160,7 @@ public class ThrowBox : MonoBehaviour
         //float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
         
         // 홀드 시간 슬라이더로 높이 정하기
-        float mappedDuration = Mathf.Lerp(0.5f, 3f, ThrowTouchPanel.Instance.throwHeightSli.value);
+        float mappedDuration = Mathf.Lerp(0.2f, 3f, ThrowTouchPanel.Instance.throwHeightSli.value);
         Debug.Log("mappedDuration : "+ mappedDuration);
         // 1. 드래그 거리 정규화 (해상도 기준 비율)
         float normalizedDragY = dragVector.y / ThrowTouchPanel.Instance.height;
