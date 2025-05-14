@@ -11,7 +11,7 @@ public class InAppUpdateManager : MonoBehaviour
     void Start()
     {
 
-        StartCoroutine(CheckForUpdate());
+        //StartCoroutine(CheckForUpdate());
     }
 
     IEnumerator CheckForUpdate()

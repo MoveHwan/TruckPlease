@@ -25,6 +25,10 @@ public class LoadingLogin : MonoBehaviour
         loadingSlider = slider.GetComponent<Slider>();
     }
 
+    void Start()
+    {
+        CheckNickName();
+    }
     // 닉네임이 있는지 확인
     public void CheckNickName()
     {
@@ -65,7 +69,7 @@ public class LoadingLogin : MonoBehaviour
             string name = PlayGamesPlatform.Instance.GetUserDisplayName();
             string id = PlayGamesPlatform.Instance.GetUserId();
             string ImgUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
-
+            Debug.Log("로그인은 됨");
             UnityConnect();
         }
         else
