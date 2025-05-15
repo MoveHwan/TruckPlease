@@ -52,7 +52,7 @@ public class BoxManager : MonoBehaviour
             return;
         curBox = Instantiate(box[count], transform);
         float randomY = Random.Range(0f, 360f);
-        curBox.transform.localRotation = Quaternion.Euler(-90f, randomY, 0f); // 부모 기준으로 Y축 회전
+        curBox.transform.localRotation = Quaternion.Euler(0f, randomY, 0f); // 부모 기준으로 Y축 회전
     }
 
     public void NextBoxSpawnWait()

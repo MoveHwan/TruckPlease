@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotationBox : MonoBehaviour
 {
-    public float rotationSpeed = 100f; // 회전 속도 설정
+    float rotationSpeed = 10f; // 회전 속도 설정
     private Vector2 lastTouchPosition; // Vector2로 수정
     private bool isDragging = false;
     public bool throwDone;

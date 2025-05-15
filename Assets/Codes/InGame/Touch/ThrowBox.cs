@@ -39,6 +39,7 @@ public class ThrowBox : MonoBehaviour
 
     void Start()
     {
+        ThrowTouchPanel.Instance.controlBox = this;
         screenWidth = Screen.width;
         screenHeight = Screen.height; // 화면 높이
     }
@@ -47,10 +48,10 @@ public class ThrowBox : MonoBehaviour
     {
         if (throwDone)
             return;
-        if (ThrowTouchPanel.Instance.throwAble)
-        {
-            ThrowObject();
-        }
+        //if (ThrowTouchPanel.Instance.throwAble)
+        //{
+        //    ThrowObject();
+        //}
 //#if UNITY_EDITOR || UNITY_STANDALONE
 //        HandleMouseInput();
 //#elif UNITY_ANDROID || UNITY_IOS
@@ -137,15 +138,19 @@ public class ThrowBox : MonoBehaviour
     }
 
     // 물체 던지기
-    void ThrowObject()
+    public void ThrowObject()
     {
+        if (throwDone)
+            return;
         dragStartPos = ThrowTouchPanel.Instance.dragStartPos;
         dragEndPos = ThrowTouchPanel.Instance.dragEndPos;
-
+        //dragEndPos.y = Mathf.Clamp(dragEndPos.y, 0f, ThrowTouchPanel.Instance.CircleIn.rect.yMax);
+        Debug.Log("dragEndPos: " + dragEndPos);
         Vector2 dragVector = dragEndPos - dragStartPos;
         if (dragVector.y < 0)
             return;
-
+        dragVector.y = Mathf.Clamp(dragVector.y, 0, ThrowTouchPanel.Instance.height);
+        Debug.Log("dragVector.y" + dragVector.y);
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
@@ -164,6 +169,7 @@ public class ThrowBox : MonoBehaviour
         Debug.Log("mappedDuration : "+ mappedDuration);
         // 1. 드래그 거리 정규화 (해상도 기준 비율)
         float normalizedDragY = dragVector.y / ThrowTouchPanel.Instance.height;
+        Debug.Log(ThrowTouchPanel.Instance.height);
         // 3. 힘 계산: 정규화된 드래그 × 보정값
         float throwForce = normalizedDragY;
         throwForce = Mathf.Lerp(0.3f, 1f, throwForce);

@@ -45,6 +45,8 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     private Canvas canvas;
 
+    public ThrowBox controlBox;
+
 
     void Awake()
     {
@@ -76,9 +78,13 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (controlBox == null)
+            return;
         dragStarted = true;
         isPressing = true;
-        dragStartPos = eventData.position;
+
+
+        //dragStartPos = eventData.position;
         dragStartTime = Time.time;
         throwHeightSli.value = 0f;
         Debug.Log("Pointer Down: " + dragStartPos);
@@ -92,7 +98,19 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             null, // Overlay 모드니까 무조건 null!
             out localPoint
         );
-        startPos = localPoint;
+
+        // 2. Clamp (rect 영역 제한)
+        Rect rect = CircleIn.rect;
+        localPoint.x = Mathf.Clamp(localPoint.x, rect.xMin, rect.xMax);
+        localPoint.y = Mathf.Clamp(localPoint.y, rect.yMin, rect.yMax);
+
+        // 3. Clamp된 localPoint → 다시 screen 좌표계로 변환하고 싶다면 (선택사항)
+        // Vector2 worldPoint = CircleIn.TransformPoint(localPoint);
+        // dragEndPos = RectTransformUtility.WorldToScreenPoint(null, worldPoint);
+
+        // 4. 저장
+        startPos = localPoint; // 또는 worldPoint / anchoredPosition, 상황에 따라
+        dragStartPos = localPoint;
 
         startCircle = Instantiate(startCirclePrefab, CircleIn);
         startCircle.GetComponent<RectTransform>().anchoredPosition = localPoint;
@@ -105,10 +123,32 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         if (dragStarted)
         {
-            dragEndPos = eventData.position;
+            // 1. Screen → LocalPoint로 변환
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                CircleIn,
+                eventData.position,
+                null,
+                out localPoint
+            );
+
+            // 2. Clamp (rect 영역 제한)
+            Rect rect = CircleIn.rect;
+            localPoint.x = Mathf.Clamp(localPoint.x, rect.xMin, rect.xMax);
+            localPoint.y = Mathf.Clamp(localPoint.y, rect.yMin, rect.yMax);
+
+            // 3. Clamp된 localPoint → 다시 screen 좌표계로 변환하고 싶다면 (선택사항)
+            // Vector2 worldPoint = CircleIn.TransformPoint(localPoint);
+            // dragEndPos = RectTransformUtility.WorldToScreenPoint(null, worldPoint);
+
+            // 4. 저장
+            dragEndPos = localPoint; // 또는 worldPoint / anchoredPosition, 상황에 따라
+            
+            //dragEndPos = eventData.position;
             dragEndTime = Time.time;
 
             dragStarted = false;
+
             throwAble = true;
             isPressing = false;
 
@@ -121,6 +161,11 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
             foreach (var c in circlePool)
                 c.SetActive(false);
+            if (controlBox != null)
+            {
+                controlBox.ThrowObject();
+            }
+
         }
     }
 
@@ -153,6 +198,11 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             null, // Overlay 모드니까 무조건 null!
             out localPoint
         );
+
+        Rect rect = CircleIn.rect;
+        localPoint.x = Mathf.Clamp(localPoint.x, rect.xMin, rect.xMax);
+        localPoint.y = Mathf.Clamp(localPoint.y, rect.yMin, rect.yMax);
+
         Vector2 endPos = localPoint;
         float dist = Vector2.Distance(startPos, endPos);
         int activeCount = Mathf.Clamp(Mathf.FloorToInt((dist / maxDistance) * maxCircleCount), 2, maxCircleCount);
