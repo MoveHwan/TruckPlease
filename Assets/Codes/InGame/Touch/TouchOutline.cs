@@ -9,7 +9,7 @@ public class TouchOutline : MonoBehaviour
     private Material materialInstance;
     public bool isOutlined = false;
 
-    [SerializeField] private float outlineWidth = 0.05f;
+    private float outlineWidth = 0.13f;
 
     // 감지할 레이어 설정 (에디터에서 바꿔도 됨)
     public LayerMask targetLayer;
@@ -21,7 +21,7 @@ public class TouchOutline : MonoBehaviour
     void Start()
     {
         materialInstance = GetComponent<Renderer>().material;
-        materialInstance.SetFloat("_Outline", 0f);
+        //materialInstance.SetFloat("_Outline", 0f);
         targetLayer = 1 << 10;
     }
 

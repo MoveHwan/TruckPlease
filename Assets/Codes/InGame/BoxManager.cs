@@ -20,6 +20,7 @@ public class BoxManager : MonoBehaviour
     public int remainBoxCount;      // 남은 박스 수
     public float remainBoxWeight;   // 남은 박스 무게
     public float inBoxWeight;   // 들어가 있는 박스 무게
+    float keepBoxWeight;            // 킾 박스 웨이트
     public int count = 0;
 
     public List<GameObject> spawnedBoxes = new List<GameObject>();   // 스폰된 박스를 리스트에 넣어주기
@@ -130,7 +131,7 @@ public class BoxManager : MonoBehaviour
     // 현재 몇 kg이 생성됐는지
     public void CalcBoxCur()
     {
-        float minusBoxWeight = 0f;
+        float minusBoxWeight = keepBoxWeight;
 
         foreach (GameObject boxObj in spawnedBoxes)
         {
@@ -152,7 +153,7 @@ public class BoxManager : MonoBehaviour
     // 현재 몇 kg이 찼는지
     public void CalcBoxIn()
     {
-        inBoxWeight = 0f;
+        inBoxWeight = keepBoxWeight;
 
         if (GoaledBoxes.Count > 0)
         {
@@ -231,11 +232,13 @@ public class BoxManager : MonoBehaviour
                 if (touchOutline != null && touchOutline.isOutlined)
                 {
                     Debug.Log("킾됨");
-                    inBoxWeight += box.GetComponent<ThrowBox>().weight;
+                    keepBoxWeight += box.GetComponent<ThrowBox>().weight;
+                    spawnedBoxes.Remove(box);
                     GoaledBoxes.RemoveAt(i); // 안전하게 제거 가능
                     box.gameObject.SetActive(false);
                 }
             }
+            CalcBoxIn();
         }
     }
 }
