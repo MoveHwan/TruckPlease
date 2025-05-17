@@ -142,6 +142,8 @@ public class ThrowBox : MonoBehaviour
     {
         if (throwDone)
             return;
+        BoxManager.Instance.boxReady = false;
+
         dragStartPos = ThrowTouchPanel.Instance.dragStartPos;
         dragEndPos = ThrowTouchPanel.Instance.dragEndPos;
         //dragEndPos.y = Mathf.Clamp(dragEndPos.y, 0f, ThrowTouchPanel.Instance.CircleIn.rect.yMax);

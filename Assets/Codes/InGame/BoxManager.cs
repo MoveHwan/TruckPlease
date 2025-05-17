@@ -28,7 +28,10 @@ public class BoxManager : MonoBehaviour
     GameObject curBox;      // 현재 스폰되어 있는 박스
 
     bool gameEndBox;
+    public bool boxReady;          // 상자 준비 되면
 
+    [Header("item")]
+    public bool keepItem;
 
     void Awake()
     {
@@ -50,6 +53,7 @@ public class BoxManager : MonoBehaviour
     {
         if (count == box.Length || GameManager.Instance.gameEnd)
             return;
+        boxReady = true;
         curBox = Instantiate(box[count], transform);
         float randomY = Random.Range(0f, 360f);
         curBox.transform.localRotation = Quaternion.Euler(0f, randomY, 0f); // 부모 기준으로 Y축 회전
@@ -86,7 +90,7 @@ public class BoxManager : MonoBehaviour
     // 박스되돌리기
     public void DeleteBox()
     {
-        if (spawnedBoxes.Count >= 1)
+        if (spawnedBoxes.Count >= 1 && boxReady)
         {
             int index = spawnedBoxes.Count - 1; // 뒤에서 첫 번째
             GameObject objToDelete = spawnedBoxes[index];
@@ -202,6 +206,36 @@ public class BoxManager : MonoBehaviour
         if (inBoxWeight > GameManager.Instance.thirdStar || count >= box.Length || remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
         {
             GameManager.Instance.GameEnd();
+        }
+    }
+
+    // 아이템 킾 발동
+    public void ActiveKeepItem()
+    {
+        if (keepItem)
+        {
+            KeepItemBox();
+        }
+        keepItem = !keepItem;
+    }
+
+    // 아이템 킾
+    public void KeepItemBox()
+    {
+        if (keepItem)
+        {
+            for (int i = GoaledBoxes.Count - 1; i >= 0; i--)
+            {
+                var box = GoaledBoxes[i];
+                TouchOutline touchOutline = box.GetComponent<TouchOutline>();
+                if (touchOutline != null && touchOutline.isOutlined)
+                {
+                    Debug.Log("킾됨");
+                    inBoxWeight += box.GetComponent<ThrowBox>().weight;
+                    GoaledBoxes.RemoveAt(i); // 안전하게 제거 가능
+                    box.gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

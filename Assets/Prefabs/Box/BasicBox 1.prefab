@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 1519685752912717741}
   - component: {fileID: 2466815613321044704}
   - component: {fileID: 3154848685289714737}
-  m_Layer: 0
+  - component: {fileID: 1271036751033414271}
+  m_Layer: 10
   m_Name: BasicBox 1
   m_TagString: Box
   m_Icon: {fileID: 0}
@@ -139,6 +140,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDone: 0
+--- !u!114 &1271036751033414271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077089334365139061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610c77a2014baa9478e33bc6e024fee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineWidth: 0.05
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 2
 --- !u!1001 &4943506959419994929
 PrefabInstance:
   m_ObjectHideFlags: 0

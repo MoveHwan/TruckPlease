@@ -17,13 +17,14 @@ MonoBehaviour:
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
     type: 3}
+  stageObstacle: {fileID: 0}
   boxes:
-  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
-  - {fileID: 243642405857881829, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
-  - {fileID: 3883160608215507730, guid: 816bcb0e5faf66e459e0aa582a033a1d, type: 3}
+  - {fileID: 8906029403394023033, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 8906029403394023033, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
+  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
+  - {fileID: 8906029403394023033, guid: 42ff146cd2c62bd428b95f7bd8d7fabb, type: 3}
+  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   firstStar: 6
   secondStar: 7
   thirdStar: 9

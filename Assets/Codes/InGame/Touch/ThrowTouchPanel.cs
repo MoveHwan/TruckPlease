@@ -78,12 +78,12 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (controlBox == null)
+        if (controlBox == null || BoxManager.Instance.keepItem)
             return;
         dragStarted = true;
         isPressing = true;
 
-
+        Debug.Log("버튼 누름");
         //dragStartPos = eventData.position;
         dragStartTime = Time.time;
         throwHeightSli.value = 0f;
@@ -131,6 +131,7 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                 null,
                 out localPoint
             );
+            Debug.Log("버튼 올림");
 
             // 2. Clamp (rect 영역 제한)
             Rect rect = CircleIn.rect;
@@ -190,6 +191,7 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         if (!isDragging)
             return;
+        Debug.Log("버튼 드래그");
 
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
