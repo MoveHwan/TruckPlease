@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using TMPro; // 네임스페이스
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public float timeCount;
     public bool obstacleReady;
-    public Text timeCountUI;
+    public TextMeshProUGUI timeCountUI;
 
     void Awake()
     {

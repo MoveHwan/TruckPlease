@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // 네임스페이스
+
 
 public class BoxManager : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class BoxManager : MonoBehaviour
     public Text boxCountUi;
     public Text weightUi;
     public Text inWeightUi;
-    public Text gameEndCountUi;
+    public TextMeshProUGUI gameEndCountUi;
 
     public List<GameObject> box = new List<GameObject>();
     float totalWeight;              // 총 박스 무게
@@ -171,11 +173,6 @@ public class BoxManager : MonoBehaviour
             }
         }
 
-        // 3성 이상이면 게임 끝내기
-        if(inBoxWeight > GameManager.Instance.thirdStar)
-        {
-            StartCoroutine(BoxGameEnd());
-        }
     }
 
     // 박스 관련 게임 끝내기
@@ -186,10 +183,19 @@ public class BoxManager : MonoBehaviour
 
         gameEndBox = true;
 
-        float gameEndCount = 3f;
-        gameEndCountUi.gameObject.SetActive(true);
+        float gameEndCount;
 
-        while (gameEndCount > 0)
+        if (count >= box.Count)
+        {
+            gameEndCount = 3f;
+        }
+        else
+        {
+            gameEndCount = 10f;
+        }
+        gameEndCountUi.transform.parent.gameObject.SetActive(true);
+
+        while (gameEndCount >= 0)
         {
             if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Count && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar) // 조건이 깨졌는지 다시 확인
             {
@@ -204,12 +210,9 @@ public class BoxManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             gameEndCount -= 0.1f;
         }
-
-        // 3성 이상이면 게임 끝내기
-        if (inBoxWeight > GameManager.Instance.thirdStar || count >= box.Count || remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
-        {
-            GameManager.Instance.GameEnd();
-        }
+        gameEndCount = 0f;
+        GameManager.Instance.GameEnd();
+        
     }
 
     // 아이템 킾 발동
