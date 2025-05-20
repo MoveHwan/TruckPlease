@@ -28,7 +28,7 @@ public class StageUI : MonoBehaviour
         {
             StageImage.sprite = StageClearSprite;
 
-            starCount = Random.Range(1, 4);
+            starCount = PlayerPrefs.GetInt("Stage" + Id + "_Star", 0);
 
             for (int i = 0; i < starCount; i++)
             {

@@ -48,17 +48,38 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         isDrag = false;
 
-        // 스크롤을 특정 화면으로 고정
+        if (targetIdx < size - 1 && scrollbar.value - pos[targetIdx] > distance * 0.2f)
+        {
+            targetPos = pos[++targetIdx];
+
+            SetPageNavi();
+        }
+        else if (targetIdx > 0 && scrollbar.value - pos[targetIdx] < -distance * 0.2f)
+        {
+            targetPos = pos[--targetIdx];
+
+            SetPageNavi();
+        }
+
+
+        /*// 스크롤을 특정 화면으로 고정
         for (int i = 0; i < size; i++)
         {
-            if (scrollbar.value < pos[i] + distance * 0.5f && scrollbar.value > pos[i] - distance * 0.5f)
+            if (scrollbar.value - pos[i] > 0)
             {
                 targetIdx = i;
                 targetPos = pos[i];
 
                 SetPageNavi();
             }
-        }
+            else if (scrollbar.value - pos[i] < 0 && scrollbar.value < pos[i] + distance * 0.8f && scrollbar.value > pos[i] - distance * 0.5f)
+            {
+                targetIdx = i;
+                targetPos = pos[i];
+
+                SetPageNavi();
+            }
+        }*/
 
     }
 
