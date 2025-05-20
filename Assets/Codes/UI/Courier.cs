@@ -7,30 +7,38 @@ public class Courier : MonoBehaviour
 {
     public Transform courier;
     public Animator animator;
-
-    public bool isClear, isPush;
+    public Vector3 targetVec;
+    public bool isPush, pushOn;
 
     AnimatorStateInfo animStateInfo;
 
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Lobby")
-            animator.SetTrigger("Hello");
-        else
         {
-            animator.SetTrigger("Idle");
+            animator.SetTrigger("Lean");
+            animator.SetTrigger("Hello");
         }
-        //PushStart();
     }
 
     void Update()
     {
-        animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        if (animStateInfo.IsName("Push") && isPush)
+        if (!pushOn && GameManager.Instance && GameManager.Instance.gameEnd)
         {
-            courier.position = Vector3.MoveTowards(courier.position, Vector3.right * -0.669f + Vector3.up * courier.position.y + Vector3.forward * courier.position.z, Time.deltaTime * 1.2f);
+            pushOn = true;
+            StartCoroutine(PushDelay());
         }
+
+        if (gameObject.activeSelf)
+        {
+            animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (animStateInfo.IsName("Push") && isPush)
+            {
+                courier.position = Vector3.MoveTowards(courier.position, targetVec, Time.deltaTime * 2);
+            }
+        }
+       
     }
 
     public void ReHello()
@@ -40,7 +48,7 @@ public class Courier : MonoBehaviour
 
     IEnumerator ReHelloDelay()
     {
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(10);
 
         animator.SetTrigger("Hello");
     }
@@ -48,8 +56,17 @@ public class Courier : MonoBehaviour
 
     public void PushStart()
     {
+        gameObject.SetActive(true);
+
         animator.SetTrigger("Push");
         isPush = true;
+    }
+
+    IEnumerator PushDelay()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        PushStart();
     }
 
     public void PushStop()
@@ -57,7 +74,7 @@ public class Courier : MonoBehaviour
         isPush = false;
     }
 
-    public void Reaction()
+    public void Reaction(bool isClear)
     {
         if (isClear)
             animator.SetTrigger("DDabong");

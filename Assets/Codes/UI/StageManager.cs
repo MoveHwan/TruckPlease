@@ -5,13 +5,14 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     public Transform Content;
-    public int clearStage;
 
     Transform StageGroup;
     int stageCount;
 
     void Start()
     {
+        int topRatingStage = PlayerPrefs.GetInt("TopRatingStage", 0);
+
         for (int i = 0; i < Content.childCount; i++)
         {
             StageGroup = Content.GetChild(i).GetChild(0);
@@ -20,7 +21,7 @@ public class StageManager : MonoBehaviour
             {
                 stageCount += 1;
 
-                StageGroup.GetChild(j).GetComponent<StageUI>().SetStage(stageCount, clearStage);
+                StageGroup.GetChild(j).GetComponent<StageUI>().SetStage(stageCount, topRatingStage);
             }
 
         }

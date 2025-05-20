@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class WeightSlider : MonoBehaviour
 {
+    public static WeightSlider instance;
+
     public Slider slider;
     public TextMeshProUGUI TotalWeightText;
 
@@ -19,8 +21,10 @@ public class WeightSlider : MonoBehaviour
 
     bool setEnd;
 
-    void Start()
+    void Awake()
     {
+        instance = this;
+
         StartCoroutine(WaitStarValue());
     }
 
@@ -64,12 +68,12 @@ public class WeightSlider : MonoBehaviour
             // 슬라이더 값 추출
             if (targetIdx == 0)
             {
-                targetValue = totalWeight / goalWeights[targetIdx] * Stars[targetIdx].GoalSliderValue;
+                targetValue = totalWeight / goalWeights[targetIdx] * Stars[targetIdx].goalSliderValue;
             }
             else
             {
-                targetValue = Stars[targetIdx - 1].GoalSliderValue +
-                    (Stars[targetIdx].GoalSliderValue - Stars[targetIdx - 1].GoalSliderValue) * 
+                targetValue = Stars[targetIdx - 1].goalSliderValue +
+                    (Stars[targetIdx].goalSliderValue - Stars[targetIdx - 1].goalSliderValue) * 
                     (totalWeight - goalWeights[targetIdx-1]) / (goalWeights[targetIdx] - goalWeights[targetIdx - 1]);
 
             }
@@ -99,5 +103,20 @@ public class WeightSlider : MonoBehaviour
         SetGoalWeights(new float[] { GameManager.Instance.firstStar, GameManager.Instance.secondStar, GameManager.Instance.thirdStar });
 
         setEnd = true;
+    }
+
+    public int GetStarCount()
+    {
+        int count = 0;
+
+        for (int i = 0; i < Stars.Length; i++)
+        {
+            if (targetValue < Stars[i].goalSliderValue)
+                break;
+
+            count++;
+        }
+
+        return count;
     }
 }

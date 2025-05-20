@@ -13,7 +13,7 @@ public class StarByWeight : MonoBehaviour
 
     public TextMeshProUGUI[] Texts;
 
-    public float GoalSliderValue;
+    public float goalSliderValue;
     [SerializeField] float GoalWeight;
 
     
@@ -26,9 +26,9 @@ public class StarByWeight : MonoBehaviour
     void Update()
     {
         // 슬라이더 목표치 확인 후 달성오브젝트 활성화
-        if (WeightSlider.value >= GoalSliderValue && !Arrive.activeSelf)
+        if (WeightSlider.value >= goalSliderValue && !Arrive.activeSelf)
             Arrive.SetActive(true);
-        else if (WeightSlider.value < GoalSliderValue && Arrive.activeSelf)
+        else if (WeightSlider.value < goalSliderValue && Arrive.activeSelf)
             Arrive.SetActive(false);
     }
 
