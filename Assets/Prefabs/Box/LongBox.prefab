@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610c77a2014baa9478e33bc6e024fee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineWidth: 0.05
+  isOutlined: 0
+  outlineMat: {fileID: 2100000, guid: bb4ae62d0743227499517ea1c202b7fa, type: 2}
   targetLayer:
     serializedVersion: 2
     m_Bits: 2

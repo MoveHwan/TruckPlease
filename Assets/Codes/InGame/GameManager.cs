@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
 
     public bool gameEnd;
 
+    public float timeCount;
     public bool obstacleReady;
+    public Text timeCountUI;
 
     void Awake()
     {
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        timeCount = 60f;
         SetStageData();
         GameStart();
     }
@@ -42,7 +45,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        TimeControl();
     }
 
 
@@ -112,4 +115,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void TimeControl()
+    {
+        timeCount -= Time.deltaTime;
+        timeCountUI.text = Mathf.Ceil(timeCount).ToString();
+    }
 }

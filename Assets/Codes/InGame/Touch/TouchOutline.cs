@@ -8,8 +8,9 @@ public class TouchOutline : MonoBehaviour
 
     private Material materialInstance;
     public bool isOutlined = false;
-
-    private float outlineWidth = 0.13f;
+    public Material outlineMat;
+    //private float outlineWidth = 0.13f;
+    Renderer MeshRen;
 
     // 감지할 레이어 설정 (에디터에서 바꿔도 됨)
     public LayerMask targetLayer;
@@ -17,10 +18,11 @@ public class TouchOutline : MonoBehaviour
     void Awake()
     {
         throwBox = GetComponent<ThrowBox>();
+        MeshRen = GetComponent<Renderer>();
     }
     void Start()
     {
-        materialInstance = GetComponent<Renderer>().material;
+        materialInstance = MeshRen.material;
         //materialInstance.SetFloat("_Outline", 0f);
         targetLayer = 1 << 10;
     }
@@ -57,19 +59,22 @@ public class TouchOutline : MonoBehaviour
             foreach (GameObject go in GoaledBoxes) 
             {
                 TouchOutline touchOutline = go.GetComponent<TouchOutline>();
-                touchOutline.OffOutLine();
+                if (touchOutline != null)
+                {
+                    touchOutline.OffOutLine();
+                }
             }
         
-            isOutlined = !isOutlined;
-
-            materialInstance.SetFloat("_Outline", isOutlined ? outlineWidth : 0);
+            isOutlined = true;
+            MeshRen.material = outlineMat;
+            //materialInstance.SetFloat("_Outline", isOutlined ? outlineWidth : 0);
         }
     }
 
-    void OffOutLine()
+    public void OffOutLine()
     {
         isOutlined = false;
-
-        materialInstance.SetFloat("_Outline", 0f);
+        MeshRen.material = materialInstance;
+        //materialInstance.SetFloat("_Outline", 0f);
     }
 }

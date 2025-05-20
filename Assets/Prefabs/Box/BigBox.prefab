@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4981271823537174517}
   - component: {fileID: 316173119302923859}
   - component: {fileID: 1314248847978585136}
+  - component: {fileID: 8356210033109282244}
   m_Layer: 10
   m_Name: BigBox
   m_TagString: Box
@@ -139,6 +140,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4525458, y: 0.99999994, z: 0.99999994}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8356210033109282244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189067268428545770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610c77a2014baa9478e33bc6e024fee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOutlined: 0
+  outlineMat: {fileID: 2100000, guid: bb4ae62d0743227499517ea1c202b7fa, type: 2}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &5554644205486638071
 PrefabInstance:
   m_ObjectHideFlags: 0

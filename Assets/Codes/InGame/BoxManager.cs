@@ -15,7 +15,7 @@ public class BoxManager : MonoBehaviour
     public Text inWeightUi;
     public Text gameEndCountUi;
 
-    public GameObject[] box;
+    public List<GameObject> box = new List<GameObject>();
     float totalWeight;              // 총 박스 무게
     public int remainBoxCount;      // 남은 박스 수
     public float remainBoxWeight;   // 남은 박스 무게
@@ -52,12 +52,14 @@ public class BoxManager : MonoBehaviour
 
     public void NextBoxSpawn()
     {
-        if (count == box.Length || GameManager.Instance.gameEnd)
+        if (count == box.Count || GameManager.Instance.gameEnd)
             return;
+        Debug.Log("box.Count:" + box.Count);
+
         boxReady = true;
         curBox = Instantiate(box[count], transform);
         float randomY = Random.Range(0f, 360f);
-        curBox.transform.localRotation = Quaternion.Euler(0f, randomY, 0f); // 부모 기준으로 Y축 회전
+        curBox.transform.localRotation = Quaternion.Euler(0f, randomY, randomY); // 부모 기준으로 Y축 회전
     }
 
     public void NextBoxSpawnWait()
@@ -75,11 +77,11 @@ public class BoxManager : MonoBehaviour
     {
         spawnedBoxes.Add(throwBox);
 
-        if (count < box.Length)
+        if (count < box.Count)
         {
             count++;
         }
-        if (count >= box.Length)
+        if (count >= box.Count)
         {
             StartCoroutine(BoxGameEnd());
             Debug.Log("GameEnd");
@@ -125,7 +127,7 @@ public class BoxManager : MonoBehaviour
     //몇 번 남았는지
     public void CalcBoxCount()
     {
-        remainBoxCount = box.Length - count;
+        remainBoxCount = box.Count - count;
     }
 
     // 현재 몇 kg이 생성됐는지
@@ -189,7 +191,7 @@ public class BoxManager : MonoBehaviour
 
         while (gameEndCount > 0)
         {
-            if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Length && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar) // 조건이 깨졌는지 다시 확인
+            if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Count && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar) // 조건이 깨졌는지 다시 확인
             {
                 gameEndCountUi.gameObject.SetActive(false);
                 gameEndBox = false;
@@ -204,7 +206,7 @@ public class BoxManager : MonoBehaviour
         }
 
         // 3성 이상이면 게임 끝내기
-        if (inBoxWeight > GameManager.Instance.thirdStar || count >= box.Length || remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
+        if (inBoxWeight > GameManager.Instance.thirdStar || count >= box.Count || remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
         {
             GameManager.Instance.GameEnd();
         }
@@ -227,17 +229,20 @@ public class BoxManager : MonoBehaviour
         {
             for (int i = GoaledBoxes.Count - 1; i >= 0; i--)
             {
-                var box = GoaledBoxes[i];
-                TouchOutline touchOutline = box.GetComponent<TouchOutline>();
+                var thisBox = GoaledBoxes[i];
+                TouchOutline touchOutline = thisBox.GetComponent<TouchOutline>();
                 if (touchOutline != null && touchOutline.isOutlined)
                 {
                     Debug.Log("킾됨");
-                    keepBoxWeight += box.GetComponent<ThrowBox>().weight;
-                    spawnedBoxes.Remove(box);
+                    keepBoxWeight += thisBox.GetComponent<ThrowBox>().weight;
+                    box.Remove(thisBox);
+                    spawnedBoxes.Remove(thisBox);
                     GoaledBoxes.RemoveAt(i); // 안전하게 제거 가능
-                    box.gameObject.SetActive(false);
+                    thisBox.gameObject.SetActive(false);
                 }
             }
+            Debug.Log("box.Count:" + box.Count);
+
             CalcBoxIn();
         }
     }
