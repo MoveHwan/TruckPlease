@@ -12,6 +12,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject InGamePanel;
     public GameObject RetryButton;
     public GameObject ClearConfetti;
+    public GameObject Count;
     public GameObject[] StarImages; // 3개의 별 이미지
 
     [Header("[ RectTransform ]")]
@@ -98,6 +99,7 @@ public class StageTruckCanvas : MonoBehaviour
         SetResult();
 
         InGamePanel.SetActive(false);
+        Count.SetActive(false);
 
         resultSeq.Play();
 
@@ -159,7 +161,7 @@ public class StageTruckCanvas : MonoBehaviour
 
             ResultCanvas.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
             ResultCanvas.DOFade(1f, 0.5f);
-        }).AppendInterval(0.6f);
+        }).AppendInterval(0.5f);
     }
 
     void ShowStars()
@@ -173,7 +175,7 @@ public class StageTruckCanvas : MonoBehaviour
                 StarImages[idx].SetActive(true);
                 StarImages[idx].transform.localScale = Vector3.zero;
                 StarImages[idx].transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
-            }).AppendInterval(0.5f);
+            }).AppendInterval(0.25f);
 
 
         }
@@ -199,11 +201,11 @@ public class StageTruckCanvas : MonoBehaviour
         // 이동 + 알파 동시에 트윈
         resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.5f).SetEase(Ease.OutQuad))
             .Join(canvasGroup.DOFade(1f, 0.5f))
-            .AppendInterval(0.4f)
+            .AppendInterval(0.2f)
             .Append(DOVirtual.Int(0, targetValue, 0.5f, value => {
                 TMP.text = value.ToString();
             }))
-            .AppendInterval(0.2f);
+            .AppendInterval(0.1f);
     }
 
     void Stamp()
@@ -229,7 +231,7 @@ public class StageTruckCanvas : MonoBehaviour
                ClearConfetti.SetActive(starCount > 0);
                // 여기에 사운드 효과 넣는 것도 추천!
                // AudioManager.Play("stamp");
-           }).AppendInterval(0.5f);
+           }).AppendInterval(0.3f);
 
 
     }
@@ -249,8 +251,8 @@ public class StageTruckCanvas : MonoBehaviour
 
         // 이동 + 서서히 나타나기
         resultSeq.Append(Buttons.DOAnchorPos(originalPos, 0.8f).SetEase(Ease.OutCubic))
-                 .Join(canvasGroup.DOFade(1f, 0.8f))
-                 .AppendInterval(0.5f);
+                 .Join(canvasGroup.DOFade(1f, 0.8f));
+                 
     }
 
 

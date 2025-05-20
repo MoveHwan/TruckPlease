@@ -12,7 +12,7 @@ public class BoxManager : MonoBehaviour
 
     BoxCollider storageCollider;
 
-    public Text boxCountUi;
+    public TextMeshProUGUI boxCountUi;
     public Text weightUi;
     public Text inWeightUi;
     public TextMeshProUGUI gameEndCountUi;
