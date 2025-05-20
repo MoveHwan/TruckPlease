@@ -24,7 +24,10 @@ public class WeightSlider : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
 
+    void Start()
+    {
         StartCoroutine(WaitStarValue());
     }
 
