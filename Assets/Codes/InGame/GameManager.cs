@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // 네임스페이스
+using TMPro;
+using UnityEngine.Playables; // 네임스페이스
 
 public class GameManager : MonoBehaviour
 {
@@ -25,10 +26,16 @@ public class GameManager : MonoBehaviour
     public float thirdStar;
 
     public bool gameEnd;
+    public bool gamePause;
 
     public float timeCount;
     public bool obstacleReady;
     public TextMeshProUGUI timeCountUI;
+
+    public PlayableDirector playableDirector;
+
+    public GameObject tuto;
+    public bool tutoNeed;
 
     void Awake()
     {
@@ -40,6 +47,17 @@ public class GameManager : MonoBehaviour
         timeCount = 60f;
         SetStageData();
         GameStart();
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+#elif UNITY_ANDROID || UNITY_IOS
+                if (!tutoNeed)
+        {
+            tuto.SetActive(true);
+            tutoNeed = true;
+        }
+
+#endif
+
     }
 
     // Update is called once per frame
@@ -78,21 +96,18 @@ public class GameManager : MonoBehaviour
         BoxManager.Instance.NextBoxSpawn();
     }
 
-    public void GameEnd()
-    {
-        gameEnd = true;
-        truckAni.SetTrigger("GameEnd");
-    }
 
-    public void GoLobby()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
 
     void SelectStage()
     {
+    #if UNITY_EDITOR || UNITY_STANDALONE
         stage = stageSelect;
+#elif UNITY_ANDROID || UNITY_IOS
+        Debug.Log("모바일(Android 또는 iOS)에서 실행됨");
+        stage = PlayerPrefs.GetInt("Stage");
+#endif
     }
+
 
     public void ReadyToStart()
     {
@@ -117,7 +132,40 @@ public class GameManager : MonoBehaviour
 
     void TimeControl()
     {
-        timeCount -= Time.deltaTime;
-        timeCountUI.text = Mathf.Ceil(timeCount).ToString();
+        if (!gamePause)
+        {
+            timeCount -= Time.deltaTime;
+            timeCountUI.text = Mathf.Ceil(timeCount).ToString();
+        }
+    }
+
+    public void GamePause()
+    {
+        gamePause = true;
+    }
+    public void GameResume()
+    {
+        gamePause = false;
+    }
+
+    public void GameRestart()
+    {
+        SceneManager.LoadScene("InGame");
+    }
+    public void GameEnd()
+    {
+        gameEnd = true;
+        truckAni.SetTrigger("GameEnd");
+        playableDirector.Play();
+    }
+
+    public void GoLobby()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
+    public void PlayEndAni()
+    {
+        playableDirector.Play();
     }
 }

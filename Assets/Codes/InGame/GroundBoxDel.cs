@@ -10,7 +10,14 @@ public class GroundBoxDel : MonoBehaviour
 
         if (other.CompareTag("Box"))
         {
-            other.gameObject.SetActive(false);
+            StartCoroutine(BoxDelayDelete(other.gameObject));
+            BoxManager.Instance.CalcBoxCurEnd();
         }
+    }
+
+    IEnumerator BoxDelayDelete(GameObject box)
+    {
+        yield return new WaitForSeconds(1f);
+        box.SetActive(false);
     }
 }

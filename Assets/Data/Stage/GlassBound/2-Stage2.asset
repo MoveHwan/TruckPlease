@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24a5b41a2f1e484a84410fb8369cdb5, type: 3}
   m_Name: 2-Stage2
   m_EditorClassIdentifier: 
-  truck: {fileID: 6156463510423527833, guid: 78888fd18a0b4404d976eb351010947d, type: 3}
+  truck: {fileID: 4896329237258397798, guid: cbd1ba6b10fdf6f45ac83872743cef74, type: 3}
   stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,

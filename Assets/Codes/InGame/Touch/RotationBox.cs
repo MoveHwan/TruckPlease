@@ -13,7 +13,6 @@ public class RotationBox : MonoBehaviour
     {
         if (throwDone)
             return;
-
         if (Application.isMobilePlatform)
         {
             HandleTouchInput();
@@ -78,6 +77,27 @@ public class RotationBox : MonoBehaviour
             {
                 isDragging = false;
             }
+
+            if (Input.touchCount == 2)
+            {
+                Touch t0 = Input.GetTouch(0);
+                Touch t1 = Input.GetTouch(1);
+
+                // 두 터치 간의 벡터
+                Vector2 prevPos0 = t0.position - t0.deltaPosition;
+                Vector2 prevPos1 = t1.position - t1.deltaPosition;
+
+                Vector2 prevVector = prevPos1 - prevPos0;
+                Vector2 currVector = t1.position - t0.position;
+
+                // 이전 프레임과 현재 프레임의 각도 차이를 계산
+                float angle = Vector2.SignedAngle(prevVector, currVector);
+
+                // 오브젝트 회전 (Y축 기준으로 회전 예시)
+                transform.Rotate(Vector3.forward, angle * rotationSpeed * rotationSpeed * Time.deltaTime, Space.World);
+
+            }
+
         }
     }
 
@@ -89,4 +109,5 @@ public class RotationBox : MonoBehaviour
         transform.Rotate(Vector3.up, -rotationX, Space.World);
         transform.Rotate(Vector3.right, rotationY, Space.World);
     }
+
 }

@@ -30,11 +30,12 @@ public class BoxManager : MonoBehaviour
 
     GameObject curBox;      // 현재 스폰되어 있는 박스
 
-    bool gameEndBox;
+    public bool gameEndBox;
     public bool boxReady;          // 상자 준비 되면
 
     [Header("item")]
     public bool keepItem;
+    public bool warnEnd;        // 남은 상자로 못 클리어하는 변수
 
     void Awake()
     {
@@ -148,11 +149,30 @@ public class BoxManager : MonoBehaviour
 
         remainBoxWeight = totalWeight - minusBoxWeight; 
         
-        if(remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
+    }
+
+    // 현재 몇 kg이 생성됐는지 확인 후 게임 끝
+    public void CalcBoxCurEnd()
+    {
+        float minusBoxWeight = keepBoxWeight;
+
+        foreach (GameObject boxObj in spawnedBoxes)
+        {
+            ThrowBox info = boxObj.GetComponent<ThrowBox>();
+            if (info != null)
+            {
+                minusBoxWeight += info.weight;
+            }
+        }
+
+        remainBoxWeight = totalWeight - minusBoxWeight;
+
+        if (remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
         {
             StartCoroutine(BoxGameEnd());
         }
     }
+
 
     // 현재 몇 kg이 찼는지
     public void CalcBoxIn()
@@ -182,6 +202,7 @@ public class BoxManager : MonoBehaviour
             yield break;
 
         gameEndBox = true;
+        GameManager.Instance.gamePause = true;
 
         float gameEndCount;
 
@@ -191,6 +212,7 @@ public class BoxManager : MonoBehaviour
         }
         else
         {
+            warnEnd = true;
             gameEndCount = 10f;
         }
         gameEndCountUi.transform.parent.gameObject.SetActive(true);
@@ -201,6 +223,8 @@ public class BoxManager : MonoBehaviour
             {
                 gameEndCountUi.gameObject.SetActive(false);
                 gameEndBox = false;
+                GameManager.Instance.gamePause = false;
+                warnEnd = false;
                 yield break;
             }
 
@@ -212,7 +236,6 @@ public class BoxManager : MonoBehaviour
         }
         gameEndCount = 0f;
         GameManager.Instance.GameEnd();
-        
     }
 
     // 아이템 킾 발동

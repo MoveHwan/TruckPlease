@@ -52,10 +52,10 @@ public class ThrowBox : MonoBehaviour
         //{
         //    ThrowObject();
         //}
-//#if UNITY_EDITOR || UNITY_STANDALONE
-//        HandleMouseInput();
-//#elif UNITY_ANDROID || UNITY_IOS
-//        HandleTouchInput();
+//#if unity_editor || unity_standalone
+//        handlemouseinput();
+//#elif unity_android || unity_ios
+//        handletouchinput();
 //#endif
     }
 
