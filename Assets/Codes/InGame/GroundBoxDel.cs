@@ -15,9 +15,13 @@ public class GroundBoxDel : MonoBehaviour
         }
     }
 
+
     IEnumerator BoxDelayDelete(GameObject box)
     {
         yield return new WaitForSeconds(1f);
-        box.SetActive(false);
+        if (box != null) 
+        { 
+            box.SetActive(false);
+        }
     }
 }
