@@ -23,6 +23,7 @@ public class StageTruckCanvas : MonoBehaviour
     public RectTransform StampImage;
 
     [Header("[ Text ]")]
+    public TextMeshProUGUI PauseStageText;
     public TextMeshProUGUI LicensePlateText;
     public TextMeshProUGUI TotalBoxText;
     public TextMeshProUGUI TotalWeightText;
@@ -50,13 +51,18 @@ public class StageTruckCanvas : MonoBehaviour
 
     void Start()
     {
-        string stageNum = PlayerPrefs.GetInt("Stage", 1).ToString();
-        int size = stageNum.Length;
+        int stageNum = PlayerPrefs.GetInt("Stage", 1);
+
+        /*int size = stageNum.Length;
 
         for (int i = 0; i < 3 - size; i++)
-            stageNum = "0" + stageNum;
+            stageNum = "0" + stageNum;*/
 
-        LicensePlateText.text = "STG - " + stageNum;
+        int chapter = (stageNum - 1) / 9 + 1;
+        stageNum = stageNum % 9 == 0 ? 9 : stageNum % 9;
+
+        PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
+        LicensePlateText.text = "CH" + chapter + " - 00" + stageNum;
 
         BoxManager = BoxManager.Instance;
         GameManager = GameManager.Instance;
@@ -85,12 +91,12 @@ public class StageTruckCanvas : MonoBehaviour
     void WaitReMainBoxInfo()
     {
         TotalBoxText.text = "/" + (BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count);
-        TotalWeightText.text = "/"+ GameManager.thirdStar;
+        TotalWeightText.text = "/" + GameManager.thirdStar;
 
     }
 
 
-    IEnumerator ShowResultUIDelay ()
+    IEnumerator ShowResultUIDelay()
     {
         yield return new WaitForSeconds(3);
 
@@ -127,12 +133,12 @@ public class StageTruckCanvas : MonoBehaviour
             RetryButton.SetActive(false);
         }
 
-        if (PlayerPrefs.GetInt(str, 0) < starCount) 
+        if (PlayerPrefs.GetInt(str, 0) < starCount)
             PlayerPrefs.SetInt(str, starCount);
 
         if (starCount > 0 && PlayerPrefs.GetInt("TopRatingStage", 0) < PlayerPrefs.GetInt("Stage"))
             PlayerPrefs.SetInt("TopRatingStage", PlayerPrefs.GetInt("Stage"));
-        
+
 
         resultSeq = DOTween.Sequence();
 
@@ -160,8 +166,8 @@ public class StageTruckCanvas : MonoBehaviour
             ResultCanvas.alpha = 0;
             ResultCanvas.transform.localScale = Vector3.one * 0.8f;
 
-            ResultCanvas.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack);
-            ResultCanvas.DOFade(1f, 0.5f);
+            ResultCanvas.transform.DOScale(1, 0.3f).SetEase(Ease.OutBack);
+            ResultCanvas.DOFade(1f, 0.3f);
         }).AppendInterval(0.35f);
     }
 
@@ -195,13 +201,13 @@ public class StageTruckCanvas : MonoBehaviour
             canvasGroup = targetUI.gameObject.AddComponent<CanvasGroup>();
 
         // 시작 상태: 오른쪽 밖 + 투명
-        targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width; 
+        targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
         canvasGroup.alpha = 0;
 
         // 이동 + 알파 동시에 트윈
-        resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.5f).SetEase(Ease.OutQuad))
-            .Join(canvasGroup.DOFade(1f, 0.5f))
-            .Append(DOVirtual.Int(0, targetValue, 0.5f, value =>
+        resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
+            .Join(canvasGroup.DOFade(1f, 0.3f))
+            .Append(DOVirtual.Int(0, targetValue, 0.2f, value =>
             {
                 TMP.text = value.ToString();
             }));
@@ -249,9 +255,9 @@ public class StageTruckCanvas : MonoBehaviour
         canvasGroup.alpha = 0;
 
         // 이동 + 서서히 나타나기
-        resultSeq.Append(Buttons.DOAnchorPos(originalPos, 0.8f).SetEase(Ease.OutCubic))
-                 .Join(canvasGroup.DOFade(1f, 0.8f));
-                 
+        resultSeq.Append(Buttons.DOAnchorPos(originalPos, 0.4f).SetEase(Ease.OutCubic))
+                 .Join(canvasGroup.DOFade(1f, 0.4f));
+
     }
 
 
