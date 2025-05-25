@@ -2,74 +2,229 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameItem : MonoBehaviour
 {
-    public GameObject ItemPurchasePanel;
-
-    public TextMeshProUGUI ItemCountText;
-
     public enum Items
     {
-        item1, item2, Item_Delete
+        item1, Item_Save, Item_Delete
     }
 
     public Items currentItems;
 
-    int count;
+    public float hueSpeed = 0.2f; // 속도 조절
+    public float saturation = 0.5f;
+    public float value = 0.9f;
+
+    [Header("[ GameObject ]")]
+    public GameObject ItemPurchasePanel;
+    public GameObject Lock;
+    public GameObject TouchBlock;
+    public GameObject SelectedItem;
+
+    [Header("[ UI ]")]
+    public BuyItem_InGame BuyItem_InGame;
+    public Button OtherBlock;
+    public Image SelectFrame;
+    public TextMeshProUGUI[] ItemCountTexts;
+    
+
+
+    BoxManager BoxManager;
+    DeleteCourier DeleteCourier;
+
+    GameObject SaveBox;
+
+    int count, useCount;
+    float hue = 0f;
+
+    bool rainbowOn;
+
 
     void Start()
     {
+        BoxManager = BoxManager.Instance;
+        DeleteCourier = DeleteCourier.Instance;
+
+        useCount = 3;
+
+        PlayerPrefs.SetInt("Item_Save", 2);
+        PlayerPrefs.SetInt("Item_Delete", 2);
+
+        SetText();
+
+        SelectedItem.SetActive(false);
+        OtherBlock.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (rainbowOn)
+            StartRainbow();
+
+        if (GameManager.Instance.gameEnd)
+        {
+            ItemCancel();
+            ItemPurchasePanel.SetActive(false);
+            TouchBlock.SetActive(false);
+        }
+    }
+
+    // 아이템 클릭
+    public void ItemCheck()
+    {
+        if (useCount <= 0) return;
+
         switch (currentItems)
         {
             case Items.item1:
-                count = PlayerPrefs.GetInt("item1", 0);
+                if (count <= 0)
+                {
+                    BuyItem_InGame.BuyItemOn(this, "item1", "This! is! item1!!!!!", 10000);
+                    return;
+                }
+                      
                 break;
-            case Items.item2:
-                count = PlayerPrefs.GetInt("item2", 0);
+
+            case Items.Item_Save:
+                if (BoxManager.spawnedBoxes.Count <= 0 && BoxManager.GoaledBoxes.Count <= 0) return;
+
+                if (count <= 0)
+                {
+                    BuyItem_InGame.BuyItemOn(this, "Save", "Save selected box", 10000);
+                    return;
+                }
+                   
+                OtherBlock.onClick.RemoveAllListeners();
+                BoxManager.ActiveKeepItem();
+
+                break;
+
+            case Items.Item_Delete:
+                if (BoxManager.spawnedBoxes.Count <= 0) return;
+
+                if (count <= 0)
+                {
+                    BuyItem_InGame.BuyItemOn(this, "Revert", "Revert previous box", 5000);
+                    return;
+                }
+                   
+                OtherBlock.onClick.RemoveAllListeners();
+                OtherBlock.onClick.AddListener(() => ItemCancel());
+
+                break;
+
+            default:
+                break;
+        }
+
+        SelectedItem.SetActive(true);
+        
+        OtherBlock.gameObject.SetActive(true);
+
+        rainbowOn = true;
+    }
+
+    // 아이템 취소
+    public void ItemCancel()
+    {
+        rainbowOn = false;
+        SelectedItem.SetActive(false);
+        OtherBlock.gameObject.SetActive(false);
+
+    }
+
+    // 아이템 사용
+    public void UseItem()
+    {
+        ItemCancel();
+
+
+        switch (currentItems)
+        {
+            case Items.item1:
+                //
+                break;
+            case Items.Item_Save:
+                if (!SelectSaveBoxCheck())
+                {
+                    BoxManager.ActiveKeepItem();
+                    return;
+                }
+
+                SubtractCount();
+
+                DeleteCourier.CarryingStart(SaveBox);
+
                 break;
             case Items.Item_Delete:
-                count = PlayerPrefs.GetInt("Item_Delete", 6);
+
+                SubtractCount();
+
+                BoxManager.DeleteBox();
+
                 break;
             default:
                 count = 0;
                 break;
         }
-
-        ItemCountText.text = count.ToString();
     }
 
-    public void UseItem()
+    void StartRainbow()
     {
-        if (count <= 0)
-        {
-            ItemPurchasePanel.SetActive(true);
+        hue += Time.deltaTime * hueSpeed;
+        if (hue > 1f) hue -= 1f;
 
-            return;
-        }
-
-        ItemCountText.text = count.ToString();
-
-        switch (currentItems)
-        {
-            case Items.item1:
-                SubtractCount();
-                break;
-            case Items.item2:
-                SubtractCount();
-                break;
-            case Items.Item_Delete:
-                BoxDeleteUI.Instance.DeleteModeOn();
-                break;
-        }
+        Color rainbowColor = Color.HSVToRGB(hue, saturation, value);
+        SelectFrame.color = rainbowColor;
     }
 
-    public void SubtractCount()
+    void SubtractCount()
     {
+        if (count - 1 < 0 || useCount - 1 < 0) return;
+
+        useCount -= 1;
         count -= 1;
 
-        //PlayerPrefs.SetInt(currentItems.ToString(), count);
+        PlayerPrefs.SetInt(currentItems.ToString(), count);
 
-        ItemCountText.text = count.ToString();
+        SetText();
+    }
+
+    public void SetText()
+    {
+        Lock.SetActive(currentItems.ToString() == "item1");
+
+        count = PlayerPrefs.GetInt(currentItems.ToString(), 1);
+
+        for (int i = 0; i < ItemCountTexts.Length; i++)
+            ItemCountTexts[i].text = useCount + " / " + count;
+    }
+
+    
+
+    public void DeleteEnd()
+    {
+        TouchBlock.SetActive(false);
+    }
+
+    bool SelectSaveBoxCheck()
+    {
+        TouchOutline to;
+
+        for (int i = 0; i < BoxManager.GoaledBoxes.Count; i++)
+        {
+            to = BoxManager.GoaledBoxes[i].GetComponent<TouchOutline>();
+
+            if (to != null && to.isOutlined)
+            {
+                SaveBox = BoxManager.GoaledBoxes[i];
+                return true;
+            }
+                
+        }
+
+        return false;
     }
 }

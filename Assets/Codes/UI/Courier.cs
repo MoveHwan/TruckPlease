@@ -14,8 +14,12 @@ public class Courier : MonoBehaviour
 
     void Start()
     {
+        gameObject.SetActive(false);
+
         if (SceneManager.GetActiveScene().name == "Lobby")
         {
+            gameObject.SetActive(true);
+
             animator.SetTrigger("Lean");
             animator.SetTrigger("Hello");
         }
