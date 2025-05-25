@@ -45,10 +45,10 @@ public class StageTruckCanvas : MonoBehaviour
     Sequence resultSeq;
 
     int starCount;
-    bool isResult;
+    bool isResult, isSetTotal;
 
 
-    private void Start()
+    void Start()
     {
         string stageNum = PlayerPrefs.GetInt("Stage", 1).ToString();
         int size = stageNum.Length;
@@ -65,12 +65,16 @@ public class StageTruckCanvas : MonoBehaviour
             StarImages[i].SetActive(false);
 
         ResultCanvas.gameObject.SetActive(false);
-
-        StartCoroutine(WaitReMainBoxInfo());
     }
 
-    private void Update()
+    void Update()
     {
+        if (!isSetTotal)
+        {
+            isSetTotal = true;
+            WaitReMainBoxInfo();
+        }
+
         if (!isResult && GameManager.gameEnd)
         {
             isResult = true;
@@ -78,17 +82,11 @@ public class StageTruckCanvas : MonoBehaviour
         }
     }
 
-    IEnumerator WaitReMainBoxInfo()
+    void WaitReMainBoxInfo()
     {
-        while (BoxManager.remainBoxCount == 0 && BoxManager.remainBoxWeight == 0)
-        {
-            yield return null;
-        }
+        TotalBoxText.text = "/" + (BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count);
+        TotalWeightText.text = "/"+ GameManager.thirdStar;
 
-        TotalBoxText.text = "/"+ BoxManager.remainBoxCount;
-        TotalWeightText.text = "/"+ BoxManager.remainBoxWeight;
-
-        yield break;
     }
 
 
@@ -119,7 +117,10 @@ public class StageTruckCanvas : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt(str, 0) != 0)
         {
-            RetryButton.SetActive(true);
+            if (starCount == 3)
+                RetryButton.SetActive(false);
+            else
+                RetryButton.SetActive(true);
         }
         else
         {

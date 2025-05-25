@@ -44,16 +44,20 @@ public class BottomPanel : MonoBehaviour
 
         nowBoxIdx = BoxManager.count;
 
+        GameObject sourceBox;
+
         // 3번째 남은 박스
         if (BoxManager.remainBoxCount >= 3)
         {
             if (!NextBox2.activeSelf) NextBox2.SetActive(true);
 
-            GameObject sourceBox = BoxManager.box[nowBoxIdx + 2];
+            sourceBox = BoxManager.box[nowBoxIdx + 2];
 
             NextBox2.GetComponent<MeshFilter>().sharedMesh = sourceBox.GetComponent<MeshFilter>().sharedMesh;
             NextBox2.GetComponent<MeshRenderer>().sharedMaterials = sourceBox.GetComponent<MeshRenderer>().sharedMaterials;
             NextBox2.GetComponent<Transform>().localScale = sourceBox.GetComponent<Transform>().localScale;
+
+            NextBox2.transform.localRotation = sourceBox.transform.localRotation;
 
             NextBox2WeightText.text = sourceBox.GetComponent<ThrowBox>().boxData.Weight.ToString();
         }
@@ -68,11 +72,13 @@ public class BottomPanel : MonoBehaviour
         {
             if (!NextBox1.activeSelf) NextBox1.SetActive(true);
 
-            GameObject sourceBox = BoxManager.box[nowBoxIdx + 1];
+            sourceBox = BoxManager.box[nowBoxIdx + 1];
 
             NextBox1.GetComponent<MeshFilter>().sharedMesh = sourceBox.GetComponent<MeshFilter>().sharedMesh;
             NextBox1.GetComponent<MeshRenderer>().sharedMaterials = sourceBox.GetComponent<MeshRenderer>().sharedMaterials;
             NextBox1.GetComponent<Transform>().localScale = sourceBox.GetComponent<Transform>().localScale;
+
+            NextBox1.transform.localRotation = sourceBox.transform.localRotation;
 
             NextBox1WeightText.text = sourceBox.GetComponent<ThrowBox>().boxData.Weight.ToString();
         }
