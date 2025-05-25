@@ -48,7 +48,7 @@ public class BoxManager : MonoBehaviour
 
     void Update()
     {
-        boxCountUi.text = remainBoxCount.ToString();
+        //boxCountUi.text = remainBoxCount.ToString();
         weightUi.text = remainBoxWeight.ToString();
         inWeightUi.text = inBoxWeight.ToString();
     }
