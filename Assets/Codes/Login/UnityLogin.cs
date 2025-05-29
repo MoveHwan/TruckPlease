@@ -15,7 +15,7 @@ public class UnityLogin : MonoBehaviour
 {
     string Token;
     public string Error;
-    string rankingId = "SoccerRushRanking";
+    string rankingId = "StageClear";
     public TextMeshProUGUI checkText;
     public LoadingLogin loadingLogin;
 
@@ -27,13 +27,6 @@ public class UnityLogin : MonoBehaviour
     // 인터넷 체크 후 통과 
     async Task TryInitializeUnityServices()
     {
-        while (InternetConnect()) // 인터넷이 연결될 때까지 대기
-        {
-            ShowInternetMessage();
-            await Task.Delay(2000); // 3초 후 다시 체크
-        }
-        checkText.gameObject.SetActive(false);
-
         await InitializeUnityServices();
         InitializeGooglePlayGames(); // Google Play Games 활성화
     }
@@ -149,7 +142,7 @@ public class UnityLogin : MonoBehaviour
             .GetPlayerScoreAsync(leaderboardId);
         Debug.Log(JsonConvert.SerializeObject(scoreResponse));
         int myScore = (int)scoreResponse.Score;
-        PlayerPrefs.SetInt("BestScore", myScore);
+        //PlayerPrefs.SetInt("stage", myScore);
         PlayerPrefs.SetInt("first", 1);
         PlayerPrefs.Save();
     }

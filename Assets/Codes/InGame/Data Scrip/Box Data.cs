@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Box", menuName = "Scriptable Object/Box Data")]
 public class BoxData : ScriptableObject
 {
-    public enum BoxType { basicV, longV, bigV, tallV }
+    public enum BoxType { basicV, longV, bigV, tallV ,smallV}
 
     public BoxType boxType;
 
@@ -23,6 +23,9 @@ public class BoxData : ScriptableObject
                     return 3f;
                 case BoxType.tallV:
                     return 4f;
+                case BoxType.smallV:
+                    return 0.5f;
+
 
                 default:
                     return 1.0f;
@@ -44,6 +47,9 @@ public class BoxData : ScriptableObject
                     return 2f;
                 case BoxType.tallV:
                     return 2.5f;
+                case BoxType.smallV:
+                    return 0.5f;
+
 
                 default:
                     return 1.0f;
@@ -58,13 +64,16 @@ public class BoxData : ScriptableObject
             switch (boxType)
             {
                 case BoxType.basicV:
-                    return 12f;
-                case BoxType.longV:
                     return 15f;
-                case BoxType.bigV:
+                case BoxType.longV:
                     return 18f;
+                case BoxType.bigV:
+                    return 22f;
                 case BoxType.tallV:
-                    return 20f;
+                    return 25f;
+                case BoxType.smallV:
+                    return 10f;
+
 
                 default:
                     return 10f;

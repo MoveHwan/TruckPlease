@@ -29,6 +29,8 @@ public class ThrowBox : MonoBehaviour
     private float screenHeight;
     private float screenWidth;
 
+    public bool canWind;        // 바람 영향 받아도되는지
+
     void Awake()
     {
         rotationBox = GetComponent<RotationBox>();
@@ -143,6 +145,12 @@ public class ThrowBox : MonoBehaviour
         if (throwDone)
             return;
         BoxManager.Instance.boxReady = false;
+        canWind = true;
+
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.throwBox);
+        }
 
         dragStartPos = ThrowTouchPanel.Instance.dragStartPos;
         dragEndPos = ThrowTouchPanel.Instance.dragEndPos;
@@ -157,6 +165,8 @@ public class ThrowBox : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
             rb.mass = rbWeight;
+            WindEffect wind = rb.GetComponent<WindEffect>();
+            wind.rb = rb;
         }
 
         // 홀드 시간으로 높이 정하기
@@ -167,11 +177,13 @@ public class ThrowBox : MonoBehaviour
         //float mappedDuration = Mathf.Lerp(1f, 3f, (clampedDuration - 0.5f) / (3f - 0.5f));
         
         // 홀드 시간 슬라이더로 높이 정하기
-        float mappedDuration = Mathf.Lerp(0.2f, 3f, ThrowTouchPanel.Instance.throwHeightSli.value);
+        float mappedDuration = Mathf.Lerp(0.2f, 2f, ThrowTouchPanel.Instance.throwHeightSli.value);
         Debug.Log("mappedDuration : "+ mappedDuration);
+
         // 1. 드래그 거리 정규화 (해상도 기준 비율)
         float normalizedDragY = dragVector.y / ThrowTouchPanel.Instance.height;
         Debug.Log(ThrowTouchPanel.Instance.height);
+
         // 3. 힘 계산: 정규화된 드래그 × 보정값
         float throwForce = normalizedDragY;
         throwForce = Mathf.Lerp(0.3f, 1f, throwForce);
@@ -240,4 +252,26 @@ public class ThrowBox : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(touchAreaUI, screenPos, null);
     }
 
+    public void TutoThrow(Vector3 strength)
+    {
+        if (throwDone)
+            return;
+        BoxManager.Instance.boxReady = false;
+        canWind = true;
+
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+            rb.mass = rbWeight;
+            WindEffect wind = rb.GetComponent<WindEffect>();
+            wind.rb = rb;
+        }
+
+        // 4. 힘 적용
+        rb.AddForce(strength, ForceMode.Impulse);
+        dragStarted = false;
+
+        ThrowFinish();
+
+    }
 }

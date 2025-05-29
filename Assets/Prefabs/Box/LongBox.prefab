@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 344051413755825226}
   - component: {fileID: 6666383870189769126}
   - component: {fileID: -1396322053704008543}
+  - component: {fileID: 4247788659438503903}
+  - component: {fileID: -4587616580455344213}
   m_Layer: 10
   m_Name: LongBox
   m_TagString: Box
@@ -127,6 +129,7 @@ MonoBehaviour:
   throwHeightSli: {fileID: 0}
   forceMultiplier: 0
   zDirection: 1
+  canWind: 0
 --- !u!114 &6666383870189769126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,10 +156,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOutlined: 0
-  outlineMat: {fileID: 2100000, guid: bb4ae62d0743227499517ea1c202b7fa, type: 2}
+  outlineMat: {fileID: 2100000, guid: e77d83591d02c15488e05555f5f21738, type: 2}
   targetLayer:
     serializedVersion: 2
     m_Bits: 2
+--- !u!114 &4247788659438503903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906029403394023033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00937f798547d544ba8f453234e6c50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+--- !u!114 &-4587616580455344213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906029403394023033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4988ace4224683448bdc75b64ff92b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 0}
 --- !u!1001 &8149410140153945977
 PrefabInstance:
   m_ObjectHideFlags: 0

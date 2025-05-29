@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24a5b41a2f1e484a84410fb8369cdb5, type: 3}
+  m_Name: 3-Stage4
+  m_EditorClassIdentifier: 
+  truck: {fileID: 4896329237258397798, guid: cbd1ba6b10fdf6f45ac83872743cef74, type: 3}
+  stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
+    type: 3}
+  stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
+    type: 3}
+  stageObstacle: {fileID: 0}
+  boxes:
+  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
+  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
+  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
+  firstStar: 0.5
+  secondStar: 1
+  thirdStar: 1.5
+  useWind: 1
+  random: 0
+  windType: 2
+  windSpeed: 2

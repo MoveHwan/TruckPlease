@@ -5,6 +5,7 @@ using GoogleMobileAds.Api;
 
 public class GoogleAd : MonoBehaviour
 {
+    public bool buyAdDel;
 
     // Start is called before the first frame update
     void Start()
@@ -13,9 +14,12 @@ public class GoogleAd : MonoBehaviour
         {
             Debug.Log("AdMob Initialized");
 
-            LoadInterstitialAd();
-            LoadRewardedAd();
-            LoadBannerAd();
+            if (!buyAdDel)
+            {
+                LoadInterstitialAd();
+                LoadRewardedAd();
+                LoadBannerAd();
+            }
         });
     }
 
@@ -152,6 +156,7 @@ public class GoogleAd : MonoBehaviour
         {
             rewardedAd.Show((Reward reward) =>
             {
+                // ø©±‚º≠ ∫∏ªÛ¡‡æﬂµ 
             });
 
         }

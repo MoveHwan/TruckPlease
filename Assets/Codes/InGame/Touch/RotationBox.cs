@@ -8,6 +8,7 @@ public class RotationBox : MonoBehaviour
     private Vector2 lastTouchPosition; // Vector2·Î ¼öÁ¤
     private bool isDragging = false;
     public bool throwDone;
+    public bool vfxDone;
 
     void Update()
     {

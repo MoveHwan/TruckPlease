@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
@@ -15,6 +16,7 @@ public class Tutorial : MonoBehaviour
     public GameObject throwPowerImage;
     public GameObject throwHeightImage;
 
+    public Image tutoPanel;
 
     void Start()
     {
@@ -52,19 +54,55 @@ public class Tutorial : MonoBehaviour
         {
             images[currentIndex - 1].SetActive(false);
         }
-        if (currentIndex >= images.Length)
-        {
-            GameManager.Instance.gamePause = false;
 
-            transform.gameObject.SetActive(false);
-        }
         // 현재 인덱스가 범위 안에 있다면 이미지 보여주기
-        if (currentIndex < images.Length)
+        if (currentIndex <= 1)
         {
             images[currentIndex].SetActive(true);
             yield return new WaitForSeconds(3f); // 2초 대기
             canProceed = true;
             currentIndex++; // 다음 인덱스로 이동
+        }
+        else if (currentIndex == 2)
+        {
+            Color tuto = tutoPanel.color;
+            tuto.a = 0f;
+            tutoPanel.color = tuto;
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 2f, 2f));
+            yield return new WaitForSeconds(2f); // 2초 대기
+            tuto.a = 0.6f;
+            tutoPanel.color = tuto;
+
+            images[2].SetActive(true);
+            canProceed = true;
+            currentIndex++; // 다음 인덱스로 이동
+        }
+        else if (currentIndex == 3) 
+        {
+            Color tuto = tutoPanel.color;
+            tuto.a = 0f;
+            tutoPanel.color = tuto;
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 5f, 5f));
+            yield return new WaitForSeconds(2f); // 2초 대기
+            tuto.a = 0.6f;
+            tutoPanel.color = tuto;
+
+            images[3].SetActive(true);
+            canProceed = true;
+            currentIndex++; // 다음 인덱스로 이동
+
+        }
+        else if (currentIndex == 4)
+        {
+            Color tuto = tutoPanel.color;
+            tuto.a = 0f;
+            tutoPanel.color = tuto;
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 12f, 7f));
+            yield return new WaitForSeconds(3f); // 2초 대기
+            PlayerPrefs.SetInt("Tutorial", 1);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("InGame");
+
         }
     }
     bool IsClickOrTouch()

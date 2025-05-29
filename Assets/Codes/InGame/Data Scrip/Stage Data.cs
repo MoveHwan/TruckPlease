@@ -17,4 +17,10 @@ public class StageData : ScriptableObject
     public float firstStar;
     public float secondStar;
     public float thirdStar;
+
+    [Header("Wind Settings")]
+    public bool useWind = false;  // 바람 설정 사용할지 여부
+    public bool random = false;     // 랜덤 바람일지
+    public WindManager.WindType windType;
+    public WindManager.WindSpeed windSpeed;
 }

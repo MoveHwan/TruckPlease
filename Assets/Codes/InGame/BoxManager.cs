@@ -221,9 +221,10 @@ public class BoxManager : MonoBehaviour
         {
             if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Count && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar) // 조건이 깨졌는지 다시 확인
             {
-                gameEndCountUi.gameObject.SetActive(false);
                 gameEndBox = false;
                 GameManager.Instance.gamePause = false;
+                gameEndCountUi.transform.parent.gameObject.SetActive(false);
+
                 warnEnd = false;
                 yield break;
             }

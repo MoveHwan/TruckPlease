@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.Playables; // 네임스페이스
+using GooglePlayGames.BasicApi;
+using GooglePlayGames;
+using System.Net.Mime;
+using UnityEngine.UI;
+using Newtonsoft.Json;
+using Unity.Services.Leaderboards;
+using DG.Tweening;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,6 +45,11 @@ public class GameManager : MonoBehaviour
     public GameObject tuto;
     public bool tutoNeed;
 
+    string unityLeaderboard = "StageClear";
+    string unityLeaderboardWeight = "TotalWeight";
+
+    public GoogleAd googleAd;
+
     void Awake()
     {
         Instance = this;
@@ -50,7 +63,7 @@ public class GameManager : MonoBehaviour
 
 #if UNITY_EDITOR || UNITY_STANDALONE
 #elif UNITY_ANDROID || UNITY_IOS
-                if (!tutoNeed)
+                if (PlayerPrefs.GetInt("Tutorial") == 0)
         {
             tuto.SetActive(true);
             tutoNeed = true;
@@ -89,6 +102,21 @@ public class GameManager : MonoBehaviour
         BoxManager.Instance.CalcBoxCount();
 
         truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
+
+        // 바람 관련 설정
+        if (stageData[stage - 1].useWind && !stageData[stage - 1].random)
+        {
+            WindManager.instance.SetFixedWind(stageData[stage - 1].windType, stageData[stage - 1].windSpeed);
+        }       
+        else if(stageData[stage - 1].random)
+        {
+            WindManager.instance.RandomWind();
+        }
+        else
+        {
+            // 바람을 사용하지 않음 → WindManager에 비활성화 지시
+            WindManager.instance.DisableWind();
+        }
     }
 
     public void GameStart()
@@ -157,6 +185,10 @@ public class GameManager : MonoBehaviour
         gameEnd = true;
         truckAni.SetTrigger("GameEnd");
         playableDirector.Play();
+        if (BoxManager.Instance.inBoxWeight >= firstStar)
+        {
+            StageSave();
+        }
     }
 
     public void GoLobby()
@@ -168,4 +200,54 @@ public class GameManager : MonoBehaviour
     {
         playableDirector.Play();
     }
+
+    void StageSave()
+    {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+        }
+        else
+        {
+            AddScore(unityLeaderboard, stage);
+            AddWeight(unityLeaderboard);
+        }
+    }
+
+    // 유니티 점수 전달
+    public async void AddScore(string leaderboardId, int score)
+    {
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(leaderboardId, score);
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
+    public async void AddWeight(string leaderboardId)
+    {
+        float totalWeight = PlayerPrefs.GetFloat("TotalWeight");
+        totalWeight += BoxManager.Instance.inBoxWeight;
+        PlayerPrefs.SetFloat("TotalWeight", totalWeight);
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(unityLeaderboardWeight, totalWeight);
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
+    public void StackIntAdClear()
+    {
+        if (BoxManager.Instance.inBoxWeight >= firstStar)
+        {
+            StackIntAd.instance.stack++;
+            if(StackIntAd.instance.stack >= 3)
+            {
+                StackIntAd.instance.stack = 0;
+                googleAd.ShowInterstitialAd();
+            }
+        }
+    }
+
+    // 아이템 주는 광고 - 앙환씨가 수정 부탁
+    public void ItemAd()
+    {
+        googleAd.ShowRewardedAd();
+    }
+
 }

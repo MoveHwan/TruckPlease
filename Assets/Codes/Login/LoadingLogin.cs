@@ -71,8 +71,8 @@ public class LoadingLogin : MonoBehaviour
             string id = PlayGamesPlatform.Instance.GetUserId();
             string ImgUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
 
-            //UnityConnect();
-            StartCoroutine(WaitLoadingSecond());
+            UnityConnect();
+            //StartCoroutine(WaitLoadingSecond());
 
         }
         else
@@ -110,7 +110,14 @@ public class LoadingLogin : MonoBehaviour
             loadingSlider.value = Mathf.Lerp(0, 1, elapsed / duration);
             yield return null;
         }
-        SceneManager.LoadScene("Lobby");
+        if (PlayerPrefs.GetInt("Tutorial") == 0)
+        {
+            SceneManager.LoadScene("InGame");
+        }
+        else
+        {
+            SceneManager.LoadScene("Lobby");
+        }
     }
 
     void SetRandomNickName()

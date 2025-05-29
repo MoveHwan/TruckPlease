@@ -126,6 +126,7 @@ MonoBehaviour:
   throwHeightSli: {fileID: 0}
   forceMultiplier: 0
   zDirection: 1
+  canWind: 0
 --- !u!114 &2093831869167378172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDone: 1
+  vfxDone: 1
 --- !u!54 &1306528751235559362
 Rigidbody:
   m_ObjectHideFlags: 0
