@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,8 @@ public class WeightSlider : MonoBehaviour
 
     public Slider slider;
     public TextMeshProUGUI TotalWeightText;
+    public GameObject Count;
+    public Image Fill;
 
     public StarByWeight[] Stars;
     
@@ -19,11 +22,25 @@ public class WeightSlider : MonoBehaviour
     [SerializeField] int targetIdx;
     [SerializeField] float targetValue;
 
+    Sequence seq;
+    Color originalColor;
+
     bool setEnd;
 
     void Awake()
     {
         instance = this;
+
+        originalColor = Fill.color;
+
+        seq = DOTween.Sequence();
+        seq.Pause();
+
+        seq.Append(Fill.DOColor(Color.red, 0.8f));
+        seq.AppendInterval(0.5f);
+        seq.Append(Fill.DOColor(originalColor, 0.8f));
+        seq.AppendInterval(0.8f);
+        seq.SetLoops(-1);
     }
 
     void Start()
@@ -41,7 +58,16 @@ public class WeightSlider : MonoBehaviour
 
             slider.value = Mathf.MoveTowards(slider.value, targetValue, Time.deltaTime * 0.8f);
         }
-      
+
+        if (Count.activeSelf)
+            seq.Play();
+        else
+        {
+            seq.Pause();
+            Fill.color = originalColor;
+        }
+
+
     }
 
     // 다음 슬라이더 값 추출 함수
