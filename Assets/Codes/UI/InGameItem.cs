@@ -56,6 +56,15 @@ public class InGameItem : MonoBehaviour
 
         SelectedItem.SetActive(false);
         OtherBlock.gameObject.SetActive(false);
+
+        if (currentItems.ToString() == "Item_Save")
+        {
+            if (PlayerPrefs.GetInt("Stage", 1) > 9)
+                Lock.SetActive(false);
+            else
+                Lock.SetActive(true);
+        }
+        
     }
 
     void Update()

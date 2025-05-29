@@ -16,7 +16,6 @@ public class Courier : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Lobby")
         {
-            animator.SetTrigger("Lean");
             animator.SetTrigger("Hello");
         }
     }

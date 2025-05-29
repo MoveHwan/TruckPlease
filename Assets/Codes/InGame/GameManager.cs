@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         stage = stageSelect;
 #elif UNITY_ANDROID || UNITY_IOS
         Debug.Log("모바일(Android 또는 iOS)에서 실행됨");
-        stage = PlayerPrefs.GetInt("Stage");
+        stage = PlayerPrefs.GetInt("Stage", 1);
 #endif
     }
 

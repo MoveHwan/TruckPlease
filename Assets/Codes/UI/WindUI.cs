@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class WindUI : MonoBehaviour
 {
+    public GameObject WindGroupObj;
     public RectTransform Arrow;
     public TextMeshProUGUI WindStrengthText;
 
-    Vector3[] arrowDirs = { new(0, 0, 50), new(-30, 0, 0), new(0, 0, -50) };
+    WindManager WindManager;
+
+    Vector3[] arrowDirs = { new(-25, 0, 50), new(-35, 0, 0), new(-25, 0, -50) };
 
     Vector3 targetVec;
 
@@ -17,15 +20,17 @@ public class WindUI : MonoBehaviour
 
     void Start()
     {
+        WindManager = WindManager.instance;
+
         Arrow.rotation = Quaternion.Euler(arrowDirs[1]);
     }
 
     
     void Update()
     {
-        /*if (WindManager.Instance.IsWindEnabled)
+        if (WindManager.IsWindEnabled)
         {
-            if (!gameObject.activeSelf) gameObject.SetActive(true);
+            if (!WindGroupObj.activeSelf) WindGroupObj.SetActive(true);
 
             if (int.Parse(WindStrengthText.text) != windStrength)
             {
@@ -36,23 +41,25 @@ public class WindUI : MonoBehaviour
         }
         else
         {
-            if (gameObject.activeSelf) gameObject.SetActive(false);
-        }*/
+            if (WindGroupObj.activeSelf) WindGroupObj.SetActive(false);
+        }
 
     }
 
     void WindDirSet_Update()
     {
+        idx = (int)WindManager.windType;
+        windStrength = (int)WindManager.windSpeed;
+
         Vector3 adjustedEuler = new Vector3(
            Arrow.eulerAngles.x > 180f ? Arrow.eulerAngles.x - 360f : Arrow.eulerAngles.x,
            Arrow.eulerAngles.y > 180f ? Arrow.eulerAngles.y - 360f : Arrow.eulerAngles.y,
            Arrow.eulerAngles.z > 180f ? Arrow.eulerAngles.z - 360f : Arrow.eulerAngles.z
-       );
+        );
 
         if (arrowDirs[idx] == adjustedEuler)
             return;
         
-
-        Arrow.eulerAngles = Vector3.MoveTowards(adjustedEuler, arrowDirs[idx], Time.deltaTime * 2);
+        Arrow.eulerAngles = Vector3.MoveTowards(adjustedEuler, arrowDirs[idx], Time.deltaTime * 90);
     }
 }

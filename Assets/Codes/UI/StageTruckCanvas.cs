@@ -56,10 +56,11 @@ public class StageTruckCanvas : MonoBehaviour
     void Start()
     {
         stageNum = PlayerPrefs.GetInt("Stage", 1);
-        /*int size = stageNum.Length;
 
-        for (int i = 0; i < 3 - size; i++)
-            stageNum = "0" + stageNum;*/
+        string str = stageNum.ToString();
+
+        for (int i = 0; i < 3 - str.Length; i++)
+            str = "0" + stageNum;
 
         if (stageNum < 10)
         {
@@ -78,7 +79,7 @@ public class StageTruckCanvas : MonoBehaviour
         stageNum = (int) stageNum;  
 
         PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
-        LicensePlateText.text = "CH" + chapter + " - 00" + stageNum;
+        LicensePlateText.text = "CH" + chapter + " - " + str;
 
         BoxManager = BoxManager.Instance;
         GameManager = GameManager.Instance;
@@ -179,7 +180,12 @@ public class StageTruckCanvas : MonoBehaviour
         ShowStars();
 
         LeftMoveAndNumbering(TotalBox, BoxCountText, BoxManager.GoaledBoxes.Count);
-        LeftMoveAndNumbering(TotalWeight, BoxWeightText, (int)BoxManager.inBoxWeight);
+
+        if ((int)BoxManager.inBoxWeight != BoxManager.inBoxWeight)
+            LeftMoveAndNumbering(TotalWeight, BoxWeightText, BoxManager.inBoxWeight);
+        else
+            LeftMoveAndNumbering(TotalWeight, BoxWeightText, (int)BoxManager.inBoxWeight);
+
         LeftMoveAndNumbering(Reward, CoinText, rewardCoin);
 
         resultSeq.AppendInterval(0.4f);
@@ -241,7 +247,8 @@ public class StageTruckCanvas : MonoBehaviour
 
         // 이동 + 알파 동시에 트윈
         resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
-            .Join(canvasGroup.DOFade(1f, 0.3f));
+            .Join(canvasGroup.DOFade(1f, 0.3f))
+            .AppendInterval(0.05f);
 
         if (targetValue != 0)
         {
@@ -251,6 +258,34 @@ public class StageTruckCanvas : MonoBehaviour
             }));
         }
       
+    }
+    void LeftMoveAndNumbering(RectTransform targetUI, TextMeshProUGUI TMP, float targetValue)
+    {
+        // 원래 위치 저장
+        Vector2 originalPos = targetUI.anchoredPosition;
+
+        // 캔버스 그룹 없으면 추가
+        CanvasGroup canvasGroup = targetUI.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = targetUI.gameObject.AddComponent<CanvasGroup>();
+
+        // 시작 상태: 오른쪽 밖 + 투명
+        targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
+        canvasGroup.alpha = 0;
+
+        // 이동 + 알파 동시에 트윈
+        resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
+            .Join(canvasGroup.DOFade(1f, 0.3f));
+
+        if (targetValue != 0)
+        {
+            resultSeq.Append(DOVirtual.Float(0f, targetValue, 0.2f, value =>
+            {
+                TMP.text = (Mathf.Round(value * 100f) / 100f).ToString();
+            }));
+        }
+
     }
 
     void Stamp()

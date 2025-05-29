@@ -11,7 +11,7 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-        int topRatingStage = PlayerPrefs.GetInt("TopRatingStage", 0);
+        float topRatingStage = PlayerPrefs.GetFloat("TopRatingStage", 0);
 
         for (int i = 0; i < Content.childCount; i++)
         {
@@ -21,7 +21,7 @@ public class StageManager : MonoBehaviour
             {
                 stageCount += 1;
 
-                StageGroup.GetChild(j).GetComponent<StageUI>().SetStage(stageCount, topRatingStage);
+                StageGroup.GetChild(j).GetComponent<StageUI>().SetStage(stageCount, 33);
             }
 
         }
@@ -29,4 +29,8 @@ public class StageManager : MonoBehaviour
 
     }
 
+    /*public void OpenChapter(int )
+    {
+
+    }*/
 }
