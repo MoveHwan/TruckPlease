@@ -11,6 +11,7 @@ public class StageTruckCanvas : MonoBehaviour
     [Header("[ GameOgject ]")]
     public GameObject InGamePanel;
     public GameObject RetryButton;
+    public GameObject ADButton;
     public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject[] StarImages; // 3개의 별 이미지
@@ -21,6 +22,7 @@ public class StageTruckCanvas : MonoBehaviour
     public RectTransform Reward;
     public RectTransform Buttons;
     public RectTransform StampImage;
+    public RectTransform LobbyButton;
 
     [Header("[ Text ]")]
     public TextMeshProUGUI PauseStageText;
@@ -38,6 +40,7 @@ public class StageTruckCanvas : MonoBehaviour
     [Header("[ Other ]")]
     public CanvasGroup ResultCanvas;
     public Courier Courier;
+    public ItemUnlock ItemUnlock;
 
 
     BoxManager BoxManager;
@@ -45,21 +48,34 @@ public class StageTruckCanvas : MonoBehaviour
 
     Sequence resultSeq;
 
-    int starCount;
+    int starCount, rewardCoin;
+    float stageNum, chapter;
     bool isResult, isSetTotal;
 
 
     void Start()
     {
-        int stageNum = PlayerPrefs.GetInt("Stage", 1);
-
+        stageNum = PlayerPrefs.GetInt("Stage", 1);
         /*int size = stageNum.Length;
 
         for (int i = 0; i < 3 - size; i++)
             stageNum = "0" + stageNum;*/
 
-        int chapter = (stageNum - 1) / 9 + 1;
-        stageNum = stageNum % 9 == 0 ? 9 : stageNum % 9;
+        if (stageNum < 10)
+        {
+            chapter = (stageNum - 1) / 9 + 1;
+            stageNum = stageNum % 9 == 0 ? 9 : stageNum % 9;
+        }
+        else
+        {
+            stageNum -= 9;
+
+            chapter = (stageNum - 1) / 12 + 2;
+            stageNum = stageNum % 12 == 0 ? 12 : stageNum % 12;
+        }
+        
+        chapter = (int) chapter;
+        stageNum = (int) stageNum;  
 
         PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
         LicensePlateText.text = "CH" + chapter + " - 00" + stageNum;
@@ -115,7 +131,11 @@ public class StageTruckCanvas : MonoBehaviour
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
+        float nowStage = chapter + stageNum / 100f;
 
+        rewardCoin = (int)BoxManager.inBoxWeight * 100;
+
+        // Retry버튼 활성화 여부
         if (starCount == 0)
         {
             StampImage.GetComponent<Image>().sprite = Fail;
@@ -133,11 +153,23 @@ public class StageTruckCanvas : MonoBehaviour
             RetryButton.SetActive(false);
         }
 
+        // 다음 스테이지가 새로운 챕터일시 Retry버튼 활성화
+        if (stageNum == 9 && starCount > 0)
+        {
+            RetryButton.SetActive(true);
+        }
+        else if (stageNum == 12 && starCount > 0)
+        {
+            RetryButton.SetActive(true);
+
+        }
+
+
         if (PlayerPrefs.GetInt(str, 0) < starCount)
             PlayerPrefs.SetInt(str, starCount);
 
-        if (starCount > 0 && PlayerPrefs.GetInt("TopRatingStage", 0) < PlayerPrefs.GetInt("Stage"))
-            PlayerPrefs.SetInt("TopRatingStage", PlayerPrefs.GetInt("Stage"));
+        if (starCount > 0 && PlayerPrefs.GetFloat("TopRatingStage", 0) < nowStage)
+            PlayerPrefs.SetFloat("TopRatingStage", nowStage);
 
 
         resultSeq = DOTween.Sequence();
@@ -148,7 +180,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         LeftMoveAndNumbering(TotalBox, BoxCountText, BoxManager.GoaledBoxes.Count);
         LeftMoveAndNumbering(TotalWeight, BoxWeightText, (int)BoxManager.inBoxWeight);
-        LeftMoveAndNumbering(Reward, CoinText, (int)BoxManager.inBoxWeight * 100);
+        LeftMoveAndNumbering(Reward, CoinText, rewardCoin);
 
         resultSeq.AppendInterval(0.4f);
 
@@ -156,6 +188,9 @@ public class StageTruckCanvas : MonoBehaviour
 
         ButtonsUpMove();
 
+        LeftMoveAndNumbering(LobbyButton, null, 0);
+
+        resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
     }
 
     void ShowResultUI()
@@ -206,11 +241,16 @@ public class StageTruckCanvas : MonoBehaviour
 
         // 이동 + 알파 동시에 트윈
         resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
-            .Join(canvasGroup.DOFade(1f, 0.3f))
-            .Append(DOVirtual.Int(0, targetValue, 0.2f, value =>
+            .Join(canvasGroup.DOFade(1f, 0.3f));
+
+        if (targetValue != 0)
+        {
+            resultSeq.Append(DOVirtual.Int(0, targetValue, 0.2f, value =>
             {
                 TMP.text = value.ToString();
             }));
+        }
+      
     }
 
     void Stamp()
@@ -261,6 +301,16 @@ public class StageTruckCanvas : MonoBehaviour
     }
 
 
+
+    public void AdReward()
+    {
+        ADButton.SetActive(false);
+
+        resultSeq.Append(DOVirtual.Int(rewardCoin, rewardCoin * 4, 0.2f, value =>
+        {
+            CoinText.text = value.ToString();
+        }));
+    }
 
 
 

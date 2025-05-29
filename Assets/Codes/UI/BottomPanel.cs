@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,6 +9,8 @@ public class BottomPanel : MonoBehaviour
     BoxManager BoxManager;
 
     [SerializeField] int nowBoxIdx;
+
+    public GameObject Count;
     
     [Header("[ Cargo ]")]
     public TextMeshProUGUI CargoBoxCountText;
@@ -20,12 +23,27 @@ public class BottomPanel : MonoBehaviour
     public TextMeshProUGUI NextBox1WeightText;
     public TextMeshProUGUI NextBox2WeightText;
 
+    Sequence seq;
+    Color originalColor;
 
     void Start()
     {
         BoxManager = BoxManager.Instance;
 
         nowBoxIdx = -1;
+
+        originalColor = CargoBoxCountText.color;
+
+        seq = DOTween.Sequence();
+        seq.Pause();
+
+        seq.Append(CargoBoxCountText.DOColor(Color.red, 0.8f));
+        seq.Join(CargoBoxWeightText.DOColor(Color.red, 0.8f));
+        seq.AppendInterval(0.5f);
+        seq.Append(CargoBoxCountText.DOColor(originalColor, 0.8f));
+        seq.Join(CargoBoxWeightText.DOColor(originalColor, 0.8f));
+        seq.AppendInterval(0.8f);
+        seq.SetLoops(-1);
     }
 
     
@@ -35,6 +53,15 @@ public class BottomPanel : MonoBehaviour
         CargoBoxWeightText.text = BoxManager.remainBoxWeight.ToString();
 
         SetCargoBoxUI_Update();
+
+        if (Count.activeSelf) 
+            seq.Play();
+        else
+        {
+            seq.Pause();
+            CargoBoxCountText.color = originalColor;
+            CargoBoxWeightText.color = originalColor;
+        }
     }
 
 

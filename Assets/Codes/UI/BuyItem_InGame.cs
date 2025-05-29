@@ -42,6 +42,7 @@ public class BuyItem_InGame : MonoBehaviour
             CancelBtns[i].onClick.AddListener(() => item.ItemCancel());
         }
 
+        GameManager.Instance.GamePause();
 
         gameObject.SetActive(true);
     }
@@ -55,12 +56,21 @@ public class BuyItem_InGame : MonoBehaviour
 
         item.SetText();
 
+        GameManager.Instance.GameResume();
+
         gameObject.SetActive(false);
     }
 
     // 아이템 광고 보상
     public void AD_Gift()
     {
+        PlayerPrefs.SetInt(item.currentItems.ToString(), PlayerPrefs.GetInt(item.currentItems.ToString(), 0) + 3);
+    }
 
+    public void ClosePopUp()
+    {
+        GameManager.Instance.GameResume();
+
+        gameObject.SetActive(false);
     }
 }
