@@ -29121,7 +29121,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1920}
+  m_SizeDelta: {x: 1080, y: 2340}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1155450899
 MonoBehaviour:
@@ -29136,7 +29136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 862960143}
-  rect: {x: 1080, y: 1920}
+  rect: {x: 1080, y: 2340}
   times: {x: 1, y: 1}
 --- !u!1 &1155983091
 GameObject:
@@ -29311,7 +29311,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 740594617}
   m_HandleRect: {fileID: 740594616}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 0.000000056514033
   m_Size: 0.33333334
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -52884,7 +52884,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1920}
+  m_SizeDelta: {x: 1080, y: 2340}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2134718099
 MonoBehaviour:
@@ -52899,7 +52899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 862960143}
-  rect: {x: 1080, y: 1920}
+  rect: {x: 1080, y: 2340}
   times: {x: 1, y: 1}
 --- !u!1 &2140523706
 GameObject:
@@ -53774,12 +53774,12 @@ PrefabInstance:
         type: 3}
       propertyPath: sfxClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: b49270b3e47c9ad4193615c58d143890, type: 3}
+      objectReference: {fileID: 8300000, guid: 85d5f5a62c9b2df4f8317def4cb9ffff, type: 3}
     - target: {fileID: 7035146154942172281, guid: 89ac7d046d9082a439939890307c91b5,
         type: 3}
       propertyPath: sfxClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 7b2cd752b2d5b554ca160d6321d81185, type: 3}
+      objectReference: {fileID: 8300000, guid: e83f26238eb734b41bb17a9cb772918a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -55399,7 +55399,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1920}
+  m_SizeDelta: {x: 1080, y: 2340}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &5233012058324586906
 MonoBehaviour:
@@ -55414,7 +55414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 862960143}
-  rect: {x: 1080, y: 1920}
+  rect: {x: 1080, y: 2340}
   times: {x: 1, y: 1}
 --- !u!1 &5233012058341927616
 GameObject:

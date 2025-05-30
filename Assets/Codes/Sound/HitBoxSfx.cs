@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitBoxSfx : MonoBehaviour
 {
     bool cantSfx;
-    int sfxCount = 0;
+    bool sfxCount;
 
     float sfxTerm;
     bool cantTerm;
@@ -20,17 +20,18 @@ public class HitBoxSfx : MonoBehaviour
         PlayHitSfx();
     }
 
+    // 한번만 소리나게 함
     void PlayHitSfx()
     {
-        if (AudioManager.instance != null && sfxCount <= 3 && !cantSfx && !cantTerm)
+        if (AudioManager.instance != null && !sfxCount && !cantSfx && !cantTerm)
         {
             cantTerm = true;
 
             Debug.Log("부딫히는 소리 나야됨 ");
-            StartCoroutine(OffSfx());
-            StartCoroutine(TermSfx());
+            //StartCoroutine(OffSfx());
+            //StartCoroutine(TermSfx());
             AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox);
-            sfxCount++;
+            sfxCount = true;
         }
     }
 

@@ -165,6 +165,10 @@ public class GameManager : MonoBehaviour
             timeCount -= Time.deltaTime;
             timeCountUI.text = Mathf.Ceil(timeCount).ToString();
         }
+        if (!gameEnd && timeCount < 0)
+        {
+            GameEnd();
+        }
     }
 
     public void GamePause()

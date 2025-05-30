@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6024353889514233674}
   - component: {fileID: -5644479238948685917}
   - component: {fileID: -230569776430354539}
+  - component: {fileID: 1844065297221493048}
   m_Layer: 10
   m_Name: TallBox
   m_TagString: Box
@@ -143,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDone: 0
+  vfxDone: 0
 --- !u!114 &6024353889514233674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 0}
+--- !u!114 &1844065297221493048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665115853370136558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8335d98e5f7fb774c85469c2d1f5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7111873454997517366
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8356210033109282244}
   - component: {fileID: 5778131686461738522}
   - component: {fileID: 3252748804734660689}
+  - component: {fileID: -4564986721298677676}
   m_Layer: 10
   m_Name: BigBox
   m_TagString: Box
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDone: 0
+  vfxDone: 0
 --- !u!65 &1314248847978585136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -186,6 +188,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 0}
+--- !u!114 &-4564986721298677676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189067268428545770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8335d98e5f7fb774c85469c2d1f5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5554644205486638071
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -213,7 +213,7 @@ public class BoxManager : MonoBehaviour
         else
         {
             warnEnd = true;
-            gameEndCount = 10f;
+            gameEndCount = 7f;
         }
         gameEndCountUi.transform.parent.gameObject.SetActive(true);
 

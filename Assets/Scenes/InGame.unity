@@ -4717,6 +4717,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8453157709781146197, guid: b1f7489b361dc2047b583dbe4aa1d013,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8453157709781146197, guid: b1f7489b361dc2047b583dbe4aa1d013,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8453157709781146197, guid: b1f7489b361dc2047b583dbe4aa1d013,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8531065795301758764, guid: b1f7489b361dc2047b583dbe4aa1d013,
         type: 3}
       propertyPath: m_Name
@@ -14141,7 +14156,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95d05cc9ffb62aa4d920c1d40f4e71a2, type: 2}
   - {fileID: 11400000, guid: 7738ab2a0e483364aa09aa23e334619f, type: 2}
   stage: 1
-  stageSelect: 25
+  stageSelect: 3
   stageTruck: {fileID: 0}
   stageWall: {fileID: 0}
   stageCheckBox: {fileID: 0}
