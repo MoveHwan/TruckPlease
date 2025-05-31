@@ -17,7 +17,7 @@ public class HitBoxSfx : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        PlayHitSfx();
+        //PlayHitSfx();
     }
 
     // 한번만 소리나게 함
