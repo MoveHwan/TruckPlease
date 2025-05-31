@@ -17,7 +17,7 @@ MonoBehaviour:
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
     type: 3}
-  stageObstacle: {fileID: 2159800801038167744, guid: 6dfe2ab5a7e4d8f4bad053ff2d0b431f,
+  stageObstacle: {fileID: 5944321182845632948, guid: 8a3e6bccde58d6d47a595d6625e682c2,
     type: 3}
   boxes:
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
@@ -32,3 +32,7 @@ MonoBehaviour:
   firstStar: 12
   secondStar: 14
   thirdStar: 16
+  useWind: 0
+  random: 0
+  windType: 0
+  windSpeed: 0
