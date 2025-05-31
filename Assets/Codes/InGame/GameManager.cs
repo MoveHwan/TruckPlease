@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour
         SetStageData();
         GameStart();
 
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayBGMIngame();
+        }
+
 #if UNITY_EDITOR || UNITY_STANDALONE
 #elif UNITY_ANDROID || UNITY_IOS
                 if (PlayerPrefs.GetInt("Tutorial") == 0)
