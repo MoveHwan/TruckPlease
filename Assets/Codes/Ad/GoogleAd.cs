@@ -5,8 +5,22 @@ using GoogleMobileAds.Api;
 
 public class GoogleAd : MonoBehaviour
 {
+    public static GoogleAd instance;
+
     public bool buyAdDel;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +32,8 @@ public class GoogleAd : MonoBehaviour
             {
                 LoadInterstitialAd();
                 LoadRewardedAd();
+                LoadRewardedAdHeart();
+                LoadRewardedAdCoin();
                 LoadBannerAd();
             }
         });
@@ -27,8 +43,11 @@ public class GoogleAd : MonoBehaviour
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
     private string interAdUnitId = "ca-app-pub-3940256099942544/1033173712";
-    private string rewardAdUnitId = "ca-app-pub-3940256099942544/5224354917";
     private string bannerAdUnitId = "ca-app-pub-3940256099942544/9214589741";
+    private string rewardAdItemUnitId = "ca-app-pub-3940256099942544/5224354917";
+    private string rewardAdHeartUnitId = "ca-app-pub-3940256099942544/5224354917";
+    private string rewardAdCoinUnitId = "ca-app-pub-3940256099942544/5224354917";
+
 #elif UNITY_IPHONE
   private string _adUnitId = "ca-app-pub-3940256099942544/4411468910";
 #else
@@ -36,7 +55,9 @@ public class GoogleAd : MonoBehaviour
 #endif
 
     private InterstitialAd _interstitialAd;
-    private RewardedAd rewardedAd;
+    private RewardedAd rewardedAdItem;
+    private RewardedAd rewardedAdHeart;
+    private RewardedAd rewardedAdCoin;
     private BannerView bannerView;
 
     /// <summary>
@@ -117,10 +138,10 @@ public class GoogleAd : MonoBehaviour
     public void LoadRewardedAd()
     {
         // Clean up the old ad before loading a new one.
-        if (rewardedAd != null)
+        if (rewardedAdItem != null)
         {
-            rewardedAd.Destroy();
-            rewardedAd = null;
+            rewardedAdItem.Destroy();
+            rewardedAdItem = null;
         }
 
         Debug.Log("Loading the rewarded ad.");
@@ -129,7 +150,7 @@ public class GoogleAd : MonoBehaviour
         var adRequest = new AdRequest();
 
         // send the request to load the ad.
-        RewardedAd.Load(rewardAdUnitId, adRequest,
+        RewardedAd.Load(rewardAdItemUnitId, adRequest,
             (RewardedAd ad, LoadAdError error) =>
             {
                 // if error is not null, the load request failed.
@@ -143,7 +164,7 @@ public class GoogleAd : MonoBehaviour
                 Debug.Log("Rewarded ad loaded with response : "
                           + ad.GetResponseInfo());
 
-                rewardedAd = ad;
+                rewardedAdItem = ad;
             });
     }
 
@@ -152,9 +173,9 @@ public class GoogleAd : MonoBehaviour
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
-        if (rewardedAd != null && rewardedAd.CanShowAd())
+        if (rewardedAdItem != null && rewardedAdItem.CanShowAd())
         {
-            rewardedAd.Show((Reward reward) =>
+            rewardedAdItem.Show((Reward reward) =>
             {
                 // ¿©±â¼­ º¸»óÁà¾ßµÊ
             });
@@ -163,8 +184,6 @@ public class GoogleAd : MonoBehaviour
         else
         {
         }
-
-
     }
 
     private void RegisterReloadHandler(RewardedAd ad)
@@ -213,4 +232,149 @@ public class GoogleAd : MonoBehaviour
     {
         bannerView?.Hide();
     }
+
+    public void LoadRewardedAdHeart()
+    {
+        // Clean up the old ad before loading a new one.
+        if (rewardedAdHeart != null)
+        {
+            rewardedAdHeart.Destroy();
+            rewardedAdHeart = null;
+        }
+
+        Debug.Log("Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(rewardAdHeartUnitId, adRequest,
+            (RewardedAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("Rewarded ad failed to load an ad " +
+                                   "with error : " + error);
+                    return;
+                }
+
+                Debug.Log("Rewarded ad loaded with response : "
+                          + ad.GetResponseInfo());
+
+                rewardedAdHeart = ad;
+            });
+    }
+
+    public void ShowRewardedAdHeart()
+    {
+        //const string rewardMsg =
+        //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (rewardedAdHeart != null && rewardedAdHeart.CanShowAd())
+        {
+            rewardedAdHeart.Show((Reward reward) =>
+            {
+                // ¿©±â¼­ º¸»óÁà¾ßµÊ
+            });
+
+        }
+        else
+        {
+        }
+    }
+
+    private void RegisterReloadHandlerHeart(RewardedAd ad)
+    {
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log("Rewarded Ad full screen content closed.");
+
+            // Reload the ad so that we can show another as soon as possible.
+            LoadRewardedAdHeart();
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("Rewarded ad failed to open full screen content " +
+                           "with error : " + error);
+
+            // Reload the ad so that we can show another as soon as possible.
+            LoadRewardedAdHeart();
+        };
+    }
+
+    public void LoadRewardedAdCoin()
+    {
+        // Clean up the old ad before loading a new one.
+        if (rewardedAdCoin != null)
+        {
+            rewardedAdCoin.Destroy();
+            rewardedAdCoin = null;
+        }
+
+        Debug.Log("Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(rewardAdCoinUnitId, adRequest,
+            (RewardedAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("Rewarded ad failed to load an ad " +
+                                   "with error : " + error);
+                    return;
+                }
+
+                Debug.Log("Rewarded ad loaded with response : "
+                          + ad.GetResponseInfo());
+
+                rewardedAdCoin = ad;
+            });
+    }
+
+    public void ShowRewardedAdCoin()
+    {
+        //const string rewardMsg =
+        //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (rewardedAdCoin != null && rewardedAdCoin.CanShowAd())
+        {
+            rewardedAdCoin.Show((Reward reward) =>
+            {
+                // ¿©±â¼­ º¸»óÁà¾ßµÊ
+            });
+
+        }
+        else
+        {
+        }
+    }
+
+    private void RegisterReloadHandlerCoin(RewardedAd ad)
+    {
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log("Rewarded Ad full screen content closed.");
+
+            // Reload the ad so that we can show another as soon as possible.
+            LoadRewardedAdCoin();
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("Rewarded ad failed to open full screen content " +
+                           "with error : " + error);
+
+            // Reload the ad so that we can show another as soon as possible.
+            LoadRewardedAdCoin();
+        };
+    }
+
 }
