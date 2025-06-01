@@ -58,10 +58,11 @@ public class BottomPanel : MonoBehaviour
             seq.Play();
         else
         {
-            seq.Pause();
+            seq.Kill();
             CargoBoxCountText.color = originalColor;
             CargoBoxWeightText.color = originalColor;
         }
+
     }
 
 

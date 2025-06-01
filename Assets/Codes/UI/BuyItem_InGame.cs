@@ -17,10 +17,15 @@ public class BuyItem_InGame : MonoBehaviour
     public TextMeshProUGUI ItemName;
     public TextMeshProUGUI ItemInfo;
     public TextMeshProUGUI ItemPrice;
+    public TextMeshProUGUI UserGold;
 
     InGameItem item;
     int price;
 
+    void OnEnable()
+    {
+        UserGold.text = $"{PlayerPrefs.GetInt("Gold", 0):N0}";
+    }
 
     public void BuyItemOn(InGameItem item, string name, string info, int price)
     {
@@ -50,7 +55,7 @@ public class BuyItem_InGame : MonoBehaviour
     // 아이템 구매
     public void Buy()
     {
-        //if (PlayerPrefs.GetInt("Coin", 0) < price) return;
+        if (PlayerPrefs.GetInt("Gold", 0) < price) return;
 
         PlayerPrefs.SetInt(item.currentItems.ToString(), PlayerPrefs.GetInt(item.currentItems.ToString(), 0) + 1);
 

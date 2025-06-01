@@ -82,8 +82,10 @@ public class ItemUnlock : MonoBehaviour
         CanvasGroup canvasGroup = PopUp.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = PopUp.gameObject.AddComponent<CanvasGroup>();
-
+        {
+            return;
+        }
+            
         canvasGroup.gameObject.SetActive(true);
 
         canvasGroup.alpha = 0;
@@ -98,12 +100,16 @@ public class ItemUnlock : MonoBehaviour
         canvasGroup = ItemList.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = ItemList.gameObject.AddComponent<CanvasGroup>();
+        {
+            canvasGroup.DOKill();
+            return;
+        }
 
         ItemList.anchoredPosition = originalPos + Vector2.right * Screen.width;
         canvasGroup.alpha = 0;
 
         ItemList.DOAnchorPos(originalPos, 0.8f).SetEase(Ease.OutQuad);
         canvasGroup.DOFade(1f, 0.8f);
+        
     }
 }

@@ -1,36 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
-    public Transform Content;
+    public static StageManager instance;
 
-    Transform StageGroup;
+    public GameObject StagePopUp;
+    public Transform[] Chapters;
+    public Transform[] Stages;
+
     int stageCount;
+
+    void Awake()
+    {
+        instance = this;
+
+        //PlayerPrefs.SetInt("Chapter 2_new", 0);
+    }
 
     void Start()
     {
-        float topRatingStage = PlayerPrefs.GetFloat("TopRatingStage", 0);
+        string topRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
+        string[] ratingStr = topRatingStage.Split('_');
 
-        for (int i = 0; i < Content.childCount; i++)
+        int topChapter = int.Parse(ratingStr[0]);
+        float topStage = int.Parse(ratingStr[1]);
+
+        float starCount;
+
+        for (int i = 0; i < Chapters.Length; i++)
         {
-            StageGroup = Content.GetChild(i).GetChild(0);
+            starCount = 0;
 
-            for (int j = 0; j < StageGroup.childCount; j++)
+            if (i != 0)
             {
-                stageCount += 1;
-
-                StageGroup.GetChild(j).GetComponent<StageUI>().SetStage(stageCount, 33);
+                if (topChapter + 1 <= i || (topChapter == i && topStage < 9))
+                {
+                    Chapters[i].GetChild(3).gameObject.SetActive(true);
+                }
+                else
+                {
+                    Chapters[i].GetChild(4).GetComponent<NewChapter>().NewOn();
+                }
+                
             }
 
+            Transform stagesPar = Stages[i].GetChild(0);
+
+            for (int j = 0; j < stagesPar.childCount; j++)
+            {
+                starCount += stagesPar.GetChild(j).GetComponent<StageUI>().SetStage(++stageCount);
+            }
+
+            Chapters[i].GetChild(2).GetComponent<Slider>().value = starCount / (stagesPar.childCount * 3);
+            Chapters[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = starCount + "/" + stagesPar.childCount * 3;
         }
 
-
+        
     }
 
-    /*public void OpenChapter(int )
+    public void OpenChapter(int chapter)
     {
+        for (int i = 0; i < Stages.Length; i++)
+        {
+            Stages[i].gameObject.SetActive( chapter - 1 == i );
+        }
 
-    }*/
+        StagePopUp.SetActive(true);
+
+        ScrollHelper.instance.ChapterClick(chapter);
+    }
+
+    
 }

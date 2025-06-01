@@ -35,6 +35,9 @@ public class CountAni : MonoBehaviour
             effectOn = true;
             seq.Play();
         }
+
+        if (GameManager.Instance.gameEnd)
+            seq.Kill();
     }
 
     
