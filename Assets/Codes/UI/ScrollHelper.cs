@@ -1,42 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+    public static ScrollHelper instance;
+
     public Scrollbar scrollbar;
     public Transform TargetGroup;
-    public Transform PageNavi;
+    public NewChapter NewChapter;
 
-    [SerializeField] float scrollVelocity = 0f;
     [SerializeField] float targetPos;
 
     public int targetIdx;
 
+    Coroutine coroutine;
 
     float[] pos;
 
-    int size;
+    int size, newChapIdx;
     float distance;
 
-    bool isDrag;
+    bool isDrag, isUnlock;
 
 
     void Awake()
     {
+        instance = this;
+
         size = TargetGroup.childCount;
 
         pos = new float[size];
 
         distance = 1f / (size - 1);
         for (int i = 0; i < size; i++) pos[i] = distance * i;
-        
-        targetPos = pos[0];
     }
 
-    private void OnEnable()
+    void Start()
     {
-        scrollbar.value = pos[0];
+        int idx = PlayerPrefs.GetInt("Chapter_Idx", 0);
+
+        targetPos = pos[idx];
+        scrollbar.value = pos[idx];
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -46,77 +53,67 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        isDrag = false;
-
         if (targetIdx < size - 1 && scrollbar.value - pos[targetIdx] > distance * 0.2f)
         {
             targetPos = pos[++targetIdx];
-
-            SetPageNavi();
         }
         else if (targetIdx > 0 && scrollbar.value - pos[targetIdx] < -distance * 0.2f)
         {
             targetPos = pos[--targetIdx];
-
-            SetPageNavi();
         }
 
+        PlayerPrefs.SetInt("Chapter_Idx", targetIdx);
 
-        /*// 스크롤을 특정 화면으로 고정
-        for (int i = 0; i < size; i++)
+        if (coroutine != null)
         {
-            if (scrollbar.value - pos[i] > 0)
-            {
-                targetIdx = i;
-                targetPos = pos[i];
-
-                SetPageNavi();
-            }
-            else if (scrollbar.value - pos[i] < 0 && scrollbar.value < pos[i] + distance * 0.8f && scrollbar.value > pos[i] - distance * 0.5f)
-            {
-                targetIdx = i;
-                targetPos = pos[i];
-
-                SetPageNavi();
-            }
-        }*/
-
+            StopCoroutine(coroutine);
+        }
+        coroutine = StartCoroutine(DragEndDelay());
     }
 
     void Update()
     {
+        if (!isUnlock && NewChapter)
+        {
+            isUnlock = true;
+
+            newChapIdx = ++targetIdx;
+
+            targetPos = pos[newChapIdx];
+        }
+
         if (!isDrag)
         {
             if (scrollbar.value >= targetPos - 0.001f && scrollbar.value <= targetPos + 0.001f)
             {
                 scrollbar.value = targetPos;
-                scrollVelocity = 0;
+
+                if (isUnlock && targetPos == pos[newChapIdx])
+                {
+                    NewChapter.PlayUnlockSeq();
+                    NewChapter = null;
+                    isUnlock = false;
+                }
+                    
             }
             else
-                scrollbar.value = Mathf.SmoothDamp(scrollbar.value, targetPos, ref scrollVelocity, 0.15f);
+                scrollbar.value = Mathf.MoveTowards(scrollbar.value, targetPos, Time.deltaTime * 0.6f);
 
         }
+
+        
     }
 
-    void SetPageNavi()
+    IEnumerator DragEndDelay()
     {
-        for (int i = 0; i < size; i++)
-        {
-            PageNavi.GetChild(i).GetChild(0).gameObject.SetActive(i == targetIdx);
-        }
+        yield return new WaitForSeconds(0.15f);
+
+        isDrag = false;
     }
-
-    public void PrevTarget()
+    
+    public void ChapterClick(int chap)
     {
-        if (targetIdx - 1 < 0) return;
-
-        targetPos = pos[--targetIdx];
-    }
-
-    public void NextTarget()
-    {
-        if (targetIdx + 1 >= size) return;
-
-        targetPos = pos[++targetIdx];
+        targetPos = pos[chap-1];
+        scrollbar.value = targetPos;
     }
 }

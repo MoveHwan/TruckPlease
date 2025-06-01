@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class StageTruckCanvas : MonoBehaviour
 {
+    public static StageTruckCanvas Instance;
+
     [Header("[ GameOgject ]")]
     public GameObject InGamePanel;
     public GameObject RetryButton;
@@ -23,7 +25,8 @@ public class StageTruckCanvas : MonoBehaviour
     public RectTransform Buttons;
     public RectTransform StampImage;
     public RectTransform LobbyButton;
-
+    public RectTransform LostHeartPanel;
+    
     [Header("[ Text ]")]
     public TextMeshProUGUI PauseStageText;
     public TextMeshProUGUI LicensePlateText;
@@ -41,6 +44,7 @@ public class StageTruckCanvas : MonoBehaviour
     public CanvasGroup ResultCanvas;
     public Courier Courier;
     public ItemUnlock ItemUnlock;
+    //public NoHeart NoHeart;
 
 
     BoxManager BoxManager;
@@ -52,6 +56,18 @@ public class StageTruckCanvas : MonoBehaviour
     float stageNum, chapter;
     bool isResult, isSetTotal;
 
+    int[] stageRewards = {
+        40, 40, 60, 40, 40, 60, 40, 40, 60,
+        50, 50, 75, 50, 50, 75, 50, 50, 75,
+        50, 50, 75, 60, 60, 90, 60, 60, 90,
+        60, 60, 90, 60, 60, 90
+    };
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -132,13 +148,16 @@ public class StageTruckCanvas : MonoBehaviour
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
-        float nowStage = chapter + stageNum / 100f;
 
-        rewardCoin = (int)BoxManager.inBoxWeight * 100;
+        rewardCoin = GetStageReward(PlayerPrefs.GetInt("Stage"), starCount, str);
+
+        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0)+ rewardCoin);
 
         // Retry버튼 활성화 여부
         if (starCount == 0)
         {
+            FatigueManager.instance.SubFatigue();
+
             StampImage.GetComponent<Image>().sprite = Fail;
             RetryButton.SetActive(true);
         }
@@ -165,12 +184,23 @@ public class StageTruckCanvas : MonoBehaviour
 
         }
 
+        if (!FatigueManager.instance.CheckFatigue())
+        {
+            Buttons.GetChild(0).gameObject.SetActive(false);
+            Buttons.GetChild(1).gameObject.SetActive(false);
+        }
+
 
         if (PlayerPrefs.GetInt(str, 0) < starCount)
             PlayerPrefs.SetInt(str, starCount);
 
-        if (starCount > 0 && PlayerPrefs.GetFloat("TopRatingStage", 0) < nowStage)
-            PlayerPrefs.SetFloat("TopRatingStage", nowStage);
+        string[] ratingStrs = PlayerPrefs.GetString("TopRatingStage", "1_0").Split('_');
+
+        int topChapter = int.Parse(ratingStrs[0]);
+        int topStage = int.Parse(ratingStrs[1]);
+
+        if (starCount > 0 && stageNum <= 9 && (chapter > topChapter || (chapter == topChapter && stageNum > topStage)))
+            PlayerPrefs.SetString("TopRatingStage", chapter + "_" + stageNum);
 
 
         resultSeq = DOTween.Sequence();
@@ -196,7 +226,12 @@ public class StageTruckCanvas : MonoBehaviour
 
         LeftMoveAndNumbering(LobbyButton, null, 0);
 
+        resultSeq.AppendCallback(() => GameManager.StackIntAdClear())
+            .AppendInterval(0.1f);
+
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
+
+        PlayerPrefs.Save();
     }
 
     void ShowResultUI()
@@ -239,7 +274,11 @@ public class StageTruckCanvas : MonoBehaviour
         CanvasGroup canvasGroup = targetUI.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = targetUI.gameObject.AddComponent<CanvasGroup>();
+        {
+            canvasGroup.DOKill();
+            return;
+        }
+            
 
         // 시작 상태: 오른쪽 밖 + 투명
         targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
@@ -268,7 +307,10 @@ public class StageTruckCanvas : MonoBehaviour
         CanvasGroup canvasGroup = targetUI.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = targetUI.gameObject.AddComponent<CanvasGroup>();
+        {
+            canvasGroup.DOKill();
+            return;
+        }
 
         // 시작 상태: 오른쪽 밖 + 투명
         targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
@@ -296,7 +338,11 @@ public class StageTruckCanvas : MonoBehaviour
         CanvasGroup canvasGroup = StampImage.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = StampImage.gameObject.AddComponent<CanvasGroup>();
+        {
+            canvasGroup.DOKill();
+            return;
+        }
+            
 
         StampImage.localScale = Vector3.zero;
         canvasGroup.alpha = 0f;
@@ -323,7 +369,10 @@ public class StageTruckCanvas : MonoBehaviour
         CanvasGroup canvasGroup = Buttons.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-            canvasGroup = Buttons.gameObject.AddComponent<CanvasGroup>();
+        {
+            canvasGroup.DOKill();
+            return;
+        }
 
         // 시작 상태: 아래에서 대기 + 투명
         Buttons.anchoredPosition = originalPos - Vector2.up * Screen.height;
@@ -348,17 +397,94 @@ public class StageTruckCanvas : MonoBehaviour
     }
 
 
+    public void CheckStageRetry()
+    {
+        if (!FatigueManager.instance.CheckFatigue())
+        {
+            //NoHeart.NoHeartOn(target);
+            return;
+        }
+        
+        Button btn = LostHeartPanel.GetChild(3).GetComponent<Button>();
+
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => StageRetry());
+
+        LostHeartPanel.gameObject.SetActive(true);
+    }
+
+    public void CheckLobby()
+    {
+        if (!FatigueManager.instance.CheckFatigue())
+        {
+            //NoHeart.NoHeartOn(target);
+            return;
+        }
+
+        Button btn = LostHeartPanel.GetChild(3).GetComponent<Button>();
+
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => Lobby());
+
+        LostHeartPanel.gameObject.SetActive(true);
+    }
 
     public void StageRetry()
     {
+        if (!FatigueManager.instance.SubFatigue())
+        {
+            //NoHeart.NoHeartOn(target);
+            return;
+        }
+
+        DOTween.KillAll();
+
         SceneManager.LoadScene("InGame");
     }
 
     public void NextStage()
     {
+        if (!FatigueManager.instance.CheckFatigue())
+        {
+           // NoHeart.NoHeartOn(target);
+            return;
+        }
+
+        DOTween.KillAll();
+
+        PlayerPrefs.SetInt("StageIn", 1);
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
 
         SceneManager.LoadScene("InGame");
+    }
+
+    public void Lobby()
+    {
+        DOTween.KillAll();
+
+        SceneManager.LoadScene("Lobby");
+    }
+
+
+    int GetStageReward(int stage, int starCount, string stageStar)
+    {
+        if (starCount <= 0) return 0;
+
+        int accStarCount = PlayerPrefs.GetInt(stageStar, 0);
+
+        int amount = stageRewards[stage] / 3;
+
+        int[] rewards = { amount, amount, amount + stageRewards[stage] % 3 };
+
+        amount = 0;
+
+        for (int i = 0; i < rewards.Length; i++)
+        {
+            if (i + 1 != accStarCount)
+                amount += rewards[i];
+        }
+
+        return amount;
     }
 
 }

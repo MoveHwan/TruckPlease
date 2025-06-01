@@ -49,9 +49,6 @@ public class InGameItem : MonoBehaviour
 
         useCount = 3;
 
-        PlayerPrefs.SetInt("Item_Save", 2);
-        PlayerPrefs.SetInt("Item_Delete", 2);
-
         SetText();
 
         SelectedItem.SetActive(false);
@@ -205,7 +202,7 @@ public class InGameItem : MonoBehaviour
     {
         Lock.SetActive(currentItems.ToString() == "item1");
 
-        count = PlayerPrefs.GetInt(currentItems.ToString(), 1);
+        count = PlayerPrefs.GetInt(currentItems.ToString(), 3);
 
         for (int i = 0; i < ItemCountTexts.Length; i++)
             ItemCountTexts[i].text = useCount + " / " + count;
