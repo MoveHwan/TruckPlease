@@ -27345,7 +27345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 046698ff6b7e9d44fa3886c31fd87d77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8236314df455d6c44b05f26e530bd046, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -38552,7 +38552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8236314df455d6c44b05f26e530bd046, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 046698ff6b7e9d44fa3886c31fd87d77, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -60314,6 +60314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7035146154942172281, guid: 89ac7d046d9082a439939890307c91b5,
         type: 3}
+      propertyPath: bgmClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 25fe7ee57ee00704abdf4807208d7270, type: 3}
+    - target: {fileID: 7035146154942172281, guid: 89ac7d046d9082a439939890307c91b5,
+        type: 3}
       propertyPath: channels
       value: 10
       objectReference: {fileID: 0}
@@ -60326,7 +60331,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ingameClip
       value: 
-      objectReference: {fileID: 8300000, guid: efc894dfed6bde740b8241cf83c9b7ef, type: 3}
+      objectReference: {fileID: 8300000, guid: 5ecb3b0f9f45c244b9100f492265732b, type: 3}
     - target: {fileID: 7035146154942172281, guid: 89ac7d046d9082a439939890307c91b5,
         type: 3}
       propertyPath: sfxClips.Array.size

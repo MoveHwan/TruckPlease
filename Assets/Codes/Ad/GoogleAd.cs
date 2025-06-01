@@ -11,16 +11,9 @@ public class GoogleAd : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
+
     // Start is called before the first frame update
     void Start()
     {
