@@ -179,10 +179,12 @@ public class GameManager : MonoBehaviour
     public void GamePause()
     {
         gamePause = true;
+        Time.timeScale = 0;
     }
     public void GameResume()
     {
         gamePause = false;
+        Time.timeScale = 1;
     }
 
     public void GameRestart()
@@ -245,8 +247,11 @@ public class GameManager : MonoBehaviour
         if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
             StackIntAd.instance.stack++;
-            if(StackIntAd.instance.stack >= 3)
+            Debug.Log("Àü¸é±¤°í ½ºÅÃ");
+
+            if (StackIntAd.instance.stack >= 3)
             {
+                Debug.Log("Àü¸é±¤°í ³ª¿È");
                 StackIntAd.instance.stack = 0;
                 googleAd.ShowInterstitialAd();
             }
