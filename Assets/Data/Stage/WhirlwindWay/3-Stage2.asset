@@ -30,9 +30,9 @@ MonoBehaviour:
   - {fileID: 8665115853370136558, guid: ad9554aba83a1414bacd6cf4158ad243, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
-  firstStar: 23
-  secondStar: 25
-  thirdStar: 27
+  firstStar: 28
+  secondStar: 31
+  thirdStar: 32
   useWind: 1
   random: 0
   windType: 0

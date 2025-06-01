@@ -36,6 +36,7 @@ public class BoxManager : MonoBehaviour
     [Header("item")]
     public bool keepItem;
     public bool warnEnd;        // 남은 상자로 못 클리어하는 변수
+    public bool itemBuy;        // 아이템을 살려고 하면 시간을 멈추게 하는변수
 
     void Awake()
     {
@@ -233,7 +234,10 @@ public class BoxManager : MonoBehaviour
                 gameEndCountUi.text = gameEndCount.ToString("F1");
 
             yield return new WaitForSeconds(0.1f);
-            gameEndCount -= 0.1f;
+            if (!itemBuy)
+            {
+                gameEndCount -= 0.1f;
+            }
         }
         gameEndCount = 0f;
         GameManager.Instance.GameEnd();

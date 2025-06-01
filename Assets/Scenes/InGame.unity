@@ -5929,6 +5929,7 @@ MonoBehaviour:
   boxReady: 0
   keepItem: 0
   warnEnd: 0
+  itemBuy: 0
 --- !u!4 &784012772
 Transform:
   m_ObjectHideFlags: 0
@@ -14054,14 +14055,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 710df876aa9cf9344bf362e5e67eaf73, type: 2}
   - {fileID: 11400000, guid: de0cffcb5c4b46141b31438e93a27a1f, type: 2}
   - {fileID: 11400000, guid: 57619b7cbf9741e48b9d268a980b23ba, type: 2}
-  - {fileID: 11400000, guid: 27ee1d3ecdd560945a8a84c190469bbe, type: 2}
   - {fileID: 11400000, guid: 3ac9a311db83d674caec8b58ec9513fc, type: 2}
+  - {fileID: 11400000, guid: 27ee1d3ecdd560945a8a84c190469bbe, type: 2}
   - {fileID: 11400000, guid: e6ebcfad2a797d24a86de26bdd16813e, type: 2}
   - {fileID: 11400000, guid: 09dacd3598835e94aa4bf339acd35b19, type: 2}
   - {fileID: 11400000, guid: 95d05cc9ffb62aa4d920c1d40f4e71a2, type: 2}
   - {fileID: 11400000, guid: 7738ab2a0e483364aa09aa23e334619f, type: 2}
   stage: 11
-  stageSelect: 16
+  stageSelect: 33
   stageTruck: {fileID: 0}
   stageWall: {fileID: 0}
   stageCheckBox: {fileID: 0}

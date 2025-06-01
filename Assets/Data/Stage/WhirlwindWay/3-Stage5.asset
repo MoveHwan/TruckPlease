@@ -21,16 +21,16 @@ MonoBehaviour:
     type: 3}
   boxes:
   - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
+  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
+  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
-  firstStar: 20
-  secondStar: 20.5
-  thirdStar: 21
+  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
+  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
+  firstStar: 29
+  secondStar: 29.5
+  thirdStar: 30
   useWind: 1
   random: 0
   windType: 0
