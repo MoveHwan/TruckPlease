@@ -4601,8 +4601,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 223.595, y: -40}
-  m_SizeDelta: {x: 126.81, y: 50}
+  m_AnchoredPosition: {x: 208.845, y: -40}
+  m_SizeDelta: {x: 156.31, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104146501
 MonoBehaviour:
@@ -4627,7 +4627,7 @@ MonoBehaviour:
   m_text: 46 / 50
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e0962d31f1f084fa3ba7147d76f5b6e8, type: 2}
-  m_sharedMaterial: {fileID: 7423409246693961632, guid: 5f58c05479cb14f588efcdfcbdab347c,
+  m_sharedMaterial: {fileID: 1653631458307283989, guid: e0962d31f1f084fa3ba7147d76f5b6e8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4652,7 +4652,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -14399,7 +14399,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -355}
-  m_SizeDelta: {x: 414.07336, y: 119.20216}
+  m_SizeDelta: {x: 850, y: 119.20216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418799761
 MonoBehaviour:
@@ -14421,7 +14421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Chapter 3
+  m_text: 'Whirlwind way
 
     <#92a4b4><size=70%>Stage 1~12'
   m_isRightToLeft: 0
@@ -40388,7 +40388,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -355}
-  m_SizeDelta: {x: 414.07336, y: 119.20216}
+  m_SizeDelta: {x: 850, y: 119.20216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1444003198
 MonoBehaviour:
@@ -40410,7 +40410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Chapter 1
+  m_text: 'Box Breakthrough
 
     <#92a4b4><size=70%>Stage 1~9'
   m_isRightToLeft: 0
@@ -52888,7 +52888,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -355}
-  m_SizeDelta: {x: 414.07336, y: 119.20216}
+  m_SizeDelta: {x: 850, y: 119.20216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922960676
 MonoBehaviour:
@@ -52910,7 +52910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Chapter 2
+  m_text: 'Glass Bound
 
     <#92a4b4><size=70%>Stage 1~12'
   m_isRightToLeft: 0

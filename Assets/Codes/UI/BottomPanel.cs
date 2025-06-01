@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 
 public class BottomPanel : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class BottomPanel : MonoBehaviour
     [Header("[ Cargo ]")]
     public TextMeshProUGUI CargoBoxCountText;
     public TextMeshProUGUI CargoBoxWeightText;
+    public Image CargoBack;
 
     [Header("[ Box ]")]
     public GameObject NextBox1;
@@ -24,7 +27,9 @@ public class BottomPanel : MonoBehaviour
     public TextMeshProUGUI NextBox2WeightText;
 
     Sequence seq;
-    Color originalColor;
+    Color originalColor, targetColor;
+
+    bool isWarning;
 
     void Start()
     {
@@ -32,18 +37,9 @@ public class BottomPanel : MonoBehaviour
 
         nowBoxIdx = -1;
 
-        originalColor = CargoBoxCountText.color;
+        originalColor = CargoBack.color;
 
-        seq = DOTween.Sequence();
-        seq.Pause();
-
-        seq.Append(CargoBoxCountText.DOColor(Color.red, 0.8f));
-        seq.Join(CargoBoxWeightText.DOColor(Color.red, 0.8f));
-        seq.AppendInterval(0.5f);
-        seq.Append(CargoBoxCountText.DOColor(originalColor, 0.8f));
-        seq.Join(CargoBoxWeightText.DOColor(originalColor, 0.8f));
-        seq.AppendInterval(0.8f);
-        seq.SetLoops(-1);
+        targetColor = new(1, 0.5f, 0.5f, 1);
     }
 
     
@@ -54,17 +50,35 @@ public class BottomPanel : MonoBehaviour
 
         SetCargoBoxUI_Update();
 
-        if (Count.activeSelf) 
-            seq.Play();
-        else
+        if (!isWarning && Count.activeSelf)
         {
+            isWarning = true;
+            SetWarningSeq();
+        }
+
+        if (!Count.activeSelf && isWarning)
+        {
+            isWarning = false;
+
             seq.Kill();
-            CargoBoxCountText.color = originalColor;
-            CargoBoxWeightText.color = originalColor;
+            CargoBack.color = originalColor;
         }
 
     }
 
+    void SetWarningSeq()
+    {
+        seq = DOTween.Sequence();
+        seq.Pause();
+
+        seq.Append(CargoBack.DOColor(targetColor, 0.8f));
+        seq.AppendInterval(0.5f);
+        seq.Append(CargoBack.DOColor(originalColor, 0.8f));
+        seq.AppendInterval(0.8f);
+        seq.SetLoops(-1);
+
+        seq.Play();
+    }
 
     void SetCargoBoxUI_Update()
     {

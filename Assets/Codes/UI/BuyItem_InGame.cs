@@ -12,6 +12,7 @@ public class BuyItem_InGame : MonoBehaviour
     public Image ItemBack;
     public Image ItemBaclPattern;
     public Image ItemIcon;
+    public Image ItemIcon2;
 
     [Header("[ Text ]")]
     public TextMeshProUGUI ItemName;
@@ -35,7 +36,9 @@ public class BuyItem_InGame : MonoBehaviour
         ItemBack.sprite = item.GetComponent<Image>().sprite;
         ItemBaclPattern.sprite = item.transform.GetChild(0).GetComponent<Image>().sprite;
         ItemIcon.sprite = item.transform.GetChild(1).GetComponent<Image>().sprite;
+        ItemIcon2.sprite = item.transform.GetChild(1).GetComponent<Image>().sprite;
         ItemIcon.color = item.transform.GetChild(1).GetComponent<Image>().color;
+        ItemIcon2.color = item.transform.GetChild(1).GetComponent<Image>().color;
 
         ItemName.text = name;
         ItemInfo.text = info;
@@ -55,11 +58,17 @@ public class BuyItem_InGame : MonoBehaviour
     // 아이템 구매
     public void Buy()
     {
-        if (PlayerPrefs.GetInt("Gold", 0) < price) return;
+        int Gold = PlayerPrefs.GetInt("Gold", 0);
+
+        if (Gold < price) return;
+
+        PlayerPrefs.SetInt("Gold", Gold - price);
 
         PlayerPrefs.SetInt(item.currentItems.ToString(), PlayerPrefs.GetInt(item.currentItems.ToString(), 0) + 1);
 
         item.SetText();
+
+        PlayerPrefs.Save();
 
         GameManager.Instance.GameResume();
 
@@ -70,6 +79,8 @@ public class BuyItem_InGame : MonoBehaviour
     public void AD_Gift()
     {
         PlayerPrefs.SetInt(item.currentItems.ToString(), PlayerPrefs.GetInt(item.currentItems.ToString(), 0) + 3);
+
+        PlayerPrefs.Save();
     }
 
     public void ClosePopUp()

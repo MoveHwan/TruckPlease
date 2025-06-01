@@ -98,10 +98,10 @@ public class InGameItem : MonoBehaviour
 
                 if (count <= 0)
                 {
-                    BuyItem_InGame.BuyItemOn(this, "Save", "Save selected box", 10000);
+                    BuyItem_InGame.BuyItemOn(this, "Save", "Save selected box", 80);
                     return;
                 }
-                   
+
                 OtherBlock.onClick.RemoveAllListeners();
                 BoxManager.ActiveKeepItem();
 
@@ -112,10 +112,10 @@ public class InGameItem : MonoBehaviour
 
                 if (count <= 0)
                 {
-                    BuyItem_InGame.BuyItemOn(this, "Revert", "Revert previous box", 5000);
+                    BuyItem_InGame.BuyItemOn(this, "Revert", "Revert previous box", 100);
                     return;
                 }
-                   
+
                 OtherBlock.onClick.RemoveAllListeners();
                 OtherBlock.onClick.AddListener(() => ItemCancel());
 
@@ -202,7 +202,7 @@ public class InGameItem : MonoBehaviour
     {
         Lock.SetActive(currentItems.ToString() == "item1");
 
-        count = PlayerPrefs.GetInt(currentItems.ToString(), 3);
+        count = PlayerPrefs.GetInt(currentItems.ToString(), 2);
 
         for (int i = 0; i < ItemCountTexts.Length; i++)
             ItemCountTexts[i].text = useCount + " / " + count;
