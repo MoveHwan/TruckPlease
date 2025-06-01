@@ -145,8 +145,6 @@ public class StageTruckCanvas : MonoBehaviour
 
     void SetResult()
     {
-        GameManager.Instance.StackIntAdClear();
-
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
