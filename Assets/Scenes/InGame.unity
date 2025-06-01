@@ -28717,7 +28717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87d55066ee91f24ca7aa31e6f914839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeleteItem: {fileID: 0}
+  DeleteItem: {fileID: 5311531822447534119}
   DeleteCourierAni: {fileID: 1794326960048502944}
   CarryingBox: {fileID: 3481563324737850390}
   hand: {fileID: 6199352896901462046}
