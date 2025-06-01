@@ -49,7 +49,7 @@ public class WindUI : MonoBehaviour
     void WindDirSet_Update()
     {
         idx = (int)WindManager.windType;
-        windStrength = (int)WindManager.windSpeed;
+        windStrength = (int)WindManager.windSpeed + 1;
 
         Vector3 adjustedEuler = new Vector3(
            Arrow.eulerAngles.x > 180f ? Arrow.eulerAngles.x - 360f : Arrow.eulerAngles.x,

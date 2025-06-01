@@ -38,6 +38,15 @@ public class FatigueManager : MonoBehaviour
 
     void Update()
     {
+        if (CheckStageIn && StageCheck.Instance != null)
+        {
+            CheckStageIn = false;
+
+            PlayerPrefs.SetInt("StageIn", 1);
+
+            Destroy(StageCheck.Instance.gameObject);
+        }
+
         if (SceneManager.GetActiveScene().name == "Lobby" && PlayerPrefs.GetInt("StageIn") != 0)
         {
             currentFatigue -= 1;
@@ -142,5 +151,10 @@ public class FatigueManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void StageIn()
+    {
+        CheckStageIn = true;
     }
 }

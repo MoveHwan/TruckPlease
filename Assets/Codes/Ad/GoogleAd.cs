@@ -177,7 +177,8 @@ public class GoogleAd : MonoBehaviour
         {
             rewardedAdItem.Show((Reward reward) =>
             {
-                // ø©±‚º≠ ∫∏ªÛ¡‡æﬂµ 
+                PlayerPrefs.SetInt("isItemReward", 1);
+                BuyItem_InGame.instance.AD_Gift();
             });
 
         }
@@ -347,7 +348,8 @@ public class GoogleAd : MonoBehaviour
         {
             rewardedAdCoin.Show((Reward reward) =>
             {
-                // ø©±‚º≠ ∫∏ªÛ¡‡æﬂµ 
+                PlayerPrefs.SetInt("isCoinReward", 1);
+                StageTruckCanvas.Instance.AdReward();
             });
 
         }

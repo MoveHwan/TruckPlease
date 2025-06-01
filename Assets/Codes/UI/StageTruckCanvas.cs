@@ -145,6 +145,8 @@ public class StageTruckCanvas : MonoBehaviour
 
     void SetResult()
     {
+        GameManager.Instance.StackIntAdClear();
+
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
@@ -167,11 +169,17 @@ public class StageTruckCanvas : MonoBehaviour
                 RetryButton.SetActive(false);
             else
                 RetryButton.SetActive(true);
+
+            PlayerPrefs.SetInt("StageIn", 0);
         }
         else
         {
             RetryButton.SetActive(false);
+
+            PlayerPrefs.SetInt("StageIn", 0);
         }
+
+
 
         // 다음 스테이지가 새로운 챕터일시 Retry버튼 활성화
         if (stageNum == 9 && starCount > 0)
@@ -388,12 +396,23 @@ public class StageTruckCanvas : MonoBehaviour
 
     public void AdReward()
     {
+        if (PlayerPrefs.GetInt("isCoinReward", 0) == 0) return;
+
+        PlayerPrefs.SetInt("isCoinReward", 0);
+        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + rewardCoin * 3);
+
         ADButton.SetActive(false);
 
+        resultSeq.Kill();
+        resultSeq.Pause();
+
+        resultSeq.AppendInterval(0.3f);
         resultSeq.Append(DOVirtual.Int(rewardCoin, rewardCoin * 4, 0.2f, value =>
         {
             CoinText.text = value.ToString();
         }));
+
+        resultSeq.Play();
     }
 
 
@@ -472,17 +491,30 @@ public class StageTruckCanvas : MonoBehaviour
 
         int accStarCount = PlayerPrefs.GetInt(stageStar, 0);
 
-        int amount = stageRewards[stage] / 3;
+        int amount = stageRewards[stage - 1] / 3;
 
-        int[] rewards = { amount, amount, amount + stageRewards[stage] % 3 };
+        int[] rewards = { amount, amount, amount + stageRewards[stage - 1] % 3 };
 
         amount = 0;
 
         for (int i = 0; i < rewards.Length; i++)
         {
-            if (i + 1 != accStarCount)
-                amount += rewards[i];
+            if (accStarCount > 0)
+            {
+                rewards[i] = 0;
+            }
+            else if (starCount <= 0)
+            {
+                rewards[i] = 0;
+            }
+
+            accStarCount -= 1;
+            starCount -= 1;
+
+
+            amount += rewards[i];
         }
+
 
         return amount;
     }

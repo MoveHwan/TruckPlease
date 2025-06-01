@@ -69,7 +69,7 @@ public class StageUI : MonoBehaviour
     {
         if (!FatigueManager.instance.CheckFatigue()) return;
 
-        PlayerPrefs.SetInt("StageIn", 1);
+        FatigueManager.instance.StageIn();
 
         PlayerPrefs.SetInt("Stage", stageId);
 

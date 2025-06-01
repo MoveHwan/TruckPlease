@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class BuyItem_InGame : MonoBehaviour
 {
+    public static BuyItem_InGame instance;
+
+    public Button ADButton;
     public Button[] CancelBtns;
 
     [Header("[ Image ]")]
@@ -22,6 +25,11 @@ public class BuyItem_InGame : MonoBehaviour
 
     InGameItem item;
     int price;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void OnEnable()
     {
@@ -49,6 +57,10 @@ public class BuyItem_InGame : MonoBehaviour
             CancelBtns[i].onClick.RemoveAllListeners();
             CancelBtns[i].onClick.AddListener(() => item.ItemCancel());
         }
+
+
+        ADButton.GetComponent<DailyAdManager>().name = name;
+        ADButton.gameObject.SetActive(true);
 
         GameManager.Instance.GamePause();
 
@@ -78,9 +90,17 @@ public class BuyItem_InGame : MonoBehaviour
     // 아이템 광고 보상
     public void AD_Gift()
     {
+        if (PlayerPrefs.GetInt("isItemReward", 0) == 0) return;
+
+        PlayerPrefs.SetInt("isItemReward", 0);
+
         PlayerPrefs.SetInt(item.currentItems.ToString(), PlayerPrefs.GetInt(item.currentItems.ToString(), 0) + 3);
 
         PlayerPrefs.Save();
+
+        item.SetText();
+
+        ClosePopUp();
     }
 
     public void ClosePopUp()

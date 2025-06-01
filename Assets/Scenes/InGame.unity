@@ -2685,6 +2685,50 @@ Transform:
   - {fileID: 1802616827}
   m_Father: {fileID: 1600169390}
   m_LocalEulerAnglesHint: {x: -12.3395605, y: -10.251681, z: 3.805836}
+--- !u!1 &772089549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772089551}
+  - component: {fileID: 772089550}
+  m_Layer: 0
+  m_Name: StageCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &772089550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772089549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4a82a52af740244bc51caac9fbb197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &772089551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772089549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &784012770
 GameObject:
   m_ObjectHideFlags: 0
@@ -9306,7 +9350,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95d05cc9ffb62aa4d920c1d40f4e71a2, type: 2}
   - {fileID: 11400000, guid: 7738ab2a0e483364aa09aa23e334619f, type: 2}
   stage: 11
-  stageSelect: 33
+  stageSelect: 1
   stageTruck: {fileID: 0}
   stageWall: {fileID: 0}
   stageCheckBox: {fileID: 0}
@@ -16365,6 +16409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7541950320679546626}
+  - component: {fileID: 7775474987526329673}
   - component: {fileID: 3208674057334450812}
   - component: {fileID: 7775474987526329672}
   - component: {fileID: 4931175955526715418}
@@ -20197,9 +20242,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GoLobby
+      - m_Target: {fileID: 4551866720143213012}
+        m_TargetAssemblyTypeName: StageTruckCanvas, Assembly-CSharp
+        m_MethodName: Lobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28802,10 +28847,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2186573554067169223}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 7332469911678517888}
+        m_TargetAssemblyTypeName: BuyItem_InGame, Assembly-CSharp
+        m_MethodName: ClosePopUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30597,9 +30642,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4551866720143213012}
-        m_TargetAssemblyTypeName: StageTruckCanvas, Assembly-CSharp
-        m_MethodName: AdReward
+      - m_Target: {fileID: 7775474987526329673}
+        m_TargetAssemblyTypeName: DailyAdManager, Assembly-CSharp
+        m_MethodName: OnAdWatched
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33019,10 +33064,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2186573554067169223}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 7332469911678517888}
+        m_TargetAssemblyTypeName: BuyItem_InGame, Assembly-CSharp
+        m_MethodName: ClosePopUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -34847,7 +34892,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6054160414555015395
 CanvasRenderer:
@@ -39599,6 +39644,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933638583472653164}
+  - component: {fileID: 9078397314381287438}
   - component: {fileID: 7991472929014054439}
   - component: {fileID: 8393660405073644859}
   - component: {fileID: 9078397314381287437}
@@ -39873,6 +39919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe3c0d06b70dee4d8d5f668bed3468a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ADButton: {fileID: 8577377333702875137}
   CancelBtns:
   - {fileID: 5521714761114532949}
   - {fileID: 4576938509591671766}
@@ -41899,6 +41946,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 7
+--- !u!114 &7775474987526329673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877462244209066582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fac25a2c79c0a4fa9931067872c328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: RewardCoin
 --- !u!1 &7780753094229637681
 GameObject:
   m_ObjectHideFlags: 0
@@ -44602,7 +44662,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8393660405073644859}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9078397314381287438}
+        m_TargetAssemblyTypeName: DailyAdManager, Assembly-CSharp
+        m_MethodName: OnAdWatched
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8579860736362954560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46684,6 +46756,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9078397314381287438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7199317436188495820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fac25a2c79c0a4fa9931067872c328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
 --- !u!114 &9098013904706642180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47057,3 +47142,4 @@ SceneRoots:
   - {fileID: 1015455240}
   - {fileID: 2133314012}
   - {fileID: 1957952161}
+  - {fileID: 772089551}
