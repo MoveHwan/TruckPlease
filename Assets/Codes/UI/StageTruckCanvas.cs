@@ -456,6 +456,8 @@ public class StageTruckCanvas : MonoBehaviour
 
         DOTween.KillAll();
 
+        GameManager.Instance.GameResume();
+
         SceneManager.LoadScene("InGame");
     }
 
@@ -472,11 +474,15 @@ public class StageTruckCanvas : MonoBehaviour
         PlayerPrefs.SetInt("StageIn", 1);
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
 
+        GameManager.Instance.GameResume();
+
         SceneManager.LoadScene("InGame");
     }
 
     public void Lobby()
     {
+        GameManager.Instance.GameResume();
+
         DOTween.KillAll();
 
         SceneManager.LoadScene("Lobby");
