@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d604fcf559402134ba8ab49d1286aa4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: cd0c538ad0c1d1d41a3400cdf42621c5, type: 3}
-  ingameClip: {fileID: 8300000, guid: d5c52513105c79f459fa7d18708495ae, type: 3}
+  bgmClip: {fileID: 8300000, guid: 25fe7ee57ee00704abdf4807208d7270, type: 3}
+  ingameClip: {fileID: 8300000, guid: 5ecb3b0f9f45c244b9100f492265732b, type: 3}
   bgmVolume: 1
   sfxClips:
-  - {fileID: 8300000, guid: 85d5f5a62c9b2df4f8317def4cb9ffff, type: 3}
-  - {fileID: 8300000, guid: e83f26238eb734b41bb17a9cb772918a, type: 3}
+  - {fileID: 8300000, guid: b49270b3e47c9ad4193615c58d143890, type: 3}
+  - {fileID: 8300000, guid: 9909b897f008ca64dba8ace26e4f3432, type: 3}
   sfxVolume: 1
   channels: 10
   sfxObject: {fileID: 0}

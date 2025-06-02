@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         GetSfxVolume();
-        bgmPlayer.Play();
+        //bgmPlayer.Play();
         // Slider 값이 변경될 때 호출될 메서드 연결
     }
 
