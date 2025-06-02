@@ -112,6 +112,7 @@ public class LoadingLogin : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("Tutorial") == 0)
         {
+            PlayerPrefs.SetInt("Stage", 1);
             SceneManager.LoadScene("InGame");
         }
         else
