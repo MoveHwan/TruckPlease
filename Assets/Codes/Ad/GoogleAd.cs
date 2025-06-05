@@ -17,6 +17,11 @@ public class GoogleAd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 광고제거 구매했을 시
+        if(PlayerPrefs.GetInt("RemoveAd") == 1)
+        {
+            buyAdDel = true;
+        }
         MobileAds.Initialize(initStatus =>
         {
             Debug.Log("AdMob Initialized");
@@ -35,11 +40,11 @@ public class GoogleAd : MonoBehaviour
 
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
-    private string interAdUnitId = "ca-app-pub-3940256099942544/1033173712";
-    private string bannerAdUnitId = "ca-app-pub-3940256099942544/9214589741";
-    private string rewardAdItemUnitId = "ca-app-pub-3940256099942544/5224354917";
-    private string rewardAdHeartUnitId = "ca-app-pub-3940256099942544/5224354917";
-    private string rewardAdCoinUnitId = "ca-app-pub-3940256099942544/5224354917";
+    private string interAdUnitId = "ca-app-pub-1025011428285645/8575153655";
+    private string bannerAdUnitId = "ca-app-pub-1025011428285645/3122123790";
+    private string rewardAdItemUnitId = "ca-app-pub-1025011428285645/8661949414";
+    private string rewardAdHeartUnitId = "ca-app-pub-1025011428285645/7348867747";
+    private string rewardAdCoinUnitId = "ca-app-pub-1025011428285645/9776554687";
 
 #elif UNITY_IPHONE
   private string _adUnitId = "ca-app-pub-3940256099942544/4411468910";
@@ -94,16 +99,19 @@ public class GoogleAd : MonoBehaviour
     /// </summary>
     public void ShowInterstitialAd()
     {
-        if (_interstitialAd != null && _interstitialAd.CanShowAd())
+        if (!buyAdDel)
         {
-            Debug.Log("Showing interstitial ad.");
-            _interstitialAd.Show();
+            if (_interstitialAd != null && _interstitialAd.CanShowAd())
+            {
+                Debug.Log("Showing interstitial ad.");
+                _interstitialAd.Show();
 
-            RegisterReloadHandler(_interstitialAd);
-        }
-        else
-        {
-            Debug.LogError("Interstitial ad is not ready yet.");
+                RegisterReloadHandler(_interstitialAd);
+            }
+            else
+            {
+                Debug.LogError("Interstitial ad is not ready yet.");
+            }
         }
     }
 

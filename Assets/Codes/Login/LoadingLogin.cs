@@ -27,7 +27,7 @@ public class LoadingLogin : MonoBehaviour
 
     void Start()
     {
-        CheckNickName();
+        //CheckNickName();
     }
 
     // 닉네임이 있는지 확인

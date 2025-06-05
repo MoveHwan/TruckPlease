@@ -243,7 +243,7 @@ PrefabInstance:
     - target: {fileID: 667294010160291665, guid: 9b459a30fec94b84ea0a3328c291312c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 66.5
+      value: 53.2
       objectReference: {fileID: 0}
     - target: {fileID: 667294010160291665, guid: 9b459a30fec94b84ea0a3328c291312c,
         type: 3}
@@ -305,20 +305,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3442676860390732149, guid: 9b459a30fec94b84ea0a3328c291312c,
-        type: 3}
-      propertyPath: m_Value
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6783497657321523346, guid: 9b459a30fec94b84ea0a3328c291312c,
         type: 3}
       propertyPath: m_Name
       value: LoadingSlider
-      objectReference: {fileID: 0}
-    - target: {fileID: 7109339029178893277, guid: 9b459a30fec94b84ea0a3328c291312c,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7109339029178893277, guid: 9b459a30fec94b84ea0a3328c291312c,
         type: 3}
@@ -602,7 +592,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 900, y: 1600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3

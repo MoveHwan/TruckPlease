@@ -20,7 +20,7 @@ public class LobbyAudioManager : MonoBehaviour
     public void SetBgmVolume()
     {
         AudioManager.instance.bgmVolume = bgmSlider.value;
-        PlayerPrefs.SetFloat("BgmVolume", AudioManager.instance.bgmVolume);
+        PlayerPrefs.SetFloat("BgmVol", AudioManager.instance.bgmVolume);
         PlayerPrefs.SetInt("isEditBgmVolume", 1);
         PlayerPrefs.Save();
     }
@@ -28,7 +28,7 @@ public class LobbyAudioManager : MonoBehaviour
     public void SetSfxVolume()
     {
         AudioManager.instance.sfxVolume = sfxSlider.value;
-        PlayerPrefs.SetFloat("SfxVolume", AudioManager.instance.sfxVolume);
+        PlayerPrefs.SetFloat("SfxVol", AudioManager.instance.sfxVolume);
         PlayerPrefs.SetInt("isEditSfxVolume", 1);
         PlayerPrefs.Save();
     }

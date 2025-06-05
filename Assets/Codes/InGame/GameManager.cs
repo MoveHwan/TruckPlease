@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
 
     void TimeControl()
     {
-        if (!gamePause)
+        if (!gamePause && timeCount > -0.2f)
         {
             timeCount -= Time.deltaTime;
             timeCountUI.text = Mathf.Ceil(timeCount).ToString();
@@ -256,12 +256,6 @@ public class GameManager : MonoBehaviour
                 googleAd.ShowInterstitialAd();
             }
         }
-    }
-
-    // æ∆¿Ã≈€ ¡÷¥¬ ±§∞Ì - æ”»Øææ∞° ºˆ¡§ ∫Œ≈π
-    public void ItemAd()
-    {
-        googleAd.ShowRewardedAd();
     }
 
 }

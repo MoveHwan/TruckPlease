@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     bool needPlaySfx;
 
 
-    public enum Sfx {throwBox, hitBox}
+    public enum Sfx {throwBox, hitBox, loseMan, winMan, stamp, star1, star2 , star3}
 
     void Awake()
     {
@@ -176,14 +176,14 @@ public class AudioManager : MonoBehaviour
     void GetBgmVolume()
     {
         if (PlayerPrefs.GetInt("isEditBgmVolume") == 1)
-            bgmVolume = PlayerPrefs.GetFloat("BgmVolume");
+            bgmVolume = PlayerPrefs.GetFloat("BgmVol");
     }
 
 
     void GetSfxVolume()
     {
         if (PlayerPrefs.GetInt("isEditSfxVolume") == 1)
-            sfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+            sfxVolume = PlayerPrefs.GetFloat("SfxVol");
     }
 
 
