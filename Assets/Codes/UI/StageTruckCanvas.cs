@@ -377,8 +377,12 @@ public class StageTruckCanvas : MonoBehaviour
            {
                Courier.Reaction(starCount > 0);
                ClearConfetti.SetActive(starCount > 0);
-               // 여기에 사운드 효과 넣는 것도 추천!
-               // AudioManager.Play("stamp");
+
+               if (AudioManager.instance != null)
+               {
+                   AudioManager.instance.PlaySfx(AudioManager.Sfx.stamp);
+               }
+
            }).AppendInterval(0.15f);
 
 
@@ -542,5 +546,6 @@ public class StageTruckCanvas : MonoBehaviour
 
         return amount;
     }
+
 
 }

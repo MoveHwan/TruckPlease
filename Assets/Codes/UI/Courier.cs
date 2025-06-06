@@ -76,9 +76,24 @@ public class Courier : MonoBehaviour
     public void Reaction(bool isClear)
     {
         if (isClear)
+        {
             animator.SetTrigger("DDabong");
+
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.winMan);
+            }
+        }
         else
+        {
             animator.SetTrigger("Shouting");
+
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.loseMan);
+            }
+        }
+            
 
     }
 }
