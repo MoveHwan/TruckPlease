@@ -14,6 +14,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject InGamePanel;
     public GameObject RetryButton;
     public GameObject ADButton;
+    public GameObject ReviewUI;
     public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject[] StarImages; // 3개의 별 이미지
@@ -153,6 +154,9 @@ public class StageTruckCanvas : MonoBehaviour
 
         PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0)+ rewardCoin);
 
+        if (rewardCoin <= 0)
+            ADButton.SetActive(false);
+
         // Retry버튼 활성화 여부
         if (starCount == 0)
         {
@@ -160,6 +164,7 @@ public class StageTruckCanvas : MonoBehaviour
 
             StampImage.GetComponent<Image>().sprite = Fail;
             RetryButton.SetActive(true);
+
         }
         else if (PlayerPrefs.GetInt(str, 0) != 0)
         {
@@ -236,6 +241,17 @@ public class StageTruckCanvas : MonoBehaviour
             .AppendInterval(0.1f);
 
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
+
+        /*if (PlayerPrefs.GetInt("Review", 0) >= 5 && PlayerPrefs.GetInt("ReviewOn", 0) != 1)
+        {
+            ReviewUI.SetActive(true);
+            PlayerPrefs.SetInt("ReviewOn", 1);
+        }
+        else if (PlayerPrefs.GetInt("Review", 0) < 5)
+        {
+            PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
+        }*/
+
 
         PlayerPrefs.Save();
     }
@@ -399,6 +415,8 @@ public class StageTruckCanvas : MonoBehaviour
         PlayerPrefs.SetInt("isCoinReward", 0);
         PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + rewardCoin * 3);
 
+        PlayerPrefs.Save();
+
         ADButton.SetActive(false);
 
         resultSeq.Kill();
@@ -474,9 +492,11 @@ public class StageTruckCanvas : MonoBehaviour
         PlayerPrefs.SetInt("StageIn", 1);
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
 
+        PlayerPrefs.Save();
+
         GameManager.Instance.GameResume();
 
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void Lobby()
