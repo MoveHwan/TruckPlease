@@ -43,6 +43,7 @@ public class FatigueManager : MonoBehaviour
             CheckStageIn = false;
 
             PlayerPrefs.SetInt("StageIn", 1);
+            PlayerPrefs.Save();
 
             Destroy(StageCheck.Instance.gameObject);
         }
@@ -84,20 +85,26 @@ public class FatigueManager : MonoBehaviour
 
     void UpdateFatigue()
     {
-        // 피로도 회복 처리
         if (currentFatigue < MaxFatigue)
         {
             DateTime lastTime = DateTime.Parse(PlayerPrefs.GetString(LastTimeKey, DateTime.Now.ToString()));
             TimeSpan timePassed = DateTime.Now - lastTime;
 
-            if (timePassed.TotalMinutes >= RecoveryMinutes)
+            int recoverAmount = Mathf.FloorToInt((float)timePassed.TotalMinutes / RecoveryMinutes);
+
+            if (recoverAmount > 0)
             {
-                currentFatigue = Mathf.Min(currentFatigue + 1, MaxFatigue);
+                currentFatigue = Mathf.Min(currentFatigue + recoverAmount, MaxFatigue);
+
+                // 새롭게 피로도가 회복된 시점을 기준으로 다시 저장
+                DateTime newLastTime = lastTime.AddMinutes(recoverAmount * RecoveryMinutes);
+                PlayerPrefs.SetString(LastTimeKey, newLastTime.ToString());
+
                 SaveFatigue();
             }
         }
-
     }
+
 
     public void UpdateUI(TextMeshProUGUI fatigueText, TextMeshProUGUI timerText)
     {
@@ -126,10 +133,19 @@ public class FatigueManager : MonoBehaviour
 
     void SaveFatigue()
     {
+        int previousFatigue = PlayerPrefs.GetInt(FatigueKey, MaxFatigue);
+
         PlayerPrefs.SetInt(FatigueKey, currentFatigue);
-        PlayerPrefs.SetString(LastTimeKey, DateTime.Now.ToString());
+
+        // 최대치에서 하나 줄었을 때만 타이머 시작
+        if (previousFatigue == MaxFatigue && currentFatigue == MaxFatigue - 1)
+        {
+            PlayerPrefs.SetString(LastTimeKey, DateTime.Now.ToString());
+        }
+
         PlayerPrefs.Save();
     }
+
 
     public bool CheckFatigue()
     {

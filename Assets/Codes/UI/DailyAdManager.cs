@@ -3,8 +3,8 @@ using System;
 
 public class DailyAdManager : MonoBehaviour
 {
-    string defaultDateKey = "LastAdDate";
-    string defaultTicketKey = "AdTickets";
+    const string defaultDateKey = "LastAdDate";
+    const string defaultTicketKey = "AdTickets";
 
     string LastAdDateKey, AdTicketKey;
 
