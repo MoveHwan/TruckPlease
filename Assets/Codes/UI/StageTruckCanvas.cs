@@ -242,7 +242,6 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
 
-        
 
         if (PlayerPrefs.GetInt("Review", 0) >= 5 && PlayerPrefs.GetInt("ReviewOn", 0) != 1)
         {
@@ -253,9 +252,6 @@ public class StageTruckCanvas : MonoBehaviour
         {
             PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
         }
-
-        Debug.LogWarning("Review " + PlayerPrefs.GetInt("Review", 0));
-        Debug.LogWarning("ReviewOn " + PlayerPrefs.GetInt("ReviewOn", 0));
 
         PlayerPrefs.Save();
     }
@@ -284,7 +280,28 @@ public class StageTruckCanvas : MonoBehaviour
                 StarImages[idx].SetActive(true);
                 StarImages[idx].transform.localScale = Vector3.zero;
                 StarImages[idx].transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
-            }).AppendInterval(0.2f);
+            })
+            .AppendCallback(() =>
+            {
+                if (AudioManager.instance != null)
+                {
+                    switch (idx)
+                    {
+                        case 0:
+                            AudioManager.instance.PlaySfx(AudioManager.Sfx.star1);
+                            break;
+                        case 1:
+                            AudioManager.instance.PlaySfx(AudioManager.Sfx.star2);
+                            break;
+                        case 2:
+                            AudioManager.instance.PlaySfx(AudioManager.Sfx.star3);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            })
+            .AppendInterval(0.2f);
 
 
         }

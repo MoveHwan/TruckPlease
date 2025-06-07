@@ -6,6 +6,7 @@ using GoogleMobileAds.Api;
 public class GoogleAd : MonoBehaviour
 {
     public static GoogleAd instance;
+    public GameObject ADBack;
 
     public bool buyAdDel;
 
@@ -103,6 +104,8 @@ public class GoogleAd : MonoBehaviour
         {
             if (_interstitialAd != null && _interstitialAd.CanShowAd())
             {
+                ADBackOn();
+
                 Debug.Log("Showing interstitial ad.");
                 _interstitialAd.Show();
 
@@ -176,6 +179,8 @@ public class GoogleAd : MonoBehaviour
 
         if (rewardedAdItem != null && rewardedAdItem.CanShowAd())
         {
+            ADBackOn();
+
             rewardedAdItem.Show((Reward reward) =>
             {
                 PlayerPrefs.SetInt("isItemReward", 1);
@@ -275,6 +280,8 @@ public class GoogleAd : MonoBehaviour
 
         if (rewardedAdHeart != null && rewardedAdHeart.CanShowAd())
         {
+            ADBackOn();
+
             rewardedAdHeart.Show((Reward reward) =>
             {
                 // ¿©±â¼­ º¸»óÁà¾ßµÊ
@@ -342,11 +349,14 @@ public class GoogleAd : MonoBehaviour
 
     public void ShowRewardedAdCoin()
     {
+
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
         if (rewardedAdCoin != null && rewardedAdCoin.CanShowAd())
         {
+            ADBackOn();
+
             rewardedAdCoin.Show((Reward reward) =>
             {
                 PlayerPrefs.SetInt("isCoinReward", 1);
@@ -380,4 +390,19 @@ public class GoogleAd : MonoBehaviour
         };
     }
 
+
+    // ±¤°í µÞÆÇ ¶ç¿ì±â
+    void ADBackOn()
+    {
+        ADBack.SetActive(true);
+        StartCoroutine(ADBackOffCoroutine());
+    }
+    IEnumerator ADBackOffCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        ADBack.SetActive(false);
+
+        yield break;
+    }
 }
