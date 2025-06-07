@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     string unityLeaderboardWeight = "TotalWeight";
 
     public GoogleAd googleAd;
+    public ReviewInGame reviewInGame;
 
     void Awake()
     {
@@ -199,6 +200,7 @@ public class GameManager : MonoBehaviour
         if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
             StageSave();
+            ReviewClear();
         }
     }
 
@@ -258,4 +260,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ReviewClear()
+    {
+        reviewInGame.GooglePlayReview();
+    }
 }
