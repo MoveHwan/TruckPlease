@@ -242,16 +242,24 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
 
+        resultSeq.AppendCallback(() => 
+        {
+            if (starCount <= 0) return;
 
-        if (PlayerPrefs.GetInt("Review", 0) >= 5 && PlayerPrefs.GetInt("ReviewOn", 0) != 1)
-        {
-            ReviewInGame.GooglePlayReview();
-            PlayerPrefs.SetInt("ReviewOn", 1);
-        }
-        else if (PlayerPrefs.GetInt("Review", 0) < 5)
-        {
-            PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
-        }
+            if (PlayerPrefs.GetInt("Review", 0) < 5)
+            {
+                PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
+            }
+
+            if (PlayerPrefs.GetInt("ReviewOn", 0) != 1 && PlayerPrefs.GetInt("Review", 0) >= 5)
+            {
+                Debug.LogWarning("ReviewOn");
+
+                ReviewInGame.GooglePlayReview();
+                PlayerPrefs.SetInt("ReviewOn", 1);
+            }
+            
+        });
 
         PlayerPrefs.Save();
     }
