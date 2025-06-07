@@ -444,7 +444,7 @@ public class StageTruckCanvas : MonoBehaviour
             return;
         }
         
-        Button btn = LostHeartPanel.GetChild(3).GetComponent<Button>();
+        Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
 
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => StageRetry());
@@ -460,7 +460,7 @@ public class StageTruckCanvas : MonoBehaviour
             return;
         }
 
-        Button btn = LostHeartPanel.GetChild(3).GetComponent<Button>();
+        Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
 
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => Lobby());

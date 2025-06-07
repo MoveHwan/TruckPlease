@@ -39724,7 +39724,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1015455239}
         m_TargetAssemblyTypeName: GoogleAd, Assembly-CSharp
-        m_MethodName: LoadRewardedAdCoin
+        m_MethodName: ShowRewardedAdCoin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
