@@ -14,7 +14,6 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject InGamePanel;
     public GameObject RetryButton;
     public GameObject ADButton;
-    public GameObject ReviewUI;
     public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject[] StarImages; // 3개의 별 이미지
@@ -45,6 +44,7 @@ public class StageTruckCanvas : MonoBehaviour
     public CanvasGroup ResultCanvas;
     public Courier Courier;
     public ItemUnlock ItemUnlock;
+    public ReviewInGame ReviewInGame;
     //public NoHeart NoHeart;
 
 
@@ -74,11 +74,6 @@ public class StageTruckCanvas : MonoBehaviour
     {
         stageNum = PlayerPrefs.GetInt("Stage", 1);
 
-        string str = stageNum.ToString();
-
-        for (int i = 0; i < 3 - str.Length; i++)
-            str = "0" + stageNum;
-
         if (stageNum < 10)
         {
             chapter = (stageNum - 1) / 9 + 1;
@@ -93,8 +88,13 @@ public class StageTruckCanvas : MonoBehaviour
         }
         
         chapter = (int) chapter;
-        stageNum = (int) stageNum;  
+        stageNum = (int) stageNum;
 
+        string str = stageNum.ToString();
+
+        for (int i = 0; i < 3 - str.Length; i++)
+            str = "0" + str;
+        
         PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
         LicensePlateText.text = "CH" + chapter + " - " + str;
 
@@ -242,16 +242,20 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
 
-        /*if (PlayerPrefs.GetInt("Review", 0) >= 5 && PlayerPrefs.GetInt("ReviewOn", 0) != 1)
+        
+
+        if (PlayerPrefs.GetInt("Review", 0) >= 5 && PlayerPrefs.GetInt("ReviewOn", 0) != 1)
         {
-            ReviewUI.SetActive(true);
+            ReviewInGame.GooglePlayReview();
             PlayerPrefs.SetInt("ReviewOn", 1);
         }
         else if (PlayerPrefs.GetInt("Review", 0) < 5)
         {
             PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
-        }*/
+        }
 
+        Debug.LogWarning("Review " + PlayerPrefs.GetInt("Review", 0));
+        Debug.LogWarning("ReviewOn " + PlayerPrefs.GetInt("ReviewOn", 0));
 
         PlayerPrefs.Save();
     }
@@ -371,19 +375,33 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.Append(canvasGroup.DOFade(1f, 0.05f))
            .Join(StampImage.DOScale(1.4f, 0.12f).SetEase(Ease.OutBack))
-           .Append(StampImage.DOScale(1f, 0.08f).SetEase(Ease.InSine))
-           .Append(StampImage.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 1f))
            .AppendCallback(() =>
            {
-               Courier.Reaction(starCount > 0);
-               ClearConfetti.SetActive(starCount > 0);
-
                if (AudioManager.instance != null)
                {
                    AudioManager.instance.PlaySfx(AudioManager.Sfx.stamp);
                }
+           })
+           .Append(StampImage.DOScale(1f, 0.08f).SetEase(Ease.InSine))
+           .Append(StampImage.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 1f))
 
-           }).AppendInterval(0.15f);
+           .AppendCallback(() =>
+           {
+               Courier.Reaction(starCount > 0);
+               ClearConfetti.SetActive(starCount > 0);
+           })
+           .AppendInterval(0.2f)
+           .AppendCallback(() =>
+           {
+               if (AudioManager.instance != null)
+               {
+                   if (starCount > 0)
+                       AudioManager.instance.PlaySfx(AudioManager.Sfx.winMan);
+                   else
+                       AudioManager.instance.PlaySfx(AudioManager.Sfx.loseMan);
+               }
+           });
+
 
 
     }

@@ -97,7 +97,7 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
                     
             }
             else
-                scrollbar.value = Mathf.MoveTowards(scrollbar.value, targetPos, Time.deltaTime * 0.6f);
+                scrollbar.value = Mathf.MoveTowards(scrollbar.value, targetPos, Time.deltaTime * 0.9f);
 
         }
 
