@@ -406,20 +406,10 @@ public class StageTruckCanvas : MonoBehaviour
            {
                Courier.Reaction(starCount > 0);
                ClearConfetti.SetActive(starCount > 0);
+
+               StartCoroutine(CourierSfxDelay());
            })
-           .AppendInterval(0.2f)
-           .AppendCallback(() =>
-           {
-               if (AudioManager.instance != null)
-               {
-                   if (starCount > 0)
-                       AudioManager.instance.PlaySfx(AudioManager.Sfx.winMan);
-                   else
-                       AudioManager.instance.PlaySfx(AudioManager.Sfx.loseMan);
-               }
-           });
-
-
+           .AppendInterval(0.2f);
 
     }
 
@@ -469,6 +459,21 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.Play();
     }
+
+    IEnumerator CourierSfxDelay()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (AudioManager.instance != null)
+        {
+            if (starCount > 0)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.winMan);
+            else
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.loseMan);
+        }
+    }
+
+
 
 
     public void CheckStageRetry()
