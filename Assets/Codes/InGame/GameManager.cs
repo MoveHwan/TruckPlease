@@ -200,7 +200,6 @@ public class GameManager : MonoBehaviour
         if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
             StageSave();
-            ReviewClear();
         }
     }
 
@@ -260,8 +259,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ReviewClear()
-    {
-        reviewInGame.GooglePlayReview();
-    }
 }
