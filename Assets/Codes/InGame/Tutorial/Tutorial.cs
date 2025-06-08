@@ -101,8 +101,7 @@ public class Tutorial : MonoBehaviour
             yield return new WaitForSeconds(3f); // 2√  ¥Î±‚
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();
-            SceneManager.LoadScene("InGame");
-
+            tutoPanel.gameObject.SetActive(false);
         }
     }
     bool IsClickOrTouch()

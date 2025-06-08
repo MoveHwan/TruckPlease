@@ -27479,7 +27479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 046698ff6b7e9d44fa3886c31fd87d77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8236314df455d6c44b05f26e530bd046, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -38754,7 +38754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8236314df455d6c44b05f26e530bd046, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 046698ff6b7e9d44fa3886c31fd87d77, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -54565,8 +54565,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 63
-  m_fontSizeBase: 63
+  m_fontSize: 107.2
+  m_fontSizeBase: 107.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -58371,7 +58371,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 320, y: 150}
+  m_SizeDelta: {x: 464.4, y: 195.3}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2105481774
 MonoBehaviour:
@@ -63611,6 +63611,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GoogleAd
+      objectReference: {fileID: 0}
+    - target: {fileID: 2969300844452895721, guid: c9ce198cc37681d4e96303a561f9f198,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9048951875999367332, guid: c9ce198cc37681d4e96303a561f9f198,
         type: 3}

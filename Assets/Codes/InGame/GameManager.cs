@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
         timeCount = 60f;
         SetStageData();
         GameStart();
-
         if (AudioManager.instance != null)
         {
             AudioManager.instance.PlayBGMIngame();
@@ -73,6 +72,14 @@ public class GameManager : MonoBehaviour
         {
             tuto.SetActive(true);
             tutoNeed = true;
+                    if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+        }
+        else
+        {
+            AddScore(unityLeaderboard, 0);
+        }
+
         }
 
 #endif

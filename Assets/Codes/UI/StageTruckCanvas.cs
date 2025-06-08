@@ -150,7 +150,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
 
-        rewardCoin = GetStageReward(PlayerPrefs.GetInt("Stage"), starCount, str);
+        rewardCoin = GetStageReward(GameManager.Instance.stage, starCount, str);
 
         PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0)+ rewardCoin);
 
