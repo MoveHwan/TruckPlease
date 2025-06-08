@@ -8,6 +8,8 @@ public class NewChapter : MonoBehaviour
     public GameObject Chapter;
     public CanvasGroup Lock;
 
+    public int idx;
+
     [SerializeField] bool isNew;
 
     Sequence UnlockSeq;
@@ -17,6 +19,8 @@ public class NewChapter : MonoBehaviour
     {
         if (isNew)
         {
+            idx = int.Parse(Chapter.name.Split(" ")[1]) - 1;
+
             UnlockSeq = DOTween.Sequence();
 
             UnlockSeq.Pause();
@@ -36,7 +40,7 @@ public class NewChapter : MonoBehaviour
             {
                 PlayerPrefs.SetInt(Chapter.name + "_new", 1);
 
-                DOTween.Kill(UnlockSeq);
+                DOTween.Kill(UnlockSeq);    
                 
                 Lock.gameObject.SetActive(false);
             });

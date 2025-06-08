@@ -26,7 +26,7 @@ public class StageTruckCanvas : MonoBehaviour
     public RectTransform StampImage;
     public RectTransform LobbyButton;
     public RectTransform LostHeartPanel;
-    
+
     [Header("[ Text ]")]
     public TextMeshProUGUI PauseStageText;
     public TextMeshProUGUI LicensePlateText;
@@ -86,15 +86,15 @@ public class StageTruckCanvas : MonoBehaviour
             chapter = (stageNum - 1) / 12 + 2;
             stageNum = stageNum % 12 == 0 ? 12 : stageNum % 12;
         }
-        
-        chapter = (int) chapter;
-        stageNum = (int) stageNum;
+
+        chapter = (int)chapter;
+        stageNum = (int)stageNum;
 
         string str = stageNum.ToString();
 
         for (int i = 0; i < 3 - str.Length; i++)
             str = "0" + str;
-        
+
         PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
         LicensePlateText.text = "CH" + chapter + " - " + str;
 
@@ -152,7 +152,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         rewardCoin = GetStageReward(GameManager.Instance.stage, starCount, str);
 
-        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0)+ rewardCoin);
+        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + rewardCoin);
 
         if (rewardCoin <= 0)
             ADButton.SetActive(false);
@@ -187,7 +187,7 @@ public class StageTruckCanvas : MonoBehaviour
         // 다음 스테이지가 새로운 챕터일시 Retry버튼 활성화
         if (stageNum == 9 && starCount > 0)
         {
-            RetryButton.SetActive(true);
+            PlayerPrefs.SetInt("NewChapter", 1);
         }
         else if (stageNum == 12 && starCount > 0)
         {
@@ -242,7 +242,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
 
-        resultSeq.AppendCallback(() => 
+        resultSeq.AppendCallback(() =>
         {
             if (starCount <= 0) return;
 
@@ -258,7 +258,7 @@ public class StageTruckCanvas : MonoBehaviour
                 ReviewInGame.GooglePlayReview();
                 PlayerPrefs.SetInt("ReviewOn", 1);
             }
-            
+
         });
 
         PlayerPrefs.Save();
@@ -329,7 +329,7 @@ public class StageTruckCanvas : MonoBehaviour
             canvasGroup.DOKill();
             return;
         }
-            
+
 
         // 시작 상태: 오른쪽 밖 + 투명
         targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
@@ -347,7 +347,7 @@ public class StageTruckCanvas : MonoBehaviour
                 TMP.text = value.ToString();
             }));
         }
-      
+
     }
     void LeftMoveAndNumbering(RectTransform targetUI, TextMeshProUGUI TMP, float targetValue)
     {
@@ -393,7 +393,7 @@ public class StageTruckCanvas : MonoBehaviour
             canvasGroup.DOKill();
             return;
         }
-            
+
 
         StampImage.localScale = Vector3.zero;
         canvasGroup.alpha = 0f;
@@ -491,7 +491,7 @@ public class StageTruckCanvas : MonoBehaviour
             //NoHeart.NoHeartOn(target);
             return;
         }
-        
+
         Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
 
         btn.onClick.RemoveAllListeners();
@@ -535,24 +535,37 @@ public class StageTruckCanvas : MonoBehaviour
     {
         if (!FatigueManager.instance.CheckFatigue())
         {
-           // NoHeart.NoHeartOn(target);
+            // NoHeart.NoHeartOn(target);
             return;
         }
 
         DOTween.KillAll();
+
+        GameManager.Instance.GameResume();
+
+        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
+        {
+            SceneManager.LoadScene("Lobby");
+            return;
+        }
+
 
         PlayerPrefs.SetInt("StageIn", 1);
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
 
         PlayerPrefs.Save();
 
-        GameManager.Instance.GameResume();
-
         SceneManager.LoadScene("LoadingScene");
     }
 
     public void Lobby()
     {
+        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
+        {
+            SceneManager.LoadScene("Lobby");
+            return;
+        }
+
         GameManager.Instance.GameResume();
 
         DOTween.KillAll();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class StageManager : MonoBehaviour
     public static StageManager instance;
 
     public GameObject StagePopUp;
+    public GameObject ChapterPopUp;
     public Transform[] Chapters;
     public Transform[] Stages;
 
@@ -59,7 +61,11 @@ public class StageManager : MonoBehaviour
             Chapters[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = starCount + "/" + stagesPar.childCount * 3;
         }
 
-        
+        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
+        {
+            PlayerPrefs.SetInt("NewChapter", 0);
+            ChapterPopUp.SetActive(true);
+        }
     }
 
     public void OpenChapter(int chapter)

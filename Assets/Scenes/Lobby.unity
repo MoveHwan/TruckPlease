@@ -6836,6 +6836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Chapter: {fileID: 1030734248}
   Lock: {fileID: 1535465219}
+  idx: 0
   isNew: 0
 --- !u!1 &151177257
 GameObject:
@@ -15035,6 +15036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StagePopUp: {fileID: 5233012058739719350}
+  ChapterPopUp: {fileID: 776904463}
   Chapters:
   - {fileID: 192788598}
   - {fileID: 202160043}
@@ -31327,7 +31329,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 973.11, y: -50}
-  m_SizeDelta: {x: 347, y: 75}
+  m_SizeDelta: {x: 0, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1052204984
 MonoBehaviour:
@@ -53082,6 +53084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Chapter: {fileID: 202160042}
   Lock: {fileID: 287278017}
+  idx: 0
   isNew: 0
 --- !u!1 &1909103622
 GameObject:

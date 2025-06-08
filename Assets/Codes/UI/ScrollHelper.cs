@@ -77,7 +77,7 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             isUnlock = true;
 
-            newChapIdx = ++targetIdx;
+            newChapIdx = NewChapter.idx;
 
             targetPos = pos[newChapIdx];
         }
