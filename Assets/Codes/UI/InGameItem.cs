@@ -108,7 +108,7 @@ public class InGameItem : MonoBehaviour
                 break;
 
             case Items.Item_Delete:
-                if (BoxManager.spawnedBoxes.Count <= 0) return;
+                if (BoxManager.spawnedBoxes.Count <= 0 || !BoxManager.boxReady) return;
 
                 if (count <= 0)
                 {
@@ -116,10 +116,8 @@ public class InGameItem : MonoBehaviour
                     return;
                 }
 
-                OtherBlock.onClick.RemoveAllListeners();
-                OtherBlock.onClick.AddListener(() => ItemCancel());
-
-                break;
+                UseItem();
+                return;
 
             default:
                 break;

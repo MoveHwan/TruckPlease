@@ -184,7 +184,7 @@ public class GoogleAd : MonoBehaviour
             });
     }
 
-    public void ShowRewardedAd()
+    public void ShowRewardedAd(DailyAdManager dailyAd)
     {
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
@@ -196,14 +196,21 @@ public class GoogleAd : MonoBehaviour
             rewardedAd.Show((Reward reward) =>
             {
                 PlayerPrefs.SetInt("isItemReward", 1);
+                dailyAd.SubTicket();
                 BuyItem_InGame.instance.AD_Gift();
             });
 
         }
         else
         {
-            Debug.Log("No have RewardAd");
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("isItemReward", 1);
+                dailyAd.SubTicket();
+                BuyItem_InGame.instance.AD_Gift();
+            }
 
+            Debug.Log("No have RewardAd");
         }
     }
 
@@ -294,6 +301,12 @@ public class GoogleAd : MonoBehaviour
         }
         else
         {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("isCoinReward", 1);
+                StageTruckCanvas.Instance.AdReward();
+            }
+
         }
     }
 

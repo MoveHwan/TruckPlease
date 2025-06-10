@@ -34,6 +34,9 @@ public class FatigueManager : MonoBehaviour
 
         LoadFatigue();
         InvokeRepeating(nameof(UpdateFatigue), 1f, 1f); // 1초마다 업데이트
+
+        if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+            StageIn();
     }
 
     void Update()
