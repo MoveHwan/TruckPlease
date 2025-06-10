@@ -7,7 +7,7 @@
     android:versionName="1.0" >
 
      __NEARBY_PERMISSIONS__
-
+     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <application>
 
      __NEARBY_SERVICE_ELEMENT__

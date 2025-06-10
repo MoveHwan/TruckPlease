@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
             AudioManager.instance.PlayBGMIngame();
         }
 
+        GoogleAd.instance.LoadAd();
+
 #if UNITY_EDITOR || UNITY_STANDALONE
 #elif UNITY_ANDROID || UNITY_IOS
                 if (PlayerPrefs.GetInt("Tutorial") == 0)

@@ -6,6 +6,7 @@ using GooglePlayGames.BasicApi;
 using GooglePlayGames;
 using UnityEngine.SceneManagement;
 using TMPro;
+using GoogleMobileAds.Api;
 
 
 public class LoadingLogin : MonoBehaviour
@@ -27,6 +28,11 @@ public class LoadingLogin : MonoBehaviour
 
     void Start()
     {
+        // 광고를 위해 한번만 부름
+        MobileAds.Initialize((InitializationStatus initStatus) =>
+        {
+        });
+
         //CheckNickName();
     }
 

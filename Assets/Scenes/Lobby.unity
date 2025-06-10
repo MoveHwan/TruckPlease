@@ -53911,6 +53911,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_Ranking
       objectReference: {fileID: 0}
+    - target: {fileID: 5992418393663358359, guid: 1106dc659fab8b2449857ade92866f77,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5992418394261918792, guid: 1106dc659fab8b2449857ade92866f77,
         type: 3}
       propertyPath: m_SizeDelta.x

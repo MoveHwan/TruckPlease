@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleMobileAds;
 using GoogleMobileAds.Api;
 
 public class GoogleAd : MonoBehaviour
@@ -12,13 +13,21 @@ public class GoogleAd : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            // Initialize the Google Mobile Ads SDK.
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadAd();
     }
 
 
@@ -49,15 +58,11 @@ public class GoogleAd : MonoBehaviour
         {
             buyAdDel = true;
         }
-        MobileAds.Initialize(initStatus =>
-        {
-            Debug.Log("AdMob Initialized");
 
-            if (!buyAdDel)
-            {
-                StartCoroutine(DelayLoad());
-            }
-        });
+        if (!buyAdDel)
+        {
+            StartCoroutine(DelayLoad());
+        }
     }
 
     IEnumerator DelayLoad()
