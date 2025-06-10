@@ -215,7 +215,7 @@ public class GameDatas : MonoBehaviour
         {
             Debug.Log("로드 실패");
 
-            //SaveData();
+            SaveData();
         }
     }
 
