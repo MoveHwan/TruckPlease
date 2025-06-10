@@ -40,27 +40,31 @@ public class DailyAdManager : MonoBehaviour
             return;
         }
 
-        int tickets = PlayerPrefs.GetInt(AdTicketKey, MaxTicketsPerDay);
-        tickets--;
-        PlayerPrefs.SetInt(AdTicketKey, tickets);
-        PlayerPrefs.Save();
-        Debug.Log($"광고 시청 완료! 남은 티켓: {tickets}/{MaxTicketsPerDay}");
-
         switch (name)
         {
             case "RewardCoin":
                 GoogleAd.instance.ShowRewardedAdCoin();
                 break;
             case "Save":
-                GoogleAd.instance.ShowRewardedAd();
+                GoogleAd.instance.ShowRewardedAd(this);
                 break;
             case "Revert":
-                GoogleAd.instance.ShowRewardedAd();
+                GoogleAd.instance.ShowRewardedAd(this);
                 break;
             default:
                 return;
                     
         }
+
+    }
+
+    public void SubTicket()
+    {
+        int tickets = PlayerPrefs.GetInt(AdTicketKey, MaxTicketsPerDay);
+        tickets--;
+        PlayerPrefs.SetInt(AdTicketKey, tickets);
+        PlayerPrefs.Save();
+        Debug.Log($"광고 시청 완료! 남은 티켓: {tickets}/{MaxTicketsPerDay}");
     }
 
     // 날짜가 바뀌면 티켓을 리셋

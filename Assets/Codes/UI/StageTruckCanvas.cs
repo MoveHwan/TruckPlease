@@ -262,6 +262,11 @@ public class StageTruckCanvas : MonoBehaviour
         });
 
         PlayerPrefs.Save();
+
+#if !UNITY_EDITOR
+        if (GameDatas.instance != null)
+            GameDatas.instance.GetPlayerSetData();
+#endif
     }
 
     void ShowResultUI()
@@ -527,6 +532,8 @@ public class StageTruckCanvas : MonoBehaviour
         DOTween.KillAll();
 
         GameManager.Instance.GameResume();
+
+        PlayerPrefs.SetInt("StageIn", 1);
 
         SceneManager.LoadScene("InGame");
     }

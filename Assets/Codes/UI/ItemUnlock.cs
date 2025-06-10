@@ -42,7 +42,7 @@ public class ItemUnlock : MonoBehaviour
 
 
         // 큰 박스 해금
-        if (chapter == 1 && stage == 3 && starCount > 0)
+        if (chapter == 1 && stage == 2 && starCount > 0)
         {
             for (int i = 0; i < UnlockObjs.Count; i++)
                 UnlockObjs[i].SetActive(UnlockObjs[i].name == "Big Box");
