@@ -49,7 +49,7 @@ public class ItemUnlock : MonoBehaviour
         }
 
         // 긴 상자 해금
-        else if (chapter == 1 && stage == 6 && starCount > 0)
+        else if (chapter == 1 && stage == 5 && starCount > 0)
         {
             for (int i = 0; i < UnlockObjs.Count; i++)
                 UnlockObjs[i].SetActive(UnlockObjs[i].name == "Long Box");

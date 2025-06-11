@@ -33,7 +33,7 @@ public class GameDatas : MonoBehaviour
     public static GameDatas instance;
 
     public DataSettings dataSettings = new DataSettings();
-    private string fileName = "save.dat";
+    private string fileName = "Player_Save";
 
 
     void Start()
@@ -47,6 +47,8 @@ public class GameDatas : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        PlayGamesPlatform.DebugLogEnabled = true;
 
         instance = this;
 
@@ -96,7 +98,7 @@ public class GameDatas : MonoBehaviour
 
     }
 
-    public void GetPlayerSetData()
+    public void PlayerSetData()
     {
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
         dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 0);
@@ -139,7 +141,7 @@ public class GameDatas : MonoBehaviour
         }
     }
 
-    public void SaveData()
+    void SaveData()
     {
         OpenSaveGame();
     }
@@ -187,7 +189,7 @@ public class GameDatas : MonoBehaviour
         }
     }
 
-    public void LoadData()
+    void LoadData()
     {
         OpenLoadGame();
     }
@@ -214,8 +216,6 @@ public class GameDatas : MonoBehaviour
         else
         {
             Debug.Log("로드 실패");
-
-            SaveData();
         }
     }
 
