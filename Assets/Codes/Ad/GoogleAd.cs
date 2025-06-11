@@ -188,6 +188,19 @@ public class GoogleAd : MonoBehaviour
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
+        if (buyAdDel)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("isItemReward", 1);
+                dailyAd.SubTicket();
+                BuyItem_InGame.instance.AD_Gift();
+            }
+
+            Debug.Log("RemoveAd");
+            return;
+        }
+
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
             ADBackOn();
@@ -266,6 +279,17 @@ public class GoogleAd : MonoBehaviour
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
+        if (buyAdDel)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+
+            }
+
+            Debug.Log("RemoveAd");
+            return;
+        }
+
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
             ADBackOn();
@@ -286,6 +310,18 @@ public class GoogleAd : MonoBehaviour
 
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (buyAdDel)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("isCoinReward", 1);
+                StageTruckCanvas.Instance.AdReward();
+            }
+
+            Debug.Log("RemoveAd");
+            return;
+        }
 
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {

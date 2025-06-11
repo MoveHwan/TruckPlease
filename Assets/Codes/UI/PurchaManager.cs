@@ -33,6 +33,9 @@ public class PurchaManager : MonoBehaviour
 
         GameDatas.PlayerSetData();
 
+        if (GoogleAd.instance != null)
+            GoogleAd.instance.LoadAd();
+
         RemoveADPopUp.SetActive(false);
         RemoveADBtn.SetActive(false);
     }

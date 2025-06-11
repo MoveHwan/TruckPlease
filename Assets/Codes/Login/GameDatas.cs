@@ -221,6 +221,8 @@ public class GameDatas : MonoBehaviour
 
     void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] loadedData)
     {
+        PlayerPrefs.DeleteAll();
+
         string data = System.Text.Encoding.UTF8.GetString(loadedData);
 
         if(data == "")
