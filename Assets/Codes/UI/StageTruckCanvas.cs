@@ -265,7 +265,7 @@ public class StageTruckCanvas : MonoBehaviour
 
 #if !UNITY_EDITOR
         if (GameDatas.instance != null)
-            GameDatas.instance.GetPlayerSetData();
+            GameDatas.instance.PlayerSetData();
 #endif
     }
 
