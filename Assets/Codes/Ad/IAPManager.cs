@@ -4,6 +4,8 @@ using UnityEngine.Purchasing;
 
 public class IAPManager : MonoBehaviour, IStoreListener
 {
+    public static IAPManager Instance;
+
     [Header("Product ID")]
     public readonly string productId_test_id = "removead";
 
@@ -13,6 +15,16 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     private void Start()
     {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         InitUnityIAP(); //Start 문에서 초기화 필수
     }
 
@@ -25,6 +37,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
         builder.AddProduct(productId_test_id, ProductType.NonConsumable, new IDs() { { productId_test_id, GooglePlay.Name } });
 
         UnityPurchasing.Initialize(this, builder);
+    }
+
+    /* 상품 정보 반환 */
+    public Product GetProduct(string productId)
+    {
+        return storeController.products.WithID(productId);
     }
 
     /* 구매하는 함수 */

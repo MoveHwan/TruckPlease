@@ -1,5 +1,6 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.SavedGame;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -52,7 +53,14 @@ public class GameDatas : MonoBehaviour
 
         instance = this;
 
-        LoadData();
+        DeleteData();
+
+        /*if (PlayerPrefs.GetInt("SetPlayerData", 0) == 0)
+        {
+            LoadData();
+            PlayerPrefs.SetInt("SetPlayerData", 1);
+        }*/
+        
     }
 
     void LoadCloudSetData()
@@ -101,7 +109,7 @@ public class GameDatas : MonoBehaviour
     public void PlayerSetData()
     {
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
-        dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 0);
+        dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
 
         dataSettings.Item_Save = PlayerPrefs.GetInt("Item_Save", 3);
         dataSettings.Item_Delete = PlayerPrefs.GetInt("Item_Delete", 3);
@@ -112,7 +120,7 @@ public class GameDatas : MonoBehaviour
 
         dataSettings.nickname = PlayerPrefs.GetString("nickname", "");
         dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
-        dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", "");
+        dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", DateTime.Now.ToString());
 
         dataSettings.BgmVol = PlayerPrefs.GetFloat("BgmVol", 0.5f);
         dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
@@ -221,8 +229,6 @@ public class GameDatas : MonoBehaviour
 
     void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] loadedData)
     {
-        PlayerPrefs.DeleteAll();
-
         string data = System.Text.Encoding.UTF8.GetString(loadedData);
 
         if(data == "")
@@ -259,7 +265,7 @@ public class GameDatas : MonoBehaviour
         if(status == SavedGameRequestStatus.Success)
         {
             savedGameClient.Delete(data);
-
+            SaveData();
             Debug.Log("삭제 성공");
         }
         else

@@ -264,8 +264,11 @@ public class StageTruckCanvas : MonoBehaviour
         PlayerPrefs.Save();
 
 #if !UNITY_EDITOR
-        if (GameDatas.instance != null)
-            GameDatas.instance.PlayerSetData();
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            if (GameDatas.instance != null)
+                GameDatas.instance.PlayerSetData();
+        }
 #endif
     }
 
