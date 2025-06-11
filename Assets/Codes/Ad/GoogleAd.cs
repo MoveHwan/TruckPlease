@@ -7,7 +7,6 @@ using GoogleMobileAds.Api;
 public class GoogleAd : MonoBehaviour
 {
     public static GoogleAd instance;
-    public GameObject ADBack;
 
     public bool buyAdDel;
 
@@ -313,14 +312,15 @@ public class GoogleAd : MonoBehaviour
     // ±¤°í µÞÆÇ ¶ç¿ì±â
     void ADBackOn()
     {
-        ADBack.SetActive(true);
+        GameManager.Instance.ShowAdBack();
         StartCoroutine(ADBackOffCoroutine());
     }
+
     IEnumerator ADBackOffCoroutine()
     {
         yield return new WaitForSeconds(0.2f);
 
-        ADBack.SetActive(false);
+        GameManager.Instance.HideAdBack();
 
         yield break;
     }

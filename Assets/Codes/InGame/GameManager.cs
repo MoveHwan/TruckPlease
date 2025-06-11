@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     string unityLeaderboard = "StageClear";
     string unityLeaderboardWeight = "TotalWeight";
 
-    public GoogleAd googleAd;
+    public GameObject ADBack;
     public ReviewInGame reviewInGame;
 
     void Awake()
@@ -263,9 +263,23 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Àü¸é±¤°í ³ª¿È");
                 StackIntAd.instance.stack = 0;
-                googleAd.ShowInterstitialAd();
+                GoogleAd.instance.ShowInterstitialAd();
             }
         }
     }
 
+    public void ShowAdBack()
+    {
+        ADBack.SetActive(true);
+    }
+
+    public void HideAdBack()
+    {
+        ADBack.SetActive(false);
+    }
+
+    public void ShowCoinRewardAd()
+    {
+        GoogleAd.instance.ShowRewardedAdCoin();
+    }
 }
