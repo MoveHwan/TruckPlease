@@ -22,18 +22,17 @@ MonoBehaviour:
   boxes:
   - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
-  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
-  - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
+  - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
+  - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
-  - {fileID: 9189067268428545770, guid: 8a19b56ce342f5f4288eee175272dca1, type: 3}
   - {fileID: 3077089334365139061, guid: 656c3c58a72a281488ee8eb040fa2699, type: 3}
-  firstStar: 19
-  secondStar: 21
-  thirdStar: 22
+  firstStar: 24
+  secondStar: 26
+  thirdStar: 27
   useWind: 0
   random: 0
   windType: 0
