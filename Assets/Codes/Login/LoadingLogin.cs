@@ -13,7 +13,7 @@ public class LoadingLogin : MonoBehaviour
 {
     public GameObject slider;
     public GameObject unityLogin;
-
+    public GameObject cloudLoad;
     Slider loadingSlider;
     float duration = 3f; // 3초 동안 채우기
     float elapsed = 0f;  // 경과 시간
@@ -78,6 +78,7 @@ public class LoadingLogin : MonoBehaviour
             string ImgUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
 
             UnityConnect();
+            cloudLoad.SetActive(true);
             //StartCoroutine(WaitLoadingSecond());
 
         }
