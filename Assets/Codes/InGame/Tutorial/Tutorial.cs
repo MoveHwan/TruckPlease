@@ -102,6 +102,7 @@ public class Tutorial : MonoBehaviour
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();
             tutoPanel.gameObject.SetActive(false);
+            GameManager.Instance.gamePause = false;
         }
     }
     bool IsClickOrTouch()

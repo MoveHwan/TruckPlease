@@ -55,7 +55,7 @@ public class StageTruckCanvas : MonoBehaviour
 
     int starCount, rewardCoin;
     float stageNum, chapter;
-    bool isResult, isSetTotal;
+    bool isResult, isSetTotal, tuto;
 
     int[] stageRewards = {
         40, 40, 60, 40, 40, 60, 40, 40, 60,
@@ -72,6 +72,8 @@ public class StageTruckCanvas : MonoBehaviour
 
     void Start()
     {
+        tuto = PlayerPrefs.GetInt("Tutorial", 0) == 0;
+
         stageNum = PlayerPrefs.GetInt("Stage", 1);
 
         if (stageNum < 10)
@@ -124,7 +126,7 @@ public class StageTruckCanvas : MonoBehaviour
 
     void WaitReMainBoxInfo()
     {
-        TotalBoxText.text = "/" + (BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count);
+        TotalBoxText.text = "/" + (tuto ? "4" :(BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count));
         TotalWeightText.text = "/" + GameManager.thirdStar;
 
     }

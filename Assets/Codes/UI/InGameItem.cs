@@ -200,7 +200,7 @@ public class InGameItem : MonoBehaviour
     {
         Lock.SetActive(currentItems.ToString() == "item1");
 
-        count = PlayerPrefs.GetInt(currentItems.ToString(), 2);
+        count = PlayerPrefs.GetInt(currentItems.ToString(), 3);
 
         for (int i = 0; i < ItemCountTexts.Length; i++)
             ItemCountTexts[i].text = useCount + " / " + count;

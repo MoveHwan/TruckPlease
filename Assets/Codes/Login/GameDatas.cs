@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class DataSettings
 {
+    public string ID = "None";
+
     public int Gold = 0;
     public int Fatigue = 0;
 
@@ -53,18 +55,18 @@ public class GameDatas : MonoBehaviour
 
         instance = this;
 
-        DeleteData();
-
-        /*if (PlayerPrefs.GetInt("SetPlayerData", 0) == 0)
+        if (PlayerPrefs.GetInt("SetPlayerData", 0) == 0)
         {
             LoadData();
             PlayerPrefs.SetInt("SetPlayerData", 1);
-        }*/
+        }
         
     }
 
     void LoadCloudSetData()
     {
+        PlayerPrefs.SetString("PlayerID", dataSettings.ID);
+
         PlayerPrefs.SetInt("Gold", dataSettings.Gold);
         PlayerPrefs.SetInt("Fatigue", dataSettings.Fatigue);
 
@@ -77,7 +79,7 @@ public class GameDatas : MonoBehaviour
 
         PlayerPrefs.SetString("nickname", dataSettings.nickname);
         PlayerPrefs.SetString("TopRatingStage", dataSettings.TopRatingStage);
-        PlayerPrefs.SetString("LastFatigueTime", dataSettings.LastFatigueTime);
+        PlayerPrefs.SetString("LastFatigueTime", dataSettings.LastFatigueTime == "" || dataSettings.LastFatigueTime == null ? DateTime.Now.ToString() : dataSettings.LastFatigueTime);
 
         PlayerPrefs.SetFloat("BgmVol", dataSettings.BgmVol);
         PlayerPrefs.SetFloat("SfxVol", dataSettings.SfxVol);
@@ -108,6 +110,39 @@ public class GameDatas : MonoBehaviour
 
     public void PlayerSetData()
     {
+        dataSettings.ID = PlayerPrefs.GetString("PlayerID", "None");
+
+        // 아이디가 없는경우
+        if (dataSettings.ID == "None")
+        {
+            PlayerPrefs.SetString("PlayerID", Social.localUser.id);
+        }
+        // 아이디가 다를경우
+        else if (dataSettings.ID != Social.localUser.id)
+        {
+            ResetStageStar();
+
+            PlayerPrefs.SetString("PlayerID", Social.localUser.id);
+
+            PlayerPrefs.SetInt("Gold", 0);
+            PlayerPrefs.SetInt("Fatigue", 10);
+
+            PlayerPrefs.SetInt("Item_Save", 3);
+            PlayerPrefs.SetInt("Item_Delete", 3);
+
+            PlayerPrefs.SetInt("Tutorial", 0);
+            PlayerPrefs.SetInt("RemoveAd", 0);
+            PlayerPrefs.SetInt("ReviewOn", 0);
+
+            PlayerPrefs.SetString("nickname", "");
+            PlayerPrefs.SetString("TopRatingStage", "1_0");
+            PlayerPrefs.SetString("LastFatigueTime", DateTime.Now.ToString());
+
+            PlayerPrefs.SetFloat("BgmVol", 0.5f);
+            PlayerPrefs.SetFloat("SfxVol", 0.5f);
+            PlayerPrefs.SetFloat("TotalWeight", 0);
+        }
+
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
         dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
 
@@ -131,7 +166,25 @@ public class GameDatas : MonoBehaviour
         SaveData();
     }
 
-    public void RenewStageStar()
+    void ResetStageStar()
+    {
+        int chap = int.Parse(PlayerPrefs.GetString("TopRatingStage", "1_0").Split("_")[0]);
+
+        int idx = 0;
+
+        for (int i = 0; i < chap; i++)
+        {
+            for (int j = 0; j < 12; j++)
+            {
+                if (i == 0 && j > 9) break;
+
+                PlayerPrefs.SetInt("Stage" + idx + 1 + "_Star", 0);
+            }
+        }
+
+    }
+
+    void RenewStageStar()
     {
         int stage = PlayerPrefs.GetInt("Stage", 0);
         int starCount = PlayerPrefs.GetInt("Stage" + stage + "_Star", 0);
@@ -234,13 +287,16 @@ public class GameDatas : MonoBehaviour
         if(data == "")
         {
             Debug.Log("데이터 없음 초기 데이터 저장");
-            SaveData();
+
+            PlayerSetData();
         }
         else
         {
             Debug.Log("로드 데이터 : " + data);
 
             dataSettings = JsonUtility.FromJson<DataSettings>(data);
+
+            DataSettings defaultData = new DataSettings();
 
             LoadCloudSetData();
         }
@@ -265,7 +321,6 @@ public class GameDatas : MonoBehaviour
         if(status == SavedGameRequestStatus.Success)
         {
             savedGameClient.Delete(data);
-            SaveData();
             Debug.Log("삭제 성공");
         }
         else

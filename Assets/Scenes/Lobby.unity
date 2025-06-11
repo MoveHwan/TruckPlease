@@ -38517,7 +38517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1306955167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38532,6 +38532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemoveADBtn: {fileID: 3634208635714582623}
   RemoveADPopUp: {fileID: 1820186577}
+  RemoveAD_PriceText: {fileID: 852285532}
 --- !u!4 &1306955168
 Transform:
   m_ObjectHideFlags: 0
