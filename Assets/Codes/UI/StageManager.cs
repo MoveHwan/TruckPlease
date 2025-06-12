@@ -11,6 +11,7 @@ public class StageManager : MonoBehaviour
 
     public GameObject StagePopUp;
     public GameObject ChapterPopUp;
+    public GameObject NoHeartPopUp;
     public Transform[] Chapters;
     public Transform[] Stages;
 

@@ -66,6 +66,20 @@ public class FatigueManager : MonoBehaviour
             }
 #endif
         }
+
+        CheckRewardFatiuge();
+    }
+
+    void CheckRewardFatiuge()
+    {
+        if (PlayerPrefs.GetInt("isHeartReward", 0) == 1)
+        {
+            PlayerPrefs.SetInt("isHeartReward", 0);
+
+            currentFatigue += 10;
+
+            PlayerPrefs.Save();
+        }
     }
 
     void LoadFatigue()
@@ -162,6 +176,13 @@ public class FatigueManager : MonoBehaviour
     {
         if (currentFatigue > 0) return true;
         
+        return false;
+    }
+
+    public bool CheckRetryFatigue()
+    {
+        if (currentFatigue > 1) return true;
+
         return false;
     }
 

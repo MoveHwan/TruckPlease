@@ -67,7 +67,11 @@ public class StageUI : MonoBehaviour
 
     public void LoadStage()
     {
-        if (!FatigueManager.instance.CheckFatigue()) return;
+        if (!FatigueManager.instance.CheckFatigue())
+        {
+            StageManager.instance.NoHeartPopUp.SetActive(true);
+            return;
+        }
 
         FatigueManager.instance.StageIn();
 

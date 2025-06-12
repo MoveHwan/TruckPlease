@@ -31,7 +31,7 @@ public class DailyAdManager : MonoBehaviour
         return tickets > 0;
     }
 
-    // 광고 본 후 호출
+    // 광고 호출
     public void OnAdWatched()
     {
         if (!CanWatchAd())
@@ -51,6 +51,9 @@ public class DailyAdManager : MonoBehaviour
             case "Revert":
                 GoogleAd.instance.ShowRewardedAd(this);
                 break;
+            case "Heart":
+                GoogleAd.instance.ShowRewardedAdHeart(this);
+                break;
             default:
                 return;
                     
@@ -65,6 +68,8 @@ public class DailyAdManager : MonoBehaviour
         PlayerPrefs.SetInt(AdTicketKey, tickets);
         PlayerPrefs.Save();
         Debug.Log($"광고 시청 완료! 남은 티켓: {tickets}/{MaxTicketsPerDay}");
+
+        if (name == "Heart") transform.parent.parent.gameObject.SetActive(false);
     }
 
     // 날짜가 바뀌면 티켓을 리셋

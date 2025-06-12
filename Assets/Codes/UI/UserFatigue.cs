@@ -8,8 +8,11 @@ public class UserFatigue : MonoBehaviour
     public TextMeshProUGUI FatigueText;
     public TextMeshProUGUI CoolTimeText;
 
+    public bool isNoMore;
+
     int fatigue;
     string fatigueStr;
+
 
     void Update()
     {
@@ -20,7 +23,10 @@ public class UserFatigue : MonoBehaviour
     {
         fatigue = PlayerPrefs.GetInt("Fatigue", 0);
 
-        fatigueStr = fatigue.ToString() + "/10";
+        if (isNoMore)
+            fatigueStr = "<color=#FF9432>" + fatigue.ToString() + "</color>/10";
+        else
+            fatigueStr = fatigue.ToString() + "/10";
 
         if (FatigueText.text != fatigueStr)
             FatigueText.text = fatigueStr;
