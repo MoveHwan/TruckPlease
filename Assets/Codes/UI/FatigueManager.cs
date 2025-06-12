@@ -78,7 +78,7 @@ public class FatigueManager : MonoBehaviour
 
             currentFatigue += 10;
 
-            PlayerPrefs.Save();
+            SaveFatigue();
         }
     }
 

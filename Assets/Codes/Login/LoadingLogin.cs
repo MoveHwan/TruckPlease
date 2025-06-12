@@ -78,7 +78,7 @@ public class LoadingLogin : MonoBehaviour
             string ImgUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
 
             UnityConnect();
-            cloudLoad.SetActive(true);
+            //cloudLoad.SetActive(true);
             //StartCoroutine(WaitLoadingSecond());
 
         }
