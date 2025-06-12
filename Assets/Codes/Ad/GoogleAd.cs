@@ -151,6 +151,12 @@ public class GoogleAd : MonoBehaviour
 
     public void LoadRewardedAd()
     {
+        if (rewardedAd != null && rewardedAd.CanShowAd())
+        {
+            Debug.Log("Rewarded ad already loaded.");
+            return;
+        }
+
         // Clean up the old ad before loading a new one.
         if (rewardedAd != null)
         {
@@ -179,7 +185,7 @@ public class GoogleAd : MonoBehaviour
                           + ad.GetResponseInfo());
 
                 rewardedAd = ad;
-                RegisterReloadHandler(rewardedAd);
+                //RegisterReloadHandler(rewardedAd);
             });
     }
 
