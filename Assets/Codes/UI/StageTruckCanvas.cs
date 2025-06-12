@@ -269,7 +269,7 @@ public class StageTruckCanvas : MonoBehaviour
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             if (GameDatas.instance != null)
-                GameDatas.instance.PlayerSetData();
+                GameDatas.instance.StageEndSave();
         }
 #endif
     }

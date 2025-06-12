@@ -57,6 +57,14 @@ public class FatigueManager : MonoBehaviour
             PlayerPrefs.SetInt("StageIn", 0);
 
             SaveFatigue();
+
+#if !UNITY_EDITOR
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                if (GameDatas.instance != null)
+                    GameDatas.instance.StageEndSave();
+            }
+#endif
         }
     }
 

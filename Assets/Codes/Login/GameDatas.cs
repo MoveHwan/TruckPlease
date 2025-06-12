@@ -79,7 +79,7 @@ public class GameDatas : MonoBehaviour
 
         PlayerPrefs.SetString("nickname", dataSettings.nickname);
         PlayerPrefs.SetString("TopRatingStage", dataSettings.TopRatingStage);
-        PlayerPrefs.SetString("LastFatigueTime", dataSettings.LastFatigueTime == "" || dataSettings.LastFatigueTime == null ? DateTime.Now.ToString() : dataSettings.LastFatigueTime);
+        PlayerPrefs.SetString("LastFatigueTime", dataSettings.LastFatigueTime == "" || dataSettings.LastFatigueTime == null ? DateTime.Now.AddDays(-1).ToString() : dataSettings.LastFatigueTime);
 
         PlayerPrefs.SetFloat("BgmVol", dataSettings.BgmVol);
         PlayerPrefs.SetFloat("SfxVol", dataSettings.SfxVol);
@@ -90,23 +90,54 @@ public class GameDatas : MonoBehaviour
 
     void SetStageStar()
     {
-        int chap = int.Parse(dataSettings.TopRatingStage.Split("_")[0]);
-
-        int idx = 0;
-
-        for (int i = 0; i < chap; i++) 
+        for (int i = 0; i < dataSettings.StageStar.Count; i++) 
         {
-            for (int j = 0; j < 12; j++)
-            {
-                if (idx >= dataSettings.StageStar.Count) return;
-
-                if (i == 0 && j > 9) break;
-
-                PlayerPrefs.SetInt("Stage" + idx + 1 + "_Star", dataSettings.StageStar[idx]);
-            }
+            PlayerPrefs.SetInt("Stage" + i + 1 + "_Star", dataSettings.StageStar[i]);
         }
 
     }
+
+    public void StageEndSave()
+    {
+        dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
+        dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
+
+        dataSettings.Item_Save = PlayerPrefs.GetInt("Item_Save", 3);
+        dataSettings.Item_Delete = PlayerPrefs.GetInt("Item_Delete", 3);
+
+        dataSettings.Tutorial = PlayerPrefs.GetInt("Tutorial", 0) == 1;
+        dataSettings.RemoveAd = PlayerPrefs.GetInt("RemoveAd", 0) == 1;
+        dataSettings.IsReview = PlayerPrefs.GetInt("ReviewOn", 0) == 1;
+
+        dataSettings.nickname = PlayerPrefs.GetString("nickname", "");
+        dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
+        dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", DateTime.Now.ToString());
+
+        dataSettings.BgmVol = PlayerPrefs.GetFloat("BgmVol", 0.5f);
+        dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
+        dataSettings.TotalWeight = PlayerPrefs.GetFloat("TotalWeight", 0);
+
+        NewStageStar();
+
+        SaveData();
+    }
+    void NewStageStar()
+    {
+        int stage = PlayerPrefs.GetInt("Stage", 0);
+        int starCount = PlayerPrefs.GetInt("Stage" + stage + "_Star", 0);
+
+        if (starCount <= 0 || stage <= 0) return;
+
+        // 리스트가 targetIndex보다 작으면 0으로 채우기
+        while (dataSettings.StageStar.Count <= stage-1)
+        {
+            dataSettings.StageStar.Add(0);
+        }
+
+        if (dataSettings.StageStar[stage - 1] < starCount)
+            dataSettings.StageStar[stage - 1] = starCount;
+    }
+
 
     public void PlayerSetData()
     {
@@ -115,11 +146,16 @@ public class GameDatas : MonoBehaviour
         // 아이디가 없는경우
         if (dataSettings.ID == "None")
         {
+            Debug.LogWarning("아이디가 등록되어 있지 않음");
+
             PlayerPrefs.SetString("PlayerID", Social.localUser.id);
         }
+
         // 아이디가 다를경우
-        else if (dataSettings.ID != Social.localUser.id)
+        if (dataSettings.ID != Social.localUser.id)
         {
+            Debug.LogWarning("아이디가 다름");
+
             ResetStageStar();
 
             PlayerPrefs.SetString("PlayerID", Social.localUser.id);
@@ -142,6 +178,11 @@ public class GameDatas : MonoBehaviour
             PlayerPrefs.SetFloat("SfxVol", 0.5f);
             PlayerPrefs.SetFloat("TotalWeight", 0);
         }
+        else
+        {
+
+
+        }
 
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
         dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
@@ -161,9 +202,23 @@ public class GameDatas : MonoBehaviour
         dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
         dataSettings.TotalWeight = PlayerPrefs.GetFloat("TotalWeight", 0);
 
-        RenewStageStar();
-
         SaveData();
+    }
+
+    void RenewStageStar()
+    {
+        int chap = int.Parse(dataSettings.TopRatingStage.Split("_")[0]);
+        int stage = int.Parse(dataSettings.TopRatingStage.Split("_")[1]);
+
+
+        // 리스트가 targetIndex보다 작으면 0으로 채우기
+        while (dataSettings.StageStar.Count <= stage - 1)
+        {
+            dataSettings.StageStar.Add(0);
+        }
+
+        /*if (dataSettings.StageStar[stage - 1] < starCount)
+            dataSettings.StageStar[stage - 1] = starCount;*/
     }
 
     void ResetStageStar()
@@ -184,24 +239,7 @@ public class GameDatas : MonoBehaviour
 
     }
 
-    void RenewStageStar()
-    {
-        int stage = PlayerPrefs.GetInt("Stage", 0);
-        int starCount = PlayerPrefs.GetInt("Stage" + stage + "_Star", 0);
-
-        if (starCount <= 0 || stage <= 0) return;
-
-        if (dataSettings.StageStar.Count < stage)
-        {
-            dataSettings.StageStar.Add(starCount);
-        }
-        else
-        {
-            if (dataSettings.StageStar[stage - 1] < starCount)
-                dataSettings.StageStar[stage - 1] = starCount;
-        }
-    }
-
+   
     void SaveData()
     {
         OpenSaveGame();
