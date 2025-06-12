@@ -57,6 +57,28 @@ public class FatigueManager : MonoBehaviour
             PlayerPrefs.SetInt("StageIn", 0);
 
             SaveFatigue();
+
+#if !UNITY_EDITOR
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                if (GameDatas.instance != null)
+                    GameDatas.instance.StageEndSave();
+            }
+#endif
+        }
+
+        CheckRewardFatiuge();
+    }
+
+    void CheckRewardFatiuge()
+    {
+        if (PlayerPrefs.GetInt("isHeartReward", 0) == 1)
+        {
+            PlayerPrefs.SetInt("isHeartReward", 0);
+
+            currentFatigue += 10;
+
+            PlayerPrefs.Save();
         }
     }
 
@@ -154,6 +176,13 @@ public class FatigueManager : MonoBehaviour
     {
         if (currentFatigue > 0) return true;
         
+        return false;
+    }
+
+    public bool CheckRetryFatigue()
+    {
+        if (currentFatigue > 1) return true;
+
         return false;
     }
 

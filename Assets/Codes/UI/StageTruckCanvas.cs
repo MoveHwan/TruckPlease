@@ -16,6 +16,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject ADButton;
     public GameObject ClearConfetti;
     public GameObject Count;
+    public GameObject NoHeartPopUp;
     public GameObject[] StarImages; // 3개의 별 이미지
 
     [Header("[ RectTransform ]")]
@@ -197,11 +198,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         }
 
-        if (!FatigueManager.instance.CheckFatigue())
-        {
-            Buttons.GetChild(0).gameObject.SetActive(false);
-            Buttons.GetChild(1).gameObject.SetActive(false);
-        }
+       
 
 
         if (PlayerPrefs.GetInt(str, 0) < starCount)
@@ -269,7 +266,7 @@ public class StageTruckCanvas : MonoBehaviour
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             if (GameDatas.instance != null)
-                GameDatas.instance.PlayerSetData();
+                GameDatas.instance.StageEndSave();
         }
 #endif
     }
@@ -491,14 +488,28 @@ public class StageTruckCanvas : MonoBehaviour
         }
     }
 
+    public void CheckPauseRetry()
+    {
+        if (!FatigueManager.instance.CheckRetryFatigue())
+        {
+            NoHeartPopUp.SetActive(true);
+            return;
+        }
 
+        Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
+
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => StageRetry());
+
+        LostHeartPanel.gameObject.SetActive(true);
+    }
 
 
     public void CheckStageRetry()
     {
         if (!FatigueManager.instance.CheckFatigue())
         {
-            //NoHeart.NoHeartOn(target);
+            NoHeartPopUp.SetActive(true);
             return;
         }
 
@@ -512,12 +523,6 @@ public class StageTruckCanvas : MonoBehaviour
 
     public void CheckLobby()
     {
-        if (!FatigueManager.instance.CheckFatigue())
-        {
-            //NoHeart.NoHeartOn(target);
-            return;
-        }
-
         Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
 
         btn.onClick.RemoveAllListeners();
@@ -530,7 +535,7 @@ public class StageTruckCanvas : MonoBehaviour
     {
         if (!FatigueManager.instance.SubFatigue())
         {
-            //NoHeart.NoHeartOn(target);
+            NoHeartPopUp.SetActive(true);
             return;
         }
 
@@ -547,7 +552,7 @@ public class StageTruckCanvas : MonoBehaviour
     {
         if (!FatigueManager.instance.CheckFatigue())
         {
-            // NoHeart.NoHeartOn(target);
+            NoHeartPopUp.SetActive(true);
             return;
         }
 

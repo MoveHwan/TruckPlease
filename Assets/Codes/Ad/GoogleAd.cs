@@ -280,7 +280,7 @@ public class GoogleAd : MonoBehaviour
     }
 
 
-    public void ShowRewardedAdHeart()
+    public void ShowRewardedAdHeart(DailyAdManager dailyAd)
     {
         //const string rewardMsg =
         //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
@@ -289,7 +289,8 @@ public class GoogleAd : MonoBehaviour
         {
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-
+                PlayerPrefs.SetInt("isHeartReward", 1);
+                dailyAd.SubTicket();
             }
 
             Debug.Log("RemoveAd");
@@ -302,12 +303,20 @@ public class GoogleAd : MonoBehaviour
 
             rewardedAd.Show((Reward reward) =>
             {
-                // ø©±‚º≠ ∫∏ªÛ¡‡æﬂµ 
+                PlayerPrefs.SetInt("isHeartReward", 1);
+                dailyAd.SubTicket();
             });
 
         }
         else
         {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("isHeartReward", 1);
+                dailyAd.SubTicket();
+            }
+
+            Debug.Log("No have RewardAd");
         }
     }
 
