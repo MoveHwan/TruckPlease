@@ -37,12 +37,11 @@ public class RotationBox : MonoBehaviour
 
         if (Input.GetMouseButton(0) && isDragging)
         {
-            if (Input.mousePosition.y < Screen.height * 0.3f)
-            {
-                Vector2 deltaPosition = (Vector2)Input.mousePosition - lastTouchPosition;
-                RotateObject(deltaPosition);
-                lastTouchPosition = Input.mousePosition;
-            }
+            
+            Vector2 deltaPosition = (Vector2)Input.mousePosition - lastTouchPosition;
+            RotateObject(deltaPosition);
+            lastTouchPosition = Input.mousePosition;
+            
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -67,12 +66,11 @@ public class RotationBox : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved && isDragging)
             {
-                if (touch.position.y < Screen.height * 0.3f)
-                {
-                    Vector2 deltaPosition = touch.position - lastTouchPosition;
-                    RotateObject(deltaPosition);
-                    lastTouchPosition = touch.position;
-                }
+                
+                Vector2 deltaPosition = touch.position - lastTouchPosition;
+                RotateObject(deltaPosition);
+                lastTouchPosition = touch.position;
+                
             }
             else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
