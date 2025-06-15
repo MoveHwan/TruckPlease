@@ -139,7 +139,7 @@ public class GameDatas : MonoBehaviour
     }
 
 
-    public void PlayerSetData()
+    public void PlayerDataSave()
     {
         dataSettings.ID = PlayerPrefs.GetString("PlayerID", "None");
 
@@ -149,6 +149,26 @@ public class GameDatas : MonoBehaviour
             Debug.LogWarning("아이디가 등록되어 있지 않음");
 
             PlayerPrefs.SetString("PlayerID", Social.localUser.id);
+
+            dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
+            dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
+
+            dataSettings.Item_Save = PlayerPrefs.GetInt("Item_Save", 3);
+            dataSettings.Item_Delete = PlayerPrefs.GetInt("Item_Delete", 3);
+
+            dataSettings.Tutorial = PlayerPrefs.GetInt("Tutorial", 0) == 1;
+            dataSettings.RemoveAd = PlayerPrefs.GetInt("RemoveAd", 0) == 1;
+            dataSettings.IsReview = PlayerPrefs.GetInt("ReviewOn", 0) == 1;
+
+            dataSettings.nickname = PlayerPrefs.GetString("nickname", "");
+            dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
+            dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", DateTime.Now.ToString());
+
+            dataSettings.BgmVol = PlayerPrefs.GetFloat("BgmVol", 0.5f);
+            dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
+            dataSettings.TotalWeight = PlayerPrefs.GetFloat("TotalWeight", 0);
+
+            SaveData();
         }
 
         // 아이디가 다를경우
@@ -205,10 +225,19 @@ public class GameDatas : MonoBehaviour
         SaveData();
     }
 
-    void RenewStageStar()
+    void PlayerPrefsStageStarSet()
     {
         int chap = int.Parse(dataSettings.TopRatingStage.Split("_")[0]);
         int stage = int.Parse(dataSettings.TopRatingStage.Split("_")[1]);
+
+        for (int c = 0; c < chap; c++)
+        {
+            for (int s = 0; s < 12; s++)
+            {
+                if (c + 1 >= chap && s + 1 < stage ) return;
+                if (c == 0 && s > 9) break;
+            }
+        }
 
 
         // 리스트가 targetIndex보다 작으면 0으로 채우기
@@ -326,7 +355,7 @@ public class GameDatas : MonoBehaviour
         {
             Debug.Log("데이터 없음 초기 데이터 저장");
 
-            PlayerSetData();
+            PlayerDataSave();
         }
         else
         {

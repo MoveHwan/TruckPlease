@@ -48,7 +48,7 @@ public void PurchaComplete_RemoveAD()
     {
         PlayerPrefs.SetInt("RemoveAd", 1);
 
-        GameDatas.PlayerSetData();
+        GameDatas.PlayerDataSave();
 
         if (GoogleAd.instance != null)
             GoogleAd.instance.LoadAd();
