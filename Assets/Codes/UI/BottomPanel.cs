@@ -50,13 +50,13 @@ public class BottomPanel : MonoBehaviour
 
         SetCargoBoxUI_Update();
 
-        if (!isWarning && Count.activeSelf)
+        if (!isWarning && BoxManager.Instance.boxWarn)
         {
             isWarning = true;
             SetWarningSeq();
         }
 
-        if (!Count.activeSelf && isWarning)
+        if (!BoxManager.Instance.boxWarn && isWarning)
         {
             isWarning = false;
 

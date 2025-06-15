@@ -78,7 +78,7 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (controlBox == null || BoxManager.Instance.keepItem || GameManager.Instance.gameEnd || BoxManager.Instance.warnEnd)
+        if (controlBox == null || BoxManager.Instance.keepItem || GameManager.Instance.gameEnd)
             return;
         dragStarted = true;
         isPressing = true;

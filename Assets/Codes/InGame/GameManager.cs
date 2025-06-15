@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         if(stageData[stage - 1].stageObstacle != null)
         {
             stageObstacle = stageData[stage - 1].stageObstacle;
-            Instantiate(stageObstacle);
+            Instantiate(stageObstacle, BoxManager.Instance.gameObject.transform);
         }
         firstStar = stageData[stage - 1].firstStar;
         secondStar = stageData[stage - 1].secondStar;

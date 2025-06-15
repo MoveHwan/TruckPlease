@@ -32,7 +32,7 @@ public class BoxManager : MonoBehaviour
 
     public bool gameEndBox;
     public bool boxReady;          // 상자 준비 되면
-
+    public bool boxWarn;                  // 상자 다던져도 안될때
     [Header("item")]
     public bool keepItem;
     public bool warnEnd;        // 남은 상자로 못 클리어하는 변수
@@ -170,7 +170,7 @@ public class BoxManager : MonoBehaviour
 
         if (remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
         {
-            StartCoroutine(BoxGameEnd());
+            StartCoroutine(BoxWarn());
         }
     }
 
@@ -241,6 +241,22 @@ public class BoxManager : MonoBehaviour
         }
         gameEndCount = 0f;
         GameManager.Instance.GameEnd();
+    }
+
+    // 다 던져도 못넣을때 경고
+    IEnumerator BoxWarn()
+    {
+        if (boxWarn)
+            yield break;
+
+        boxWarn = true;
+
+        while (remainBoxWeight + inBoxWeight < GameManager.Instance.firstStar)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        boxWarn = false;
+        yield break;
     }
 
     // 아이템 킾 발동
