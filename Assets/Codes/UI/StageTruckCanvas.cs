@@ -17,7 +17,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject NoHeartPopUp;
-    public GameObject[] StarImages; // 3°³ÀÇ º° ÀÌ¹ÌÁö
+    public GameObject[] StarImages; // 3ê°œì˜ ë³„ ì´ë¯¸ì§€
 
     [Header("[ RectTransform ]")]
     public RectTransform TotalBox;
@@ -160,7 +160,7 @@ public class StageTruckCanvas : MonoBehaviour
         if (rewardCoin <= 0)
             ADButton.SetActive(false);
 
-        // Retry¹öÆ° È°¼ºÈ­ ¿©ºÎ
+        // Retryë²„íŠ¼ í™œì„±í™” ì—¬ë¶€
         if (starCount == 0)
         {
             FatigueManager.instance.SubFatigue();
@@ -187,7 +187,7 @@ public class StageTruckCanvas : MonoBehaviour
 
 
 
-        // ´ÙÀ½ ½ºÅ×ÀÌÁö°¡ »õ·Î¿î Ã©ÅÍÀÏ½Ã Retry¹öÆ° È°¼ºÈ­
+        // ë‹¤ìŒ ìŠ¤í…Œì´ì§€ê°€ ìƒˆë¡œìš´ ì±•í„°ì¼ì‹œ Retryë²„íŠ¼ í™œì„±í™”
         if (stageNum == 9 && starCount > 0)
         {
             PlayerPrefs.SetInt("NewChapter", 1);
@@ -325,10 +325,10 @@ public class StageTruckCanvas : MonoBehaviour
 
     void LeftMoveAndNumbering(RectTransform targetUI, TextMeshProUGUI TMP, int targetValue)
     {
-        // ¿ø·¡ À§Ä¡ ÀúÀå
+        // ì›ë˜ ìœ„ì¹˜ ì €ì¥
         Vector2 originalPos = targetUI.anchoredPosition;
 
-        // Äµ¹ö½º ±×·ì ¾øÀ¸¸é Ãß°¡
+        // ìº”ë²„ìŠ¤ ê·¸ë£¹ ì—†ìœ¼ë©´ ì¶”ê°€
         CanvasGroup canvasGroup = targetUI.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
@@ -338,11 +338,11 @@ public class StageTruckCanvas : MonoBehaviour
         }
 
 
-        // ½ÃÀÛ »óÅÂ: ¿À¸¥ÂÊ ¹Û + Åõ¸í
+        // ì‹œì‘ ìƒíƒœ: ì˜¤ë¥¸ìª½ ë°– + íˆ¬ëª…
         targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
         canvasGroup.alpha = 0;
 
-        // ÀÌµ¿ + ¾ËÆÄ µ¿½Ã¿¡ Æ®À©
+        // ì´ë™ + ì•ŒíŒŒ ë™ì‹œì— íŠ¸ìœˆ
         resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
             .Join(canvasGroup.DOFade(1f, 0.3f))
             .AppendInterval(0.05f);
@@ -358,10 +358,10 @@ public class StageTruckCanvas : MonoBehaviour
     }
     void LeftMoveAndNumbering(RectTransform targetUI, TextMeshProUGUI TMP, float targetValue)
     {
-        // ¿ø·¡ À§Ä¡ ÀúÀå
+        // ì›ë˜ ìœ„ì¹˜ ì €ì¥
         Vector2 originalPos = targetUI.anchoredPosition;
 
-        // Äµ¹ö½º ±×·ì ¾øÀ¸¸é Ãß°¡
+        // ìº”ë²„ìŠ¤ ê·¸ë£¹ ì—†ìœ¼ë©´ ì¶”ê°€
         CanvasGroup canvasGroup = targetUI.GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
@@ -370,11 +370,11 @@ public class StageTruckCanvas : MonoBehaviour
             return;
         }
 
-        // ½ÃÀÛ »óÅÂ: ¿À¸¥ÂÊ ¹Û + Åõ¸í
+        // ì‹œì‘ ìƒíƒœ: ì˜¤ë¥¸ìª½ ë°– + íˆ¬ëª…
         targetUI.anchoredPosition = originalPos + Vector2.right * Screen.width;
         canvasGroup.alpha = 0;
 
-        // ÀÌµ¿ + ¾ËÆÄ µ¿½Ã¿¡ Æ®À©
+        // ì´ë™ + ì•ŒíŒŒ ë™ì‹œì— íŠ¸ìœˆ
         resultSeq.Append(targetUI.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
             .Join(canvasGroup.DOFade(1f, 0.3f));
 
@@ -390,7 +390,7 @@ public class StageTruckCanvas : MonoBehaviour
 
     void Stamp()
     {
-        // ½ÃÀÛ »óÅÂ: ÀÛ°í Åõ¸í
+        // ì‹œì‘ ìƒíƒœ: ì‘ê³  íˆ¬ëª…
         StampImage.localScale = Vector3.zero;
 
         CanvasGroup canvasGroup = StampImage.GetComponent<CanvasGroup>();
@@ -440,11 +440,11 @@ public class StageTruckCanvas : MonoBehaviour
             return;
         }
 
-        // ½ÃÀÛ »óÅÂ: ¾Æ·¡¿¡¼­ ´ë±â + Åõ¸í
+        // ì‹œì‘ ìƒíƒœ: ì•„ë˜ì—ì„œ ëŒ€ê¸° + íˆ¬ëª…
         Buttons.anchoredPosition = originalPos - Vector2.up * Screen.height;
         canvasGroup.alpha = 0;
 
-        // ÀÌµ¿ + ¼­¼­È÷ ³ªÅ¸³ª±â
+        // ì´ë™ + ì„œì„œíˆ ë‚˜íƒ€ë‚˜ê¸°
         resultSeq.Append(Buttons.DOAnchorPos(originalPos, 0.4f).SetEase(Ease.OutCubic))
                  .Join(canvasGroup.DOFade(1f, 0.4f));
 
@@ -499,7 +499,7 @@ public class StageTruckCanvas : MonoBehaviour
         Button btn = LostHeartPanel.GetChild(4).GetComponent<Button>();
 
         btn.onClick.RemoveAllListeners();
-        btn.onClick.AddListener(() => StageRetry());
+        btn.onClick.AddListener(() => StagePauseRetry());
 
         LostHeartPanel.gameObject.SetActive(true);
     }
@@ -531,9 +531,27 @@ public class StageTruckCanvas : MonoBehaviour
         LostHeartPanel.gameObject.SetActive(true);
     }
 
-    public void StageRetry()
+
+    public void StagePauseRetry()
     {
         if (!FatigueManager.instance.SubFatigue())
+        {
+            NoHeartPopUp.SetActive(true);
+            return;
+        }
+
+        DOTween.KillAll();
+
+        GameManager.Instance.GameResume();
+
+        PlayerPrefs.SetInt("StageIn", 1);
+
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void StageRetry()
+    {
+        if (!FatigueManager.instance.CheckFatigue())
         {
             NoHeartPopUp.SetActive(true);
             return;
