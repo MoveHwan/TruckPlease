@@ -153,7 +153,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4988ace4224683448bdc75b64ff92b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 0}
+  firstStack: {fileID: 5937780535484590322, guid: d2e0eec8520b5684da97161c553efb23,
+    type: 3}
+  secondStack: {fileID: 6173110779871640579, guid: a7978c59913b6614f9f86dea2767dc6c,
+    type: 3}
+  thirdStack: {fileID: 7691309380337683697, guid: 85600561c0f9fe640bb0095f7403f8c3,
+    type: 3}
 --- !u!114 &3374655923113545062
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class BoxVfxOn : MonoBehaviour
 {
-    public ParticleSystem particle;  // 인스펙터에서 연결하거나 코드에서 찾을 수 있음
-    int count = 0;
+    public ParticleSystem firstStack;   
+    public ParticleSystem secondStack; 
+    public ParticleSystem thirdStack;
+
+    bool vfxOn;
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("일단 부딫힘");
+        if (!vfxOn && BoxManager.Instance.GoaledBoxes.Contains(gameObject))
+        {
+            Debug.Log("효과 나야됨");
+
+            ParticlePlay();
+            VfxManager.instance.stack++;
+            vfxOn = true;
+        }
+    }
 
     public void ParticlePlay()
     {
-        if (count == 0)
+        switch (VfxManager.instance.stack) 
         { 
-            particle.Play();
-            count++;
+            case 0: firstStack.Play();break;
+            case 1: secondStack.Play(); break;
+            case 2: thirdStack.Play();break;
         }
-
     }
 }

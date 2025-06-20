@@ -12,6 +12,7 @@ public class GroundBoxDel : MonoBehaviour
         {
             StartCoroutine(BoxDelayDelete(other.gameObject));
             BoxManager.Instance.CalcBoxCurEnd();
+            VfxManager.instance.stack = 0;
         }
     }
 
