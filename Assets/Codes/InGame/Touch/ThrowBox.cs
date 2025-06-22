@@ -214,6 +214,10 @@ public class ThrowBox : MonoBehaviour
         ThrowTouchPanel.Instance.throwHeightSli.value = 0f;
         BoxManager.Instance.RemainBoxCal(gameObject);
         BoxManager.Instance.NextBoxSpawnWait();
+        if (GameManager.Instance.tutoThrowZone.activeSelf)
+        {
+            GameManager.Instance.CloseTutoZone();
+        }
     }
 
     void MoveSlider()

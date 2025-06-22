@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject ADBack;
     public ReviewInGame reviewInGame;
+    public GameObject tutoThrowZone;
 
     void Awake()
     {
@@ -67,6 +68,11 @@ public class GameManager : MonoBehaviour
         }
 
         GoogleAd.instance.LoadAd();
+
+        if (PlayerPrefs.GetInt("TutoThrowZone") <= 3 && PlayerPrefs.GetInt("Tutorial") != 0)
+        {
+            tutoThrowZone.SetActive(true);
+        }
 
 #if UNITY_EDITOR || UNITY_STANDALONE
 #elif UNITY_ANDROID || UNITY_IOS
@@ -281,5 +287,13 @@ public class GameManager : MonoBehaviour
     public void ShowCoinRewardAd()
     {
         GoogleAd.instance.ShowRewardedAdCoin();
+    }
+
+    public void CloseTutoZone()
+    {
+        tutoThrowZone.SetActive(false);
+
+        int tutoZoneCount = PlayerPrefs.GetInt("TutoThrowZone");
+        tutoZoneCount++;
     }
 }
