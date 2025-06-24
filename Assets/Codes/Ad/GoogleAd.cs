@@ -27,7 +27,15 @@ public class GoogleAd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadBannerAd();
+        if (PlayerPrefs.GetInt("RemoveAd") == 1)
+        {
+            buyAdDel = true;
+        }
+
+        if (!buyAdDel)
+        {
+            LoadBannerAd();
+        }
     }
 
 

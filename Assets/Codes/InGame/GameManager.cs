@@ -260,18 +260,18 @@ public class GameManager : MonoBehaviour
 
     public void StackIntAdClear()
     {
-        //if (BoxManager.Instance.inBoxWeight >= firstStar)
-        //{
-        //    StackIntAd.instance.stack++;
-        //    Debug.Log("Àü¸é±¤°í ½ºÅÃ");
+        if (BoxManager.Instance.inBoxWeight >= firstStar)
+        {
+            StackIntAd.instance.stack++;
+            Debug.Log("Àü¸é±¤°í ½ºÅÃ");
 
-        //    if (StackIntAd.instance.stack >= 3)
-        //    {
-        //        Debug.Log("Àü¸é±¤°í ³ª¿È");
-        //        StackIntAd.instance.stack = 0;
-        //        GoogleAd.instance.ShowInterstitialAd();
-        //    }
-        //}
+            if (StackIntAd.instance.stack >= 3)
+            {
+                Debug.Log("Àü¸é±¤°í ³ª¿È");
+                StackIntAd.instance.stack = 0;
+                GoogleAd.instance.ShowInterstitialAd();
+            }
+        }
     }
 
     public void ShowAdBack()
@@ -295,5 +295,7 @@ public class GameManager : MonoBehaviour
 
         int tutoZoneCount = PlayerPrefs.GetInt("TutoThrowZone");
         tutoZoneCount++;
+        PlayerPrefs.SetInt("TutoThrowZone", tutoZoneCount);
+        PlayerPrefs.Save();
     }
 }
