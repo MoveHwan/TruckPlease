@@ -967,11 +967,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: a9304774-0dee-49b3-a8b1-b1d7b5f5c881
+  cloudProjectId: 03c040d9-e9dc-410d-acd6-f41aa0431891
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: TruckPlease
-  organizationId: anghwan
+  projectName: truckplease
+  organizationId: moribfox47
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
