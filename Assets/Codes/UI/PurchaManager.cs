@@ -7,22 +7,20 @@ using TMPro;
 
 public class PurchaManager : MonoBehaviour
 {
+    public static PurchaManager instance;
+
     public GameObject RemoveADBtn;
     public GameObject RemoveADPopUp;
 
     public TextMeshProUGUI RemoveAD_PriceText;
 
-    GameDatas GameDatas;
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        GameDatas = GameDatas.instance;
+        instance = this;
 
         RemoveADPopUp.SetActive(false);
 
-        if (PlayerPrefs.GetInt("RemoveAd",0) == 1)
+        if (PlayerPrefs.GetInt("RemoveAd", 0) == 1)
         {
             RemoveADBtn.SetActive(false);
         }
@@ -39,16 +37,14 @@ public class PurchaManager : MonoBehaviour
                 RemoveAD_PriceText.text = product.metadata.localizedPriceString;
             }
         }
-
     }
-   
 
 
-public void PurchaComplete_RemoveAD()
+
+    public void PurchaComplete_RemoveAD()
     {
-        PlayerPrefs.SetInt("RemoveAd", 1);
-
-        GameDatas.PlayerDataSave();
+        if (GameDatas.instance != null)
+            GameDatas.instance.CloudSave();
 
         if (GoogleAd.instance != null)
             GoogleAd.instance.LoadAd();

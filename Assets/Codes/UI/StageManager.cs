@@ -15,7 +15,7 @@ public class StageManager : MonoBehaviour
     public Transform[] Chapters;
     public Transform[] Stages;
 
-    int stageCount;
+    int stageCount, totalStarCount;
 
     void Awake()
     {
@@ -60,6 +60,8 @@ public class StageManager : MonoBehaviour
 
             Chapters[i].GetChild(2).GetComponent<Slider>().value = starCount / (stagesPar.childCount * 3);
             Chapters[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = starCount + "/" + stagesPar.childCount * 3;
+
+            totalStarCount += (int)starCount;
         }
 
         if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
@@ -67,6 +69,8 @@ public class StageManager : MonoBehaviour
             PlayerPrefs.SetInt("NewChapter", 0);
             ChapterPopUp.SetActive(true);
         }
+
+        Profile.Instance.SetTotalStar(totalStarCount);
     }
 
     public void OpenChapter(int chapter)

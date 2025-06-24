@@ -97,7 +97,7 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
                     
             }
             else
-                scrollbar.value = Mathf.MoveTowards(scrollbar.value, targetPos, Time.deltaTime * 0.9f);
+                scrollbar.value = Mathf.Lerp(scrollbar.value, targetPos, Time.deltaTime * 10);
 
         }
 
@@ -115,5 +115,7 @@ public class ScrollHelper : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         targetPos = pos[chap-1];
         scrollbar.value = targetPos;
+
+        PlayerPrefs.SetInt("Chapter_Idx", chap - 1);
     }
 }

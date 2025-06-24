@@ -38,11 +38,13 @@ public class NewChapter : MonoBehaviour
 
             UnlockSeq.AppendCallback(() => 
             {
-                PlayerPrefs.SetInt(Chapter.name + "_new", 1);
+                string str = Chapter.name + "_new";
 
-                DOTween.Kill(UnlockSeq);    
-                
+                PlayerPrefs.SetInt(str, 0);
+
                 Lock.gameObject.SetActive(false);
+
+                DOTween.Kill(UnlockSeq);
             });
 
 
@@ -60,7 +62,7 @@ public class NewChapter : MonoBehaviour
 
     public void NewOn()
     {
-        isNew = PlayerPrefs.GetInt(Chapter.name + "_new", 0) == 0;
+        isNew = PlayerPrefs.GetInt(Chapter.name + "_new", 0) == 1;
 
         gameObject.SetActive(isNew);
 

@@ -7,6 +7,8 @@ public class ReviewInGame : MonoBehaviour
 {
     public void GooglePlayReview()
     {
+        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + 300);
+        
         StartCoroutine(StartGooglePlayReview());
     }
 

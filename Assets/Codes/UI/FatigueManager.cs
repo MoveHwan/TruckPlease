@@ -58,13 +58,12 @@ public class FatigueManager : MonoBehaviour
 
             SaveFatigue();
 
-#if !UNITY_EDITOR
-            if (Application.internetReachability != NetworkReachability.NotReachable)
+
+            if (Application.internetReachability != NetworkReachability.NotReachable && GameDatas.instance)
             {
-                if (GameDatas.instance != null)
-                    GameDatas.instance.StageEndSave();
+                GameDatas.instance.CloudSave();
             }
-#endif
+
         }
 
         CheckRewardFatiuge();
