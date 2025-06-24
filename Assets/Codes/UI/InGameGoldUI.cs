@@ -54,6 +54,12 @@ public class InGameGoldUI : MonoBehaviour
             stage = stage % 12 == 0 ? 12 : stage % 12;
         }
 
+        if (PlayerPrefs.GetInt(stageStarStr, 0) >= 3) 
+        { 
+            gameObject.SetActive(false);
+            return;
+        }
+
         bonusGold = 10 + (chapter - 1) * 5;
 
         SetGoldEffect();
