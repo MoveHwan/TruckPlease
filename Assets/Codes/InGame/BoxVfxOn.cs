@@ -58,6 +58,7 @@ public class BoxVfxOn : MonoBehaviour
                 star.Play();
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.coinSound);
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox3);
+                InGameGoldUI.Instance.GetGold();
                 thirdStack.transform.position = gameObject.transform.position;
                 star.transform.position = gameObject.transform.position;
                 break;
