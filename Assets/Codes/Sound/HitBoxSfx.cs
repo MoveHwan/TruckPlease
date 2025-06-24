@@ -12,7 +12,7 @@ public class HitBoxSfx : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        PlayHitSfx();
+        //PlayHitSfx();
     }
 
     void OnTriggerEnter(Collider other)
@@ -30,7 +30,23 @@ public class HitBoxSfx : MonoBehaviour
             Debug.Log("何婬洒绰 家府 唱具凳 ");
             //StartCoroutine(OffSfx());
             //StartCoroutine(TermSfx());
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox);
+
+            switch (VfxManager.instance.stack)
+            {
+                case 0:
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+                    break;
+                case 1:
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
+                    break;
+                case 2:
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox3);
+                    break;
+                default:
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+                    break;
+            }
+
             sfxCount = true;
         }
     }

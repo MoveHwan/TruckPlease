@@ -28,8 +28,15 @@ public class BoxVfxOn : MonoBehaviour
             ParticlePlay();
             vfxOn = true;
         }
+        else if (!vfxOn)
+        {
+            // 바깥에 부딫히거나 할때 효과음
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+            vfxOn = true;
+        }
     }
 
+    // 파티클과 효과음 플레이
     public void ParticlePlay()
     {
         switch (VfxManager.instance.stack) 
@@ -37,18 +44,20 @@ public class BoxVfxOn : MonoBehaviour
             case 0: 
                 firstStack.Play();
                 VfxManager.instance.stack++;
-
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
                 firstStack.transform.position = gameObject.transform.position;
                 break;
             case 1: 
                 secondStack.Play();
                 VfxManager.instance.stack++;
-
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
                 secondStack.transform.position = gameObject.transform.position;
                 break;
             case 2: 
                 thirdStack.Play();
                 star.Play();
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.coinSound);
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox3);
                 thirdStack.transform.position = gameObject.transform.position;
                 star.transform.position = gameObject.transform.position;
                 break;
