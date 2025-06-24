@@ -6283,7 +6283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 215055688}
         m_TargetAssemblyTypeName: ReviewInGame, Assembly-CSharp
         m_MethodName: GooglePlayReview
         m_Mode: 1
@@ -16894,7 +16894,7 @@ MonoBehaviour:
   FireAni: {fileID: 1242642150}
   fireOn: 0
   gold: 0
-  bonusGold: 10
+  bonusGold: 0
   starGold: 0
 --- !u!1 &1568243272
 GameObject:
