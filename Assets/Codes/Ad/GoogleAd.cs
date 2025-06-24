@@ -219,6 +219,7 @@ public class GoogleAd : MonoBehaviour
                 PlayerPrefs.SetInt("isItemReward", 1);
                 dailyAd.SubTicket();
                 BuyItem_InGame.instance.AD_Gift();
+                AdBackRemove.instance.ADEnd = true;
             });
 
         }
@@ -308,6 +309,7 @@ public class GoogleAd : MonoBehaviour
             {
                 PlayerPrefs.SetInt("isHeartReward", 1);
                 dailyAd.SubTicket();
+                AdBackRemove.instance.ADEnd = true;
             });
 
         }
@@ -412,6 +414,7 @@ public class GoogleAd : MonoBehaviour
             {
                 PlayerPrefs.SetInt("isCoinReward", 1);
                 StageTruckCanvas.Instance.AdReward();
+                AdBackRemove.instance.ADEnd = true;
             });
 
         }
