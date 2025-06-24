@@ -128,11 +128,12 @@ public class StageTruckCanvas : MonoBehaviour
 
     IEnumerator ShowResultUIDelay()
     {
+        InGamePanel.SetActive(false);
+
         yield return new WaitForSeconds(3);
 
         SetResult();
 
-        InGamePanel.SetActive(false);
         Count.SetActive(false);
 
         resultSeq.Play();

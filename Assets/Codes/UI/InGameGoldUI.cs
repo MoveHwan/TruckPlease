@@ -73,7 +73,7 @@ public class InGameGoldUI : MonoBehaviour
             FireAni.SetActive(false);
         }
 
-        RefreshStarGold();
+        //RefreshStarGold();
 
         if (!isRefresh && gold + starGold != int.Parse(GoldText.text)) 
         {
@@ -154,7 +154,7 @@ public class InGameGoldUI : MonoBehaviour
 
     void RefreshGold()
     {
-        if (gold + starGold > int.Parse(GoldText.text))
+        if (gold > int.Parse(GoldText.text))
             PlayGoldEffect();
 
         PlayGoldTextEffect();
@@ -162,6 +162,8 @@ public class InGameGoldUI : MonoBehaviour
 
     public int GetTotalRewardGold()
     {
+        RefreshStarGold();
+
         return gold + starGold;
     }
 
