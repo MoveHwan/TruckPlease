@@ -28,6 +28,8 @@ public class InGameItem : MonoBehaviour
     public Button OtherBlock;
     public Image SelectFrame;
     public TextMeshProUGUI[] ItemCountTexts;
+    public Transform UseCountUI;
+    public Transform SelectUseCountUI;
     
 
 
@@ -56,10 +58,8 @@ public class InGameItem : MonoBehaviour
 
         if (currentItems.ToString() == "Item_Save")
         {
-            if (PlayerPrefs.GetInt("Stage", 1) > 9)
-                Lock.SetActive(false);
-            else
-                Lock.SetActive(true);
+            Lock.SetActive(!(PlayerPrefs.GetInt("Stage", 1) > 9));
+            ItemCountTexts[0].transform.parent.gameObject.SetActive((PlayerPrefs.GetInt("Stage", 1) > 9));
         }
         
     }
@@ -199,11 +199,20 @@ public class InGameItem : MonoBehaviour
     public void SetText()
     {
         Lock.SetActive(currentItems.ToString() == "item1");
+        ItemCountTexts[0].transform.parent.gameObject.SetActive(!(currentItems.ToString() == "item1"));
 
         count = PlayerPrefs.GetInt(currentItems.ToString(), 3);
 
         for (int i = 0; i < ItemCountTexts.Length; i++)
-            ItemCountTexts[i].text = useCount + " / " + count;
+            ItemCountTexts[i].text = count.ToString();
+
+        for (int count = 0; count < UseCountUI.childCount; count++)
+        {
+            UseCountUI.GetChild(count).GetChild(0).gameObject.SetActive(count < useCount);
+
+            if (SelectUseCountUI)
+                SelectUseCountUI.GetChild(count).GetChild(0).gameObject.SetActive(count < useCount);
+        }
     }
 
     

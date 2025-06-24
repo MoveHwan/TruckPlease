@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class AdBackRemove : MonoBehaviour
 {
-    
+    public static AdBackRemove instance;
 
-    // Update is called once per frame
+    public bool ADEnd;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    
     void Update()
     {
-        if (gameObject.activeSelf) 
+        if (ADEnd && gameObject.activeSelf)
+        {
+            ADEnd = false;
             gameObject.SetActive(false);
+        }
+            
     }
 }

@@ -17,6 +17,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject NoHeartPopUp;
+    public GameObject ReviewPopUp;
     public GameObject[] StarImages; // 3개의 별 이미지
 
     [Header("[ RectTransform ]")]
@@ -45,7 +46,6 @@ public class StageTruckCanvas : MonoBehaviour
     public CanvasGroup ResultCanvas;
     public Courier Courier;
     public ItemUnlock ItemUnlock;
-    public ReviewInGame ReviewInGame;
     //public NoHeart NoHeart;
 
 
@@ -57,13 +57,6 @@ public class StageTruckCanvas : MonoBehaviour
     int starCount, rewardCoin;
     float stageNum, chapter;
     bool isResult, isSetTotal, tuto;
-
-    int[] stageRewards = {
-        40, 40, 60, 40, 40, 60, 40, 40, 60,
-        50, 50, 75, 50, 50, 75, 50, 50, 75,
-        50, 50, 75, 60, 60, 90, 60, 60, 90,
-        60, 60, 90, 60, 60, 90
-    };
 
 
     private void Awake()
@@ -127,7 +120,7 @@ public class StageTruckCanvas : MonoBehaviour
 
     void WaitReMainBoxInfo()
     {
-        TotalBoxText.text = "/" + (tuto ? "4" :(BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count));
+        TotalBoxText.text = "/" + (tuto ? "4" : (BoxManager.remainBoxCount + BoxManager.GoaledBoxes.Count));
         TotalWeightText.text = "/" + GameManager.thirdStar;
 
     }
@@ -153,7 +146,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
 
-        rewardCoin = GetStageReward(GameManager.Instance.stage, starCount, str);
+        rewardCoin = InGameGoldUI.Instance.GetTotalRewardGold();
 
         PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + rewardCoin);
 
@@ -191,6 +184,7 @@ public class StageTruckCanvas : MonoBehaviour
         if (stageNum == 9 && starCount > 0)
         {
             PlayerPrefs.SetInt("NewChapter", 1);
+            PlayerPrefs.SetInt("Chapter " + (chapter + 1) + "_new", 1);
         }
         else if (stageNum == 12 && starCount > 0)
         {
@@ -198,11 +192,17 @@ public class StageTruckCanvas : MonoBehaviour
 
         }
 
-       
+
 
 
         if (PlayerPrefs.GetInt(str, 0) < starCount)
+        {
             PlayerPrefs.SetInt(str, starCount);
+
+            if (GameDatas.instance)
+                GameDatas.instance.NewStageStar();
+        }
+
 
         string[] ratingStrs = PlayerPrefs.GetString("TopRatingStage", "1_0").Split('_');
 
@@ -254,7 +254,7 @@ public class StageTruckCanvas : MonoBehaviour
             {
                 Debug.LogWarning("ReviewOn");
 
-                ReviewInGame.GooglePlayReview();
+                ReviewPopUp.SetActive(true);
                 PlayerPrefs.SetInt("ReviewOn", 1);
             }
 
@@ -262,13 +262,12 @@ public class StageTruckCanvas : MonoBehaviour
 
         PlayerPrefs.Save();
 
-#if !UNITY_EDITOR
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+
+        if (Application.internetReachability != NetworkReachability.NotReachable && GameDatas.instance)
         {
-            if (GameDatas.instance != null)
-                GameDatas.instance.StageEndSave();
+            GameDatas.instance.CloudSave();
         }
-#endif
+
     }
 
     void ShowResultUI()
@@ -606,41 +605,6 @@ public class StageTruckCanvas : MonoBehaviour
         DOTween.KillAll();
 
         SceneManager.LoadScene("Lobby");
-    }
-
-
-    int GetStageReward(int stage, int starCount, string stageStar)
-    {
-        if (starCount <= 0) return 0;
-
-        int accStarCount = PlayerPrefs.GetInt(stageStar, 0);
-
-        int amount = stageRewards[stage - 1] / 3;
-
-        int[] rewards = { amount, amount, amount + stageRewards[stage - 1] % 3 };
-
-        amount = 0;
-
-        for (int i = 0; i < rewards.Length; i++)
-        {
-            if (accStarCount > 0)
-            {
-                rewards[i] = 0;
-            }
-            else if (starCount <= 0)
-            {
-                rewards[i] = 0;
-            }
-
-            accStarCount -= 1;
-            starCount -= 1;
-
-
-            amount += rewards[i];
-        }
-
-
-        return amount;
     }
 
 

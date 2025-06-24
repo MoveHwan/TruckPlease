@@ -34,7 +34,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
         /* 구글 플레이 상품들 추가 */
-        builder.AddProduct(productId_test_id, ProductType.NonConsumable, new IDs() { { productId_test_id, GooglePlay.Name } });
+        //builder.AddProduct(productId_test_id, ProductType.NonConsumable, new IDs() { { productId_test_id, GooglePlay.Name } });
+        builder.AddProduct(productId_test_id, ProductType.NonConsumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -44,6 +45,32 @@ public class IAPManager : MonoBehaviour, IStoreListener
     {
         return storeController.products.WithID(productId);
     }
+
+    public void BuyRemoveAds()
+    {
+        BuyProductID(productId_test_id);
+    }
+
+    void BuyProductID(string productId)
+    {
+        if (storeController != null && storeController.products != null)
+        {
+            Product product = storeController.products.WithID(productId);
+            if (product != null && product.availableToPurchase)
+            {
+                storeController.InitiatePurchase(product);
+            }
+            else
+            {
+                Debug.Log("상품 사용 불가");
+            }
+        }
+        else
+        {
+            Debug.Log("IAP 시스템이 초기화되지 않았습니다.");
+        }
+    }
+
 
     /* 구매하는 함수 */
     public void Purchase(string productId)
@@ -97,7 +124,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             /* removead 구매 처리 */
             PlayerPrefs.SetInt("RemoveAd", 1);
-            GoogleAd.instance.HideBanner();
+
+            if (GoogleAd.instance != null)
+                GoogleAd.instance.HideBanner();
+
+            if (PurchaManager.instance != null)
+                PurchaManager.instance.PurchaComplete_RemoveAD();
         }
 
         return PurchaseProcessingResult.Complete;
