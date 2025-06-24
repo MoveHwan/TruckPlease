@@ -141,7 +141,7 @@ public class ItemUnlock : MonoBehaviour
                 }
             }
 
-            NextUnlockStage.text = "Ch 1-2";
+            NextUnlockStage.text = "Ch 1-3";
         }
 
         // 긴 상자 해금
@@ -155,7 +155,7 @@ public class ItemUnlock : MonoBehaviour
                 }
             }
 
-            NextUnlockStage.text = "Ch 1-5";
+            NextUnlockStage.text = "Ch 1-6";
         }
 
         // 세이브 아이템 해금
@@ -169,7 +169,7 @@ public class ItemUnlock : MonoBehaviour
                 }
             }
 
-            NextUnlockStage.text = "Ch 1-9";
+            NextUnlockStage.text = "Ch 2-1";
         }
 
         // 넓은 상자 해금
@@ -183,7 +183,7 @@ public class ItemUnlock : MonoBehaviour
                 }
             }
 
-            NextUnlockStage.text = "Ch 2-3";
+            NextUnlockStage.text = "Ch 2-4";
         }
 
         else

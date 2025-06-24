@@ -13,7 +13,6 @@ public class InGameGoldUI : MonoBehaviour
 
     public bool fireOn;
 
-
     Sequence GoldSeq, GoldTextSeq;
 
     [SerializeField] int gold;
@@ -21,7 +20,7 @@ public class InGameGoldUI : MonoBehaviour
     [SerializeField] int starGold;
 
     bool isRefresh;
-    int starCount;
+    int stage, chapter, starCount;
     string stageStarStr;
 
     int[] stageRewards = {
@@ -38,7 +37,24 @@ public class InGameGoldUI : MonoBehaviour
 
     void Start()
     {
-        stageStarStr = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
+        stage = PlayerPrefs.GetInt("Stage", 1);
+
+        stageStarStr = "Stage" + stage + "_Star";
+
+        if (stage < 10)
+        {
+            chapter = (stage - 1) / 9 + 1;
+            stage = stage % 9 == 0 ? 9 : stage % 9;
+        }
+        else
+        {
+            stage -= 9;
+
+            chapter = (stage - 1) / 12 + 2;
+            stage = stage % 12 == 0 ? 12 : stage % 12;
+        }
+
+        bonusGold = 10 + (chapter - 1) * 5;
 
         SetGoldEffect();
         SetGoldTextEffect();
@@ -46,6 +62,8 @@ public class InGameGoldUI : MonoBehaviour
 
     void Update()
     {
+        fireOn = VfxManager.instance.stack >= 2;
+
         if (fireOn && !FireAni.activeSelf)
         {
             FireAni.SetActive(true);
