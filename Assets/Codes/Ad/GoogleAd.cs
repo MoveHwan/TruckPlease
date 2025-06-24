@@ -73,7 +73,7 @@ public class GoogleAd : MonoBehaviour
         LoadInterstitialAd();
         LoadRewardedAd();
         LoadRewardedAdCoin();
-
+        //LoadBannerAd();
     }
     public void LoadInterstitialAd()
     {
