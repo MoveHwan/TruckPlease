@@ -46,9 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: 25fe7ee57ee00704abdf4807208d7270, type: 3}
   ingameClip: {fileID: 8300000, guid: 5ecb3b0f9f45c244b9100f492265732b, type: 3}
-  bgmVolume: 1
+  bgmVolume: 0.5
   sfxClips:
   - {fileID: 8300000, guid: b49270b3e47c9ad4193615c58d143890, type: 3}
+  - {fileID: 8300000, guid: 9c9ace94099ea8a48925827674291859, type: 3}
+  - {fileID: 8300000, guid: 1fb475cfa7030454f8551f678eee0254, type: 3}
   - {fileID: 8300000, guid: 9909b897f008ca64dba8ace26e4f3432, type: 3}
   - {fileID: 8300000, guid: 239a5bea7f065794d88777d2d0a5c17e, type: 3}
   - {fileID: 8300000, guid: ca79d234cf588514d875e42cf10b2b2c, type: 3}
@@ -56,6 +58,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b413a985852efbf49bc1f9fc1df28ecb, type: 3}
   - {fileID: 8300000, guid: 5f9d6d91ec0667d4d837b2135f940f18, type: 3}
   - {fileID: 8300000, guid: d6c6bd09eb6c6034eb33d93d65f0b4a4, type: 3}
-  sfxVolume: 1
+  - {fileID: 8300000, guid: ff88e1f587c20f34d969f06f3feff358, type: 3}
+  sfxVolume: 0.5
   channels: 10
   sfxObject: {fileID: 0}
