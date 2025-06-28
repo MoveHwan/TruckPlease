@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Purchasing;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -22,6 +21,7 @@ public class DataSettings
     public bool Tutorial = false;
     public bool RemoveAd = false;
     public bool IsReview = false;
+    public bool FreeNick = false;
 
     public string nickname = "";
     public string TopRatingStage = "1_0";
@@ -62,7 +62,7 @@ public class GameDatas : MonoBehaviour
     // 구글 게임즈 로그인 대기
     IEnumerator WaitGoogleLogin()
     {
-        while (!PlayGamesPlatform.Instance.localUser.authenticated)
+        while (!Social.localUser.authenticated)
         {
             if (SceneManager.GetActiveScene().name != "DataLoad")
             {
@@ -79,7 +79,7 @@ public class GameDatas : MonoBehaviour
         dataSettings.ID = PlayerPrefs.GetString("PlayerID", "None");
 
         // 아이디가 등록이 안되어잇을경우
-        if (dataSettings.ID == "None")
+        if (dataSettings.ID == "None" || dataSettings.ID == "0")
         {
             dataSettings.ID = Social.localUser.id;
 
@@ -96,7 +96,7 @@ public class GameDatas : MonoBehaviour
 
             PlayerPrefs.SetInt("SetPlayerData", 0);
 
-            Debug.LogWarning("아이디가 다름");
+            Debug.LogWarning($"아이디가 다름 {dataSettings.ID}, {Social.localUser.id}");
         }
 
         
@@ -112,7 +112,7 @@ public class GameDatas : MonoBehaviour
             PlayerPrefsStageStarSet();
         }
 
-
+        PlayerPrefs.Save();
         yield break;
     }
 
@@ -159,6 +159,7 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetInt("Tutorial", dataSettings.Tutorial ? 1 : 0);
         PlayerPrefs.SetInt("RemoveAd", dataSettings.RemoveAd ? 1 : 0);
         PlayerPrefs.SetInt("ReviewOn", dataSettings.IsReview ? 1 : 0);
+        PlayerPrefs.SetInt("FreeNick", dataSettings.FreeNick ? 1 : 0);
 
         PlayerPrefs.SetString("nickname", dataSettings.nickname);
         PlayerPrefs.SetString("TopRatingStage", dataSettings.TopRatingStage);
@@ -183,6 +184,7 @@ public class GameDatas : MonoBehaviour
         dataSettings.Tutorial = PlayerPrefs.GetInt("Tutorial", 0) == 1;
         dataSettings.RemoveAd = PlayerPrefs.GetInt("RemoveAd", 0) == 1;
         dataSettings.IsReview = PlayerPrefs.GetInt("ReviewOn", 0) == 1;
+        dataSettings.FreeNick = PlayerPrefs.GetInt("FreeNick", 0) == 1;
 
         dataSettings.nickname = PlayerPrefs.GetString("nickname");
         dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
@@ -209,6 +211,7 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetInt("Tutorial", 0);
         PlayerPrefs.SetInt("RemoveAd", 0);
         PlayerPrefs.SetInt("ReviewOn", 0);
+        PlayerPrefs.SetInt("FreeNick", 0);
         PlayerPrefs.SetInt("StageIn", 0);
         PlayerPrefs.SetInt("Chapter_Idx", 0);
 
