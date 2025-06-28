@@ -70,10 +70,12 @@ public class Profile : MonoBehaviour
 
     }
 
-    public void SetTotalStar(int totalStar)
+    public void SetTotalStat(int totalStar, int totalStage)
     {
         ProfileTotalStar.text = totalStar.ToString();
         PopupTotalStar.text = totalStar.ToString();
+
+        PopupTotalStage.text = totalStage.ToString();
     }
 
     public void Cancel()

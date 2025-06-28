@@ -17,6 +17,8 @@ public class StageManager : MonoBehaviour
 
     int stageCount, totalStarCount;
 
+    [SerializeField] int totalClearStage;
+
     void Awake()
     {
         instance = this;
@@ -55,7 +57,12 @@ public class StageManager : MonoBehaviour
 
             for (int j = 0; j < stagesPar.childCount; j++)
             {
-                starCount += stagesPar.GetChild(j).GetComponent<StageUI>().SetStage(++stageCount);
+                int star = stagesPar.GetChild(j).GetComponent<StageUI>().SetStage(++stageCount);
+
+                starCount += star;
+
+                if (star > 0)
+                    totalClearStage++;
             }
 
             Chapters[i].GetChild(2).GetComponent<Slider>().value = starCount / (stagesPar.childCount * 3);
@@ -70,7 +77,7 @@ public class StageManager : MonoBehaviour
             ChapterPopUp.SetActive(true);
         }
 
-        Profile.Instance.SetTotalStar(totalStarCount);
+        Profile.Instance.SetTotalStat(totalStarCount, totalClearStage);
     }
 
     public void OpenChapter(int chapter)
