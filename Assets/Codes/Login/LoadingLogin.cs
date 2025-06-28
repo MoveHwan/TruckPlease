@@ -11,6 +11,8 @@ using GoogleMobileAds.Api;
 
 public class LoadingLogin : MonoBehaviour
 {
+    public GDPRSet gdprSet;
+
     public GameObject slider;
     public GameObject unityLogin;
     public GameObject cloudLoad;
@@ -28,10 +30,6 @@ public class LoadingLogin : MonoBehaviour
 
     void Start()
     {
-        // 광고를 위해 한번만 부름
-        MobileAds.Initialize((InitializationStatus initStatus) =>
-        {
-        });
 
         //CheckNickName();
     }
@@ -111,6 +109,12 @@ public class LoadingLogin : MonoBehaviour
     // 로딩 두번째
     public IEnumerator WaitLoadingSecond()
     {
+        while (!gdprSet.set)
+        {
+            yield return null;
+        }
+
+
         while (loadingSlider.value < 1)
         {
             elapsed += Time.deltaTime;

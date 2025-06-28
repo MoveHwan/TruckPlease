@@ -791,6 +791,7 @@ GameObject:
   - component: {fileID: 2122293777}
   - component: {fileID: 2122293776}
   - component: {fileID: 2122293775}
+  - component: {fileID: 2122293778}
   m_Layer: 0
   m_Name: LoadingLogin
   m_TagString: Untagged
@@ -823,6 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff2d6364f38d4745bc1b5f6c24ed349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gdprSet: {fileID: 2122293778}
   slider: {fileID: 678529509}
   unityLogin: {fileID: 768338671}
   cloudLoad: {fileID: 1879696966}
@@ -841,6 +843,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122293778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122293774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ced9433a9ce4043b9d11cf6c49b5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  set: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

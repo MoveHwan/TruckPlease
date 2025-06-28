@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds;
 using GoogleMobileAds.Api;
+using GoogleMobileAds.Ump.Api;
 
 public class GoogleAd : MonoBehaviour
 {
@@ -85,6 +86,13 @@ public class GoogleAd : MonoBehaviour
     }
     public void LoadInterstitialAd()
     {
+        // 이미 광고가 있거나 하면 로드 하지 않기
+        if (_interstitialAd != null && _interstitialAd.CanShowAd() && StackIntAd.instance.stack < 2)
+        {
+            Debug.Log("Rewarded ad already loaded.");
+            return;
+        }
+
         // Clean up the old ad before loading a new one.
         if (_interstitialAd != null)
         {
@@ -96,6 +104,7 @@ public class GoogleAd : MonoBehaviour
 
         // create our request used to load the ad.
         var adRequest = new AdRequest();
+
 
         // send the request to load the ad.
         InterstitialAd.Load(interAdUnitId, adRequest,
