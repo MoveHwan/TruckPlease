@@ -31,9 +31,11 @@ public class Profile : MonoBehaviour
     public TextMeshProUGUI PopupTotalWeight;
     public TextMeshProUGUI PopupTotalStage;
     public TextMeshProUGUI Mesaage;
-    public RectTransform Buttons; 
+    public TextMeshProUGUI NickPrice;
+    public GameObject CheckButton;
+    public GameObject ModifyButton;
 
-       
+
     static HashSet<string> SlangList;
     [SerializeField] string changeName, slangStr;
 
@@ -64,7 +66,13 @@ public class Profile : MonoBehaviour
             PopupTotalStage.text = " - ";
         }
 
-        FreeMessage.SetActive(PlayerPrefs.GetInt("FreeNick", 0) == 0);
+        if (PlayerPrefs.GetInt("FreeNick", 0) == 0)
+        {
+            FreeMessage.SetActive(true);
+            NickPrice.text = "Free";
+        }
+        else
+            NickPrice.text = "200";
 
         Cancel();
 
@@ -81,7 +89,8 @@ public class Profile : MonoBehaviour
     public void Cancel()
     {
         Mesaage.transform.parent.gameObject.SetActive(false);
-        Buttons.gameObject.SetActive(false);
+
+        CheckButton.SetActive(true);
 
         PopupName.text = PlayerPrefs.GetString("nickname", "User name");
         PopupInput.text = "";
@@ -92,7 +101,6 @@ public class Profile : MonoBehaviour
         if (changeName == text) return;
 
         Mesaage.transform.parent.gameObject.SetActive(false);
-        Buttons.gameObject.SetActive(false);
 
         changeName = text;
     }
@@ -106,6 +114,8 @@ public class Profile : MonoBehaviour
             PlayerPrefs.SetString("nickname", changeName);
 
             FreeMessage.SetActive(false);
+
+            NickPrice.text = "200";
         }
         else
         {
@@ -130,6 +140,8 @@ public class Profile : MonoBehaviour
             GameDatas.instance.CloudSave();
 
         Cancel();
+
+        ModifyButton.SetActive(true);
     }
 
     public void CheckNickName()
@@ -138,56 +150,13 @@ public class Profile : MonoBehaviour
 
         MessageOn("Possible User Name!\nUse this name? [ <color #00681B>"+ changeName + "</color> ]");
 
-        Buttons.gameObject.SetActive(false);
-
-        if (seq == null)
-            seq = DOTween.Sequence();
-        else if (seq.IsPlaying())
-            seq.Kill();
-
-        TextMeshProUGUI PriceText = Buttons.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
-
-        if (PlayerPrefs.GetInt("FreeNick", 0) == 0)
-            PriceText.text = "Free";
-        else
-            PriceText.text = "200";
-
-
-        // 원래 위치 저장
-        Vector2 originalPos = Buttons.anchoredPosition;
-
-        // 캔버스 그룹 없으면 추가
-        CanvasGroup canvasGroup = Buttons.GetComponent<CanvasGroup>();
-
-        if (canvasGroup == null)
-            canvasGroup = Buttons.AddComponent<CanvasGroup>();
-        
-        Buttons.anchoredPosition = originalPos + Vector2.down * Buttons.anchoredPosition;
-        canvasGroup.alpha = 0;
-
-        Buttons.gameObject.SetActive(true);
-
-        // 이동 + 알파 동시에 트윈
-        seq.Append(Buttons.DOAnchorPos(originalPos, 0.3f).SetEase(Ease.OutQuad))
-            .Join(canvasGroup.DOFade(1f, 0.7f));
-
+        CheckButton.SetActive(false);
     }
 
 
     bool Check(string name)
     {
         Debug.Log("name: " + name);
-
-       /* if (!purchaseTicket)
-        {
-            if (TicketIdx == -1)
-            {
-                Debug.LogError("닉네임 변경권이 없습니다!");
-                ActiveObj("Product");
-                buttonBlock = false;
-                return true;
-            }
-        }*/
 
         if (name == null || name.Length == 0 || name == "")
         {
