@@ -72,10 +72,12 @@ public class Profile : MonoBehaviour
             NickPrice.text = "Free";
         }
         else
+        {
+            FreeMessage.SetActive(false);
             NickPrice.text = "200";
+        }
 
-        Cancel();
-
+        Cancel(true);
     }
 
     public void SetTotalStat(int totalStar, int totalStage)
@@ -87,6 +89,15 @@ public class Profile : MonoBehaviour
     }
 
     public void Cancel()
+    {
+        Mesaage.transform.parent.gameObject.SetActive(false);
+
+        CheckButton.SetActive(true);
+
+        PopupName.text = "Input User Name";
+        PopupInput.text = "";
+    }
+    public void Cancel(bool isNick)
     {
         Mesaage.transform.parent.gameObject.SetActive(false);
 
@@ -131,15 +142,15 @@ public class Profile : MonoBehaviour
             }
         }
 
-        ProfileName.text = changeName;
-        PopupName.text = changeName;
-
         PlayerPrefs.Save();
 
         if (GameDatas.instance != null)
             GameDatas.instance.CloudSave();
 
-        Cancel();
+        ProfileName.text = changeName;
+        PopupName.text = changeName;
+
+        Cancel(true);
 
         ModifyButton.SetActive(true);
     }
