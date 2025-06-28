@@ -91,7 +91,7 @@ public class LeaderBoard : MonoBehaviour
         string tagOnly = parts.Length > 1 ? "#" + parts[1] : "";
 
         // 색상 + 크기 조합 (태그는 70% 사이즈)
-        string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b><size=70%><color={tagColor}>{tagOnly}</color></size>";
+        string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
 
 
         myPlayerIdText.text = coloredNickname;
@@ -121,7 +121,7 @@ public class LeaderBoard : MonoBehaviour
                 string tagOnly = parts.Length > 1 ? "#" + parts[1] : "";
 
                 // 색상 + 크기 조합 (태그는 70% 사이즈)
-                string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b><size=70%><color={tagColor}>{tagOnly}</color></size>";
+                string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
 
 
                 playerIdText[index].text = coloredNickname;
