@@ -80,7 +80,7 @@ public class LeaderBoard : MonoBehaviour
             .GetPlayerScoreAsync(leaderboardId);
         Debug.Log(JsonConvert.SerializeObject(scoreResponse));
         myScore = (int)scoreResponse.Score;
-        myNickname = scoreResponse.PlayerName;
+        myNickname = PlayerPrefs.GetString("nickname");
         myRank = scoreResponse.Rank;
         Debug.Log(myScore.ToString());
         Debug.Log(myNickname);
