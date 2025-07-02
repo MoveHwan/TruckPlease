@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.ProBuilder.AutoUnwrapSettings;
 
 public class BottomPanel : MonoBehaviour
 {

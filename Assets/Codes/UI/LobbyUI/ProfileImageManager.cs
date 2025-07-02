@@ -36,10 +36,12 @@ public class ProfileImageManager : MonoBehaviour
 
     void Awake()
     {
+        PlayerPrefs.SetInt("Gold", 1000);
+
         if (Instance == null) 
             Instance = this;
 
-        BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", ProfileTextures[0].name).Split(","));
+        BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Human_1").Split(","));
 
         if (Content.childCount <= 0)
         {
@@ -49,13 +51,13 @@ public class ProfileImageManager : MonoBehaviour
             {
                 profileObj = Instantiate(ProfilePrefab, Content);
                 profileObj.name = ProfileTextures[i].name;
-                profileObj.transform.GetChild(0).GetChild(0).GetComponent<RawImage>().texture = ProfileTextures[i];
+                profileObj.transform.GetChild(1).GetChild(0).GetComponent<RawImage>().texture = ProfileTextures[i];
 
                 profileObj.SetActive(true);
             }
         }
 
-        string imageName = PlayerPrefs.GetString("ProfileImage", ProfileTextures[0].name);
+        string imageName = PlayerPrefs.GetString("ProfileImage", "Human_1");
 
         PlayerTexture = ProfileTextures.Find(texture => texture.name == imageName);
         
@@ -122,7 +124,7 @@ public class ProfileImageManager : MonoBehaviour
             if (PlayerPrefs.GetInt("Gold", 0) < 200) return;
 
             PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) - 200);
-            PlayerPrefs.SetString("BuyImages", PlayerPrefs.GetString("BuyImages", ProfileTextures[0].name) + "," + name);
+            PlayerPrefs.SetString("BuyImages", PlayerPrefs.GetString("BuyImages", "Human_1") + "," + name);
             PlayerPrefs.Save();
 
             BuyImages.Add(name);

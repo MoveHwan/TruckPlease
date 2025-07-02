@@ -15,7 +15,7 @@ public class ProfileImage : MonoBehaviour
         if (ProfileImageManager == null)
             ProfileImageManager = ProfileImageManager.Instance;
 
-        if (name == PlayerPrefs.GetString("ProfileImage", ProfileImageManager.ProfileTextures[0].name))
+        if (name == PlayerPrefs.GetString("ProfileImage", "Human_1"))
         {
             SelectOutline.SetActive(true);
             ProfileImageManager.ChangeImageSelect(name, gameObject);

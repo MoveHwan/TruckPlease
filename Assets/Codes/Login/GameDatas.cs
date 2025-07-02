@@ -23,7 +23,7 @@ public class DataSettings
     public bool FreeNick = false;
 
     public string nickname = "";
-    public string ProfileImage = "Box_1";
+    public string ProfileImage = "Human_1";
     public string TopRatingStage = "1_0";
     public string LastFatigueTime = DateTime.Now.ToString();
 
@@ -171,7 +171,7 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetFloat("TotalWeight", dataSettings.TotalWeight);
 
 
-        string buyImgStr = "Box_1";
+        string buyImgStr = "Human_1";
 
         if (dataSettings.BuyImages.Count <= 0)
             dataSettings.BuyImages.Add(buyImgStr);
@@ -199,7 +199,7 @@ public class GameDatas : MonoBehaviour
         dataSettings.FreeNick = PlayerPrefs.GetInt("FreeNick", 0) == 1;
 
         dataSettings.nickname = PlayerPrefs.GetString("nickname");
-        dataSettings.ProfileImage = PlayerPrefs.GetString("ProfileImage", "Box_1");
+        dataSettings.ProfileImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
         dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
         dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", DateTime.Now.ToString());
 
@@ -207,7 +207,7 @@ public class GameDatas : MonoBehaviour
         dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
         dataSettings.TotalWeight = PlayerPrefs.GetFloat("TotalWeight", 0);
 
-        dataSettings.BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Box_1").Split(","));
+        dataSettings.BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Human_1").Split(","));
     }
 
     // 플레이어프렙 리셋
@@ -232,7 +232,7 @@ public class GameDatas : MonoBehaviour
 
         int randomNum = Random.Range(0, 99999);
         PlayerPrefs.SetString("nickname", "player" + randomNum.ToString());
-        PlayerPrefs.SetString("ProfileImage", "Box_1");
+        PlayerPrefs.SetString("ProfileImage", "Human_1");
         PlayerPrefs.SetString("TopRatingStage", "1_0");
         PlayerPrefs.SetString("LastFatigueTime", DateTime.Now.ToString());
 
@@ -240,7 +240,7 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetFloat("SfxVol", 0.5f);
         PlayerPrefs.SetFloat("TotalWeight", 0);
 
-        PlayerPrefs.SetString("BuyImages", "Box_1");
+        PlayerPrefs.SetString("BuyImages", "Human_1");
 
         PlayerPrefs.Save();
     }

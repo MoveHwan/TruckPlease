@@ -6004,12 +6004,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690727041}
   m_CullTransparentMesh: 0
---- !u!1 &699337854 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3060716949256614077, guid: 5a077f3a1c1767645a2e86bef2eb6f7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4055312489446297319}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -12864,8 +12858,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTexture: {fileID: 0}
-  ProfilePrefab: {fileID: 699337854}
+  ProfilePrefab: {fileID: 3060716949256614077, guid: 5a077f3a1c1767645a2e86bef2eb6f7f,
+    type: 3}
   ProfileTextures:
+  - {fileID: 2800000, guid: e36a5b9fa9f392c4d8e4dacbe22eb291, type: 3}
+  - {fileID: 2800000, guid: 87182f66840a6aa498754c95b12cad95, type: 3}
+  - {fileID: 2800000, guid: 1c973d6dd990c8e4eaec4f14a687a474, type: 3}
+  - {fileID: 2800000, guid: 3e0278a16930e384caac2b3129f6a8dc, type: 3}
+  - {fileID: 2800000, guid: 2d6de4e3ddf716b46a6ee812ee942c11, type: 3}
+  - {fileID: 2800000, guid: 02d441ae50146f343bde03e4856eb9a2, type: 3}
+  - {fileID: 2800000, guid: 13f296fb2aeab13468850a1f7b76f050, type: 3}
+  - {fileID: 2800000, guid: ae3511345aee16e45af161a278e49a9c, type: 3}
+  - {fileID: 2800000, guid: 46ec22ba669263d4b9032cb7aa4357f5, type: 3}
+  - {fileID: 2800000, guid: 5a80f5c7a2dbc934d9d5595bd8e71615, type: 3}
+  - {fileID: 2800000, guid: 720d4a53de0b36b4396a18ab545fa5b6, type: 3}
+  - {fileID: 2800000, guid: 737a71632cc34904daa47e3fce0fefee, type: 3}
   - {fileID: 2800000, guid: ed173fc8be9e5914db5758cd0044faee, type: 3}
   - {fileID: 2800000, guid: feafb0eb3beb7724bb3200c38310a83c, type: 3}
   - {fileID: 2800000, guid: df92b4978070eb5488e654f36ef764f1, type: 3}
@@ -12874,12 +12881,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 811a0ba80febd5340ae4fa47ddd3e5c9, type: 3}
   - {fileID: 2800000, guid: c4dca8f2a8e4d304687e558fec290157, type: 3}
   - {fileID: 2800000, guid: 6f91ac89e90654849999c006b26c327e, type: 3}
-  - {fileID: 2800000, guid: ab28fdd882ab9a449a9f402296abd5fe, type: 3}
-  - {fileID: 2800000, guid: b2e19cf52f29e4f4b999cfd51846fba1, type: 3}
-  - {fileID: 2800000, guid: 46837f21a3f96d64b8bf0b4b638a0cd3, type: 3}
-  - {fileID: 2800000, guid: a1ed48362747ca841856dab79ddc0a86, type: 3}
-  - {fileID: 2800000, guid: bedbc7177e03fc348b2b8bf411de1115, type: 3}
-  - {fileID: 2800000, guid: b76137232495ee046826962866f3ea18, type: 3}
   - {fileID: 2800000, guid: 5bf1ce6c94afe584fa691ac831342968, type: 3}
   - {fileID: 2800000, guid: 3beda4f0d5e112d4b93d25a0c51a56ac, type: 3}
   - {fileID: 2800000, guid: f449c4b19a171874da87c9ba41baf8a8, type: 3}
@@ -15002,7 +15003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: ab28fdd882ab9a449a9f402296abd5fe, type: 3}
+  m_Texture: {fileID: 2800000, guid: e36a5b9fa9f392c4d8e4dacbe22eb291, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
