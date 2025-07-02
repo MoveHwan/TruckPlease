@@ -18,12 +18,12 @@ public class DataSettings
     public int Item_Save = 3;
     public int Item_Delete = 3;
     
-    public bool Tutorial = false;
     public bool RemoveAd = false;
     public bool IsReview = false;
     public bool FreeNick = false;
 
     public string nickname = "";
+    public string ProfileImage = "Box_1";
     public string TopRatingStage = "1_0";
     public string LastFatigueTime = DateTime.Now.ToString();
 
@@ -32,6 +32,7 @@ public class DataSettings
     public float TotalWeight = 0;
 
     public List<int> StageStar = new List<int>();
+    public List<string> BuyImages = new List<string>();
 }
 
 public class GameDatas : MonoBehaviour
@@ -156,18 +157,30 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetInt("Item_Save", dataSettings.Item_Save);
         PlayerPrefs.SetInt("Item_Delete", dataSettings.Item_Delete);
 
-        PlayerPrefs.SetInt("Tutorial", dataSettings.Tutorial ? 1 : 0);
         PlayerPrefs.SetInt("RemoveAd", dataSettings.RemoveAd ? 1 : 0);
         PlayerPrefs.SetInt("ReviewOn", dataSettings.IsReview ? 1 : 0);
         PlayerPrefs.SetInt("FreeNick", dataSettings.FreeNick ? 1 : 0);
 
         PlayerPrefs.SetString("nickname", dataSettings.nickname);
+        PlayerPrefs.SetString("ProfileImage", dataSettings.ProfileImage);
         PlayerPrefs.SetString("TopRatingStage", dataSettings.TopRatingStage);
         PlayerPrefs.SetString("LastFatigueTime", dataSettings.LastFatigueTime == "" || dataSettings.LastFatigueTime == null ? DateTime.Now.AddDays(-1).ToString() : dataSettings.LastFatigueTime);
 
         PlayerPrefs.SetFloat("BgmVol", dataSettings.BgmVol);
         PlayerPrefs.SetFloat("SfxVol", dataSettings.SfxVol);
         PlayerPrefs.SetFloat("TotalWeight", dataSettings.TotalWeight);
+
+
+        string buyImgStr = "Box_1";
+
+        if (dataSettings.BuyImages.Count <= 0)
+            dataSettings.BuyImages.Add(buyImgStr);
+        
+        for (int i = 1; i < dataSettings.BuyImages.Count; i++)
+            buyImgStr += "," + dataSettings.BuyImages[i];
+
+        PlayerPrefs.SetString("BuyImages", buyImgStr);
+        
 
         PlayerPrefs.Save();
     }
@@ -181,18 +194,20 @@ public class GameDatas : MonoBehaviour
         dataSettings.Item_Save = PlayerPrefs.GetInt("Item_Save", 3);
         dataSettings.Item_Delete = PlayerPrefs.GetInt("Item_Delete", 3);
 
-        dataSettings.Tutorial = PlayerPrefs.GetInt("Tutorial", 0) == 1;
         dataSettings.RemoveAd = PlayerPrefs.GetInt("RemoveAd", 0) == 1;
         dataSettings.IsReview = PlayerPrefs.GetInt("ReviewOn", 0) == 1;
         dataSettings.FreeNick = PlayerPrefs.GetInt("FreeNick", 0) == 1;
 
         dataSettings.nickname = PlayerPrefs.GetString("nickname");
+        dataSettings.ProfileImage = PlayerPrefs.GetString("ProfileImage", "Box_1");
         dataSettings.TopRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
         dataSettings.LastFatigueTime = PlayerPrefs.GetString("LastFatigueTime", DateTime.Now.ToString());
 
         dataSettings.BgmVol = PlayerPrefs.GetFloat("BgmVol", 0.5f);
         dataSettings.SfxVol = PlayerPrefs.GetFloat("SfxVol", 0.5f);
         dataSettings.TotalWeight = PlayerPrefs.GetFloat("TotalWeight", 0);
+
+        dataSettings.BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Box_1").Split(","));
     }
 
     // 플레이어프렙 리셋
@@ -217,13 +232,15 @@ public class GameDatas : MonoBehaviour
 
         int randomNum = Random.Range(0, 99999);
         PlayerPrefs.SetString("nickname", "player" + randomNum.ToString());
-
+        PlayerPrefs.SetString("ProfileImage", "Box_1");
         PlayerPrefs.SetString("TopRatingStage", "1_0");
         PlayerPrefs.SetString("LastFatigueTime", DateTime.Now.ToString());
 
         PlayerPrefs.SetFloat("BgmVol", 0.5f);
         PlayerPrefs.SetFloat("SfxVol", 0.5f);
         PlayerPrefs.SetFloat("TotalWeight", 0);
+
+        PlayerPrefs.SetString("BuyImages", "Box_1");
 
         PlayerPrefs.Save();
     }

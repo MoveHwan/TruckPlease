@@ -7,7 +7,6 @@ using Unity.Services.Authentication;
 using Newtonsoft.Json;
 using DG.Tweening;
 using Unity.VisualScripting;
-using Sequence = DG.Tweening.Sequence;
 
 public class Profile : MonoBehaviour
 {
@@ -16,14 +15,12 @@ public class Profile : MonoBehaviour
     public TextAsset SlangFile;
 
     [Header("Profile")]
-    public RawImage ProfileImage;
     public TextMeshProUGUI ProfileName;
     public TextMeshProUGUI ProfileTotalStar;
     public TextMeshProUGUI ProfileTotalWeight;
     public GameObject FreeMessage;
 
     [Header("Profile Popup")]
-    public RawImage PopupImage;
     public TMP_InputField PopupInput;
     public TextMeshProUGUI PopupPID;
     public TextMeshProUGUI PopupName;
@@ -35,13 +32,10 @@ public class Profile : MonoBehaviour
     public GameObject CheckButton;
     public GameObject ModifyButton;
 
-
     static HashSet<string> SlangList;
     [SerializeField] string changeName, slangStr;
 
-    Sequence seq;
 
-    
     private void Awake()
     {
         if (Instance == null)
