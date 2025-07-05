@@ -2,6 +2,7 @@ using GoogleMobileAds.Api;
 using GoogleMobileAds.Ump.Api;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Analytics;
 using UnityEngine;
 
 public class GDPRSet : MonoBehaviour
@@ -9,6 +10,11 @@ public class GDPRSet : MonoBehaviour
     public bool set;
 
     void Start()
+    {
+
+    }
+
+    public void GDPRFormAvail()
     {
         ConsentRequestParameters requestParameters = new ConsentRequestParameters
         {
@@ -56,6 +62,7 @@ public class GDPRSet : MonoBehaviour
                     {
                         Debug.Log("광고 로드 가능");
                     });
+                    AnalyticsService.Instance.StartDataCollection();
                 }
 
                 set = true; // 유럽이 아닌 경우도 true로 설정
@@ -98,6 +105,7 @@ public class GDPRSet : MonoBehaviour
                     {
                         Debug.Log("광고 로드 가능");
                     });
+                    AnalyticsService.Instance.StartDataCollection();
                 }
                 set = true;
 

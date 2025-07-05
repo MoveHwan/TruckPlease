@@ -5,6 +5,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using System.Threading.Tasks;
 using Unity.Services.Leaderboards;
+using Unity.Services.Analytics;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine.SocialPlatforms.Impl;
@@ -18,6 +19,8 @@ public class UnityLogin : MonoBehaviour
     string rankingId = "StageClear";
     public TextMeshProUGUI checkText;
     public LoadingLogin loadingLogin;
+
+    public GDPRSet gdprSet;
 
     async void Awake()
     {
@@ -36,6 +39,7 @@ public class UnityLogin : MonoBehaviour
         if (UnityServices.State == ServicesInitializationState.Initialized)
         {
             Debug.Log("Unity Services already initialized.");
+            gdprSet.GDPRFormAvail();
             return;
         }
 
@@ -43,6 +47,9 @@ public class UnityLogin : MonoBehaviour
         {
             await UnityServices.InitializeAsync();
             Debug.Log("Unity Services Initialized");
+            gdprSet.GDPRFormAvail();
+
+
         }
         catch (System.Exception e)
         {
@@ -158,4 +165,6 @@ public class UnityLogin : MonoBehaviour
     {
         return Application.internetReachability == NetworkReachability.NotReachable;
     }
+
+
 }

@@ -39,6 +39,7 @@ public class LoadingLogin : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("nickname"))
         {
+            gdprSet.set = true;
             StartCoroutine(WaitLoadingfirst());
         }
         else

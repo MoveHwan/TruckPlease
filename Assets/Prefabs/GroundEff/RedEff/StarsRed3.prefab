@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4804,7 +4804,7 @@ GameObject:
   - component: {fileID: 5638674892739714112}
   - component: {fileID: 6102797949026154959}
   m_Layer: 0
-  m_Name: StarsYellow
+  m_Name: StarsRed3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4834,16 +4834,16 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8622391681318258928}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 0
+  looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4944,8 +4944,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 15
-      minScalar: 12
+      scalar: 10
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4979,8 +4979,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.8218354, b: 0.30588233, a: 1}
-      maxColor: {r: 1, g: 0.798866, b: 0.216981, a: 1}
+      minColor: {r: 1, g: 0.42452818, b: 0.4695953, a: 1}
+      maxColor: {r: 1, g: 0.21176472, b: 0.27450982, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.03529412, g: 1, b: 0, a: 1}
@@ -5332,7 +5332,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: -0.1
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -5701,7 +5701,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 9
         minScalar: 15
         maxCurve:
           serializedVersion: 2
@@ -7183,7 +7183,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -9559,7 +9559,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fd49b46da64814740afc9dad46566890, type: 2}
+  - {fileID: 2100000, guid: 97f0df9b31c8b1c42bb85d0a737c9ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

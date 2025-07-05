@@ -364,6 +364,7 @@ MonoBehaviour:
   Error: 
   checkText: {fileID: 0}
   loadingLogin: {fileID: 2122293776}
+  gdprSet: {fileID: 2122293778}
 --- !u!4 &768338673
 Transform:
   m_ObjectHideFlags: 0

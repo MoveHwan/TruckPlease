@@ -82,10 +82,9 @@ public class BottomPanel : MonoBehaviour
 
     void SetCargoBoxUI_Update()
     {
-        if (nowBoxIdx == BoxManager.count || (BoxManager.count != 6 && BoxManager.count + 1 != BoxManager.transform.childCount)) return;
+        if (nowBoxIdx == BoxManager.count/* || (BoxManager.count != 6 && BoxManager.count + 1 != BoxManager.transform.childCount)*/) return;
 
         nowBoxIdx = BoxManager.count;
-
         GameObject sourceBox;
 
         // 3번째 남은 박스
@@ -94,7 +93,7 @@ public class BottomPanel : MonoBehaviour
             if (!NextBox2.activeSelf) NextBox2.SetActive(true);
 
             sourceBox = BoxManager.box[nowBoxIdx + 2];
-
+            Debug.Log("nowBoxIdx" + nowBoxIdx);
             NextBox2.GetComponent<MeshFilter>().sharedMesh = sourceBox.GetComponent<MeshFilter>().sharedMesh;
             NextBox2.GetComponent<MeshRenderer>().sharedMaterials = sourceBox.GetComponent<MeshRenderer>().sharedMaterials;
             NextBox2.GetComponent<Transform>().localScale = sourceBox.GetComponent<Transform>().localScale;

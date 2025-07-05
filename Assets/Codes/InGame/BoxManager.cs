@@ -12,12 +12,13 @@ public class BoxManager : MonoBehaviour
 
     BoxCollider storageCollider;
 
+    public GameObject[] boxPool;        // 박스로 쓸 종류들
     public TextMeshProUGUI boxCountUi;
     public Text weightUi;
     public Text inWeightUi;
     public TextMeshProUGUI gameEndCountUi;
 
-    public List<GameObject> box = new List<GameObject>();
+    public List<GameObject> box = new List<GameObject>();   // 쓸 박스들
     float totalWeight;              // 총 박스 무게
     public int remainBoxCount;      // 남은 박스 수
     public float remainBoxWeight;   // 남은 박스 무게
@@ -54,6 +55,23 @@ public class BoxManager : MonoBehaviour
         inWeightUi.text = inBoxWeight.ToString();
     }
 
+    // boxPool에서 랜덤하게 count개 만큼 선택해서 box 리스트에 추가
+    public void AddRandomBoxes(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject randomBox = boxPool[Random.Range(0, boxPool.Length)];
+            box.Add(randomBox);
+        }
+    }
+
+    // boxPool에서 랜덤하게 하나 선택해서 box 리스트 맨 뒤에 추가
+    public void AddOneRandomBox()
+    {
+        GameObject randomBox = boxPool[Random.Range(0, boxPool.Length)];
+        box.Add(randomBox);
+    }
+
     public void NextBoxSpawn()
     {
         if (count == box.Count || GameManager.Instance.gameEnd)
@@ -64,6 +82,7 @@ public class BoxManager : MonoBehaviour
         curBox = Instantiate(box[count], transform);
         float randomY = Random.Range(0f, 360f);
         curBox.transform.localRotation = Quaternion.Euler(0f, randomY, randomY); // 부모 기준으로 Y축 회전
+        AddOneRandomBox();
     }
 
     public void NextBoxSpawnWait()

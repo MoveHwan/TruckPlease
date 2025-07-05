@@ -115,7 +115,8 @@ public class GameManager : MonoBehaviour
         firstStar = stageData[stage - 1].firstStar;
         secondStar = stageData[stage - 1].secondStar;
         thirdStar = stageData[stage - 1].thirdStar;
-        BoxManager.Instance.box = stageData[stage - 1].boxes;
+        //BoxManager.Instance.box = stageData[stage - 1].boxes;
+        BoxManager.Instance.AddRandomBoxes(100);
         Instantiate(stageTruck);
         Instantiate(stageWall);
         Instantiate(stageCheckBox);

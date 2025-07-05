@@ -11,11 +11,16 @@ public class CheckBox : MonoBehaviour
 
         if (other.CompareTag("Box") && !BoxManager.Instance.GoaledBoxes.Contains(other.gameObject))
         {
-            BoxManager.Instance.GoaledBoxes.Add(other.gameObject);
-            ThrowBox throwBox = other.GetComponent<ThrowBox>();
-            throwBox.canWind = false;
-            Debug.Log($"Added: {other.name}");
-            BoxManager.Instance.CalcBoxIn();
+            StickyBlock stickyBlock = other.transform.GetComponent<StickyBlock>();
+            if (!stickyBlock.effectTriggered) 
+            { 
+                BoxManager.Instance.GoaledBoxes.Add(other.gameObject);
+                ThrowBox throwBox = other.GetComponent<ThrowBox>();
+                throwBox.canWind = false;
+                Debug.Log($"Added: {other.name}");
+                BoxManager.Instance.CalcBoxIn();
+            }
+               
         }
     }
 
