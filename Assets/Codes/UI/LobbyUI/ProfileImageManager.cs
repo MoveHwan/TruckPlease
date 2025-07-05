@@ -36,7 +36,7 @@ public class ProfileImageManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerPrefs.SetInt("Gold", 1000);
+        //PlayerPrefs.SetInt("Gold", 1000);
 
         if (Instance == null) 
             Instance = this;
