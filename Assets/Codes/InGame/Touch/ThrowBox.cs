@@ -41,7 +41,7 @@ public class ThrowBox : MonoBehaviour
 
     void Start()
     {
-        ThrowTouchPanel.Instance.controlBox = this;
+        //ThrowTouchPanel.Instance.controlBox = this;
         screenWidth = Screen.width;
         screenHeight = Screen.height; // 화면 높이
     }
@@ -146,6 +146,15 @@ public class ThrowBox : MonoBehaviour
             return;
         BoxManager.Instance.boxReady = false;
         canWind = true;
+
+        if (VfxManager.instance.comboPop)
+        {
+            VfxManager.instance.comboPop = false;       // 콤보 터지는지 확인 시작
+        }
+        else
+        {
+            VfxManager.instance.stack = 0;
+        }
 
         if (AudioManager.instance != null)
         {

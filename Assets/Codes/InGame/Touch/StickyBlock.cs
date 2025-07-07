@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
-public enum BlockColor { Red, Blue, Green, Yellow }
+public enum BlockColor { Red, Blue, Green, Yellow , Orange, Purple}
 
 public class StickyBlock : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class StickyBlock : MonoBehaviour
     public GameObject firstStack;
     public GameObject secondStack;
     public GameObject thirdStack;
+    public GameObject nextBox;
 
     private void Start()
     {
@@ -23,10 +26,27 @@ public class StickyBlock : MonoBehaviour
         var renderer = GetComponent<MeshRenderer>();
     }
 
-        private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
+        if (nextBox == null)
+            return;
+
         StickyBlock otherBlock = collision.collider.GetComponent<StickyBlock>();
-        if (otherBlock != null && !otherBlock.effectTriggered)
+
+        //if (otherBlock != null && !otherBlock.effectTriggered && otherBlock.blockColor == blockColor)
+        //{
+        //    VfxManager.instance.stack++;
+        //    effectTriggered = true;
+        //    BoxManager.Instance.GoaledBoxes.Remove(gameObject);
+        //    BoxManager.Instance.spawnedBoxes.Remove(gameObject);
+        //    BoxManager.Instance.GoaledBoxes.Remove(otherBlock.gameObject);
+        //    BoxManager.Instance.spawnedBoxes.Remove(otherBlock.gameObject);
+
+        //    StartCoroutine(otherBlock.HighlightAndDestroy());
+        //    StartCoroutine(HighlightAndDestroy());
+        //}
+
+        if (otherBlock != null && !otherBlock.effectTriggered && !effectTriggered)
         {
             touchingBlocks.Add(otherBlock);
             otherBlock.touchingBlocks.Add(this);
@@ -48,14 +68,17 @@ public class StickyBlock : MonoBehaviour
         }
     }
 
+    // 3개 이상 합칠때
     private void CheckConnectionGroup()
     {
         var group = GetConnectedGroupByColor(this.blockColor);
 
-        if (group.Count >= 3 && !effectTriggered)
+        if (group.Count >= 2 && !effectTriggered)
         {
             Debug.Log($"{this.blockColor} 블록이 3개 이상 연결됨!");
+
             VfxManager.instance.stack++;
+            VfxManager.instance.comboPop = true;    // 콤보가 터졌을때
 
             // effectTriggered 먼저 설정해서 중복 방지
             foreach (var block in group)
@@ -64,6 +87,17 @@ public class StickyBlock : MonoBehaviour
                 BoxManager.Instance.GoaledBoxes.Remove(block.gameObject);
                 BoxManager.Instance.spawnedBoxes.Remove(block.gameObject);
             }
+
+            //  1. 그룹 중앙 위치 계산
+            Vector3 totalPos = Vector3.zero;
+            foreach (var block in group)
+            {
+                totalPos += block.transform.position;
+            }
+            Vector3 centerPos = totalPos / group.Count;
+
+            if(nextBox != null)
+                BoxManager.Instance.NextBigBox(nextBox, centerPos);
 
             // 연결된 그룹 전부 파괴
             foreach (var block in group)
@@ -104,6 +138,7 @@ public class StickyBlock : MonoBehaviour
         Debug.Log("visited group count: " + visited.Count);
         return visited;
     }
+
 
     private IEnumerator HighlightAndDestroy()
     {

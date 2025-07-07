@@ -80,6 +80,7 @@ public class BoxManager : MonoBehaviour
 
         boxReady = true;
         curBox = Instantiate(box[count], transform);
+        ThrowTouchPanel.Instance.controlBox = curBox.GetComponent<ThrowBox>();
         float randomY = Random.Range(0f, 360f);
         curBox.transform.localRotation = Quaternion.Euler(0f, randomY, randomY); // 부모 기준으로 Y축 회전
         AddOneRandomBox();
@@ -311,5 +312,22 @@ public class BoxManager : MonoBehaviour
 
             CalcBoxIn();
         }
+    }
+
+    // 수박 게임 상자 생성
+    public IEnumerator NextBigBoxCo(GameObject nextBox, Vector3 position)
+    {
+        yield return new WaitForSeconds(0.2f);
+        Quaternion randomRotation = Quaternion.Euler(
+        Random.Range(0f, 360f),
+        Random.Range(0f, 360f),
+        Random.Range(0f, 360f)
+        );
+        Instantiate(nextBox, position, randomRotation);
+    }
+
+    public void NextBigBox(GameObject nextBox, Vector3 position)
+    {
+        StartCoroutine(NextBigBoxCo(nextBox,position));
     }
 }

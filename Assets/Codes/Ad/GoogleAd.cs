@@ -87,7 +87,7 @@ public class GoogleAd : MonoBehaviour
     public void LoadInterstitialAd()
     {
         // 이미 광고가 있거나 하면 로드 하지 않기
-        if (_interstitialAd != null && _interstitialAd.CanShowAd() && StackIntAd.instance.stack < 2)
+        if (_interstitialAd != null && _interstitialAd.CanShowAd() || StackIntAd.instance.stack < 2)
         {
             Debug.Log("Rewarded ad already loaded.");
             return;

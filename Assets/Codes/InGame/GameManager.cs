@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        timeCount = 60f;
+        timeCount = 5f;
         SetStageData();
         GameStart();
         if (AudioManager.instance != null)
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TimeControl();
+        //TimeControl();
     }
 
 
