@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     Animator truckAni;
 
     public StageData[] stageData;
+    public StageData eternalData;       // 무한모드 데이터
+    public bool eternalMode;            // 무한모드 불
 
     public int stage;
     public int stageSelect;
@@ -28,7 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject stageCheckBox;
     public GameObject stageObstacle;
     public GameObject[] boxes;
-
+    public int life;
     public float firstStar;
     public float secondStar;
     public float thirdStar;
@@ -104,19 +106,70 @@ public class GameManager : MonoBehaviour
     void SetStageData()
     {
         SelectStage(); // 겜 출시시 주석요망
-        stageTruck = stageData[stage - 1].truck;
-        stageWall = stageData[stage - 1].stageWall;
-        stageCheckBox = stageData[stage - 1].stageCheckBox;
-        if(stageData[stage - 1].stageObstacle != null)
+
+        if(stage == 999)
         {
-            stageObstacle = stageData[stage - 1].stageObstacle;
+            SetEternalMode();
+        }
+        else
+        {
+            stageTruck = stageData[stage - 1].truck;
+            stageWall = stageData[stage - 1].stageWall;
+            stageCheckBox = stageData[stage - 1].stageCheckBox;
+            life = stageData[stage - 1].life;
+
+            if (stageData[stage - 1].stageObstacle != null)
+            {
+                stageObstacle = stageData[stage - 1].stageObstacle;
+                Instantiate(stageObstacle, BoxManager.Instance.gameObject.transform);
+            }
+            firstStar = stageData[stage - 1].firstStar;
+            secondStar = stageData[stage - 1].secondStar;
+            thirdStar = stageData[stage - 1].thirdStar;
+            //BoxManager.Instance.box = stageData[stage - 1].boxes;
+            Instantiate(stageTruck);
+            Instantiate(stageWall);
+            Instantiate(stageCheckBox);
+            BoxManager.Instance.CalcTotalWei();
+            BoxManager.Instance.CalcBoxCount();
+
+            truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
+
+            // 바람 관련 설정
+            if (stageData[stage - 1].useWind && !stageData[stage - 1].random)
+            {
+                WindManager.instance.SetFixedWind(stageData[stage - 1].windType, stageData[stage - 1].windSpeed);
+            }       
+            else if(stageData[stage - 1].random)
+            {
+                WindManager.instance.RandomWind();
+            }
+            else
+            {
+                // 바람을 사용하지 않음 → WindManager에 비활성화 지시
+                WindManager.instance.DisableWind();
+            }
+        }
+    }
+
+    void SetEternalMode()
+    {
+        eternalMode = true;
+        stageTruck = eternalData.truck;
+        stageWall = eternalData.stageWall;
+        stageCheckBox = eternalData.stageCheckBox;
+        life = eternalData.life;
+        if (eternalData.stageObstacle != null)
+        {
+            stageObstacle = eternalData.stageObstacle;
             Instantiate(stageObstacle, BoxManager.Instance.gameObject.transform);
         }
-        firstStar = stageData[stage - 1].firstStar;
-        secondStar = stageData[stage - 1].secondStar;
-        thirdStar = stageData[stage - 1].thirdStar;
+        firstStar = eternalData.firstStar;
+        secondStar = eternalData.secondStar;
+        thirdStar = eternalData.thirdStar;
         //BoxManager.Instance.box = stageData[stage - 1].boxes;
-        BoxManager.Instance.AddRandomBoxes(100);
+        BoxManager.Instance.AddOneRandomBox();
+        BoxManager.Instance.AddOneRandomBox();
         Instantiate(stageTruck);
         Instantiate(stageWall);
         Instantiate(stageCheckBox);
@@ -126,11 +179,11 @@ public class GameManager : MonoBehaviour
         truckAni = GameObject.FindWithTag("Truck").GetComponent<Animator>();
 
         // 바람 관련 설정
-        if (stageData[stage - 1].useWind && !stageData[stage - 1].random)
+        if (eternalData.useWind && !eternalData.random)
         {
-            WindManager.instance.SetFixedWind(stageData[stage - 1].windType, stageData[stage - 1].windSpeed);
-        }       
-        else if(stageData[stage - 1].random)
+            WindManager.instance.SetFixedWind(eternalData.windType, eternalData.windSpeed);
+        }
+        else if (eternalData.random)
         {
             WindManager.instance.RandomWind();
         }
@@ -139,6 +192,7 @@ public class GameManager : MonoBehaviour
             // 바람을 사용하지 않음 → WindManager에 비활성화 지시
             WindManager.instance.DisableWind();
         }
+
     }
 
     public void GameStart()

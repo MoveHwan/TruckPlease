@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3499937a4fe4048a6507ea3316222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxData: {fileID: 11400000, guid: 71f44148dd74ddd459f3d78039d8d923, type: 2}
+  boxData: {fileID: 11400000, guid: f7701360b3bc7ed4dbd4149525a1a5cf, type: 2}
   weight: 0
   throwDone: 0
   throwHeightSli: {fileID: 0}
@@ -217,7 +217,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 10b2c03f283474d4d97d5adf5948157c, type: 2}
   firstStack: {fileID: 100000, guid: 1e51aabccd5e0234db91af1510049169, type: 3}
   secondStack: {fileID: 100000, guid: 97918fcd9079ea64a955a7cc14f3f35d, type: 3}
-  thirdStack: {fileID: 100000, guid: f1874070aef69bb4a824a98c58d9fabc, type: 3}
+  thirdStack: {fileID: 100000, guid: 78e540651659e394a8af3fe2613ba06d, type: 3}
   nextBox: {fileID: 1329092548888659047, guid: cd00cede9dac0cb4e9ecdd976e8c6c9d, type: 3}
 --- !u!1001 &2208501234754252045
 PrefabInstance:

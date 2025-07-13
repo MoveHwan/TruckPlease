@@ -13,6 +13,15 @@ public class GroundBoxDel : MonoBehaviour
             StartCoroutine(BoxDelayDelete(other.gameObject));
             BoxManager.Instance.CalcBoxCurEnd();
             VfxManager.instance.stack = 0;
+            if(GameManager.Instance.life > 0)
+            {
+                GameManager.Instance.life--;
+                if(GameManager.Instance.life <= 0)
+                {
+                    StartCoroutine(BoxManager.Instance.BoxGameEnd());
+                }
+            }
+
         }
     }
 

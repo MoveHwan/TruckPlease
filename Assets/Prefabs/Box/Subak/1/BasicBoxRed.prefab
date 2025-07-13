@@ -217,7 +217,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 10b2c03f283474d4d97d5adf5948157c, type: 2}
   firstStack: {fileID: 100000, guid: 3262975a702000f4093e1be4d1e2731a, type: 3}
   secondStack: {fileID: 100000, guid: 5f69a780087a9b14f911f52bc6037800, type: 3}
-  thirdStack: {fileID: 100000, guid: 5b6c2f68addb63847b151f0d41a9d3b1, type: 3}
+  thirdStack: {fileID: 100000, guid: f85a53e6c110f174192e6dbb2aeac7af, type: 3}
   nextBox: {fileID: 2007196811123898680, guid: d3c412b100974d84c870cb0acdb7bf1f, type: 3}
 --- !u!1001 &3059807428491251619
 PrefabInstance:

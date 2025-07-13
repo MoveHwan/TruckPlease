@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32272445409e4894a82f526ba628e861, type: 3}
-  m_Name: Big
+  m_Name: Green
   m_EditorClassIdentifier: 
-  boxType: 2
+  boxType: 3

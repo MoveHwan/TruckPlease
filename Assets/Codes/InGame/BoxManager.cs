@@ -34,6 +34,10 @@ public class BoxManager : MonoBehaviour
     public bool gameEndBox;
     public bool boxReady;          // 상자 준비 되면
     public bool boxWarn;                  // 상자 다던져도 안될때
+
+    // 색상 등장 여부 저장용
+    public Dictionary<BlockColor, bool> spawnedColorFlags = new Dictionary<BlockColor, bool>();
+
     [Header("item")]
     public bool keepItem;
     public bool warnEnd;        // 남은 상자로 못 클리어하는 변수
@@ -46,6 +50,11 @@ public class BoxManager : MonoBehaviour
 
     void Start()
     {
+        // 모든 색상은 처음에 false (등장하지 않음)
+        foreach (BlockColor color in System.Enum.GetValues(typeof(BlockColor)))
+        {
+            spawnedColorFlags[color] = false;
+        }
     }
 
     void Update()
@@ -55,21 +64,33 @@ public class BoxManager : MonoBehaviour
         inWeightUi.text = inBoxWeight.ToString();
     }
 
-    // boxPool에서 랜덤하게 count개 만큼 선택해서 box 리스트에 추가
-    public void AddRandomBoxes(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            GameObject randomBox = boxPool[Random.Range(0, boxPool.Length)];
-            box.Add(randomBox);
-        }
-    }
+    //// boxPool에서 랜덤하게 count개 만큼 선택해서 box 리스트에 추가
+    //public void AddRandomBoxes(int count)
+    //{
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        GameObject randomBox = boxPool[Random.Range(0, boxPool.Length)];
+    //        box.Add(randomBox);
+    //    }
+    //}
 
-    // boxPool에서 랜덤하게 하나 선택해서 box 리스트 맨 뒤에 추가
+    // 무한모드 랜덤하게 하나 선택해서 box 리스트 맨 뒤에 추가
     public void AddOneRandomBox()
     {
-        GameObject randomBox = boxPool[Random.Range(0, boxPool.Length)];
-        box.Add(randomBox);
+        int step = GetCurrentStep();
+        GameObject[] pool = GameManager.Instance.eternalData.firstStep;
+
+        switch (step)
+        {
+            case 2: pool = GameManager.Instance.eternalData.secondStep; break;
+            case 3: pool = GameManager.Instance.eternalData.thirdStep; break;
+            case 4: pool = GameManager.Instance.eternalData.fourStep; break;
+            case 5: pool = GameManager.Instance.eternalData.fiveStep; break;
+        }
+
+        int rand = Random.Range(0, pool.Length);
+        
+        box.Add(pool[rand]);
     }
 
     public void NextBoxSpawn()
@@ -83,7 +104,8 @@ public class BoxManager : MonoBehaviour
         ThrowTouchPanel.Instance.controlBox = curBox.GetComponent<ThrowBox>();
         float randomY = Random.Range(0f, 360f);
         curBox.transform.localRotation = Quaternion.Euler(0f, randomY, randomY); // 부모 기준으로 Y축 회전
-        AddOneRandomBox();
+        if(GameManager.Instance.eternalMode)
+            AddOneRandomBox();
     }
 
     public void NextBoxSpawnWait()
@@ -123,6 +145,7 @@ public class BoxManager : MonoBehaviour
             GameObject objToDelete = spawnedBoxes[index];
             spawnedBoxes.RemoveAt(index);
             GoaledBoxes.Remove(objToDelete);
+            spawnedBoxes.Clear();
             count--;
             Destroy(objToDelete);
             Destroy(curBox);
@@ -217,7 +240,7 @@ public class BoxManager : MonoBehaviour
     }
 
     // 박스 관련 게임 끝내기
-    IEnumerator BoxGameEnd()
+    public IEnumerator BoxGameEnd()
     {
         if (gameEndBox)
             yield break;
@@ -234,7 +257,7 @@ public class BoxManager : MonoBehaviour
         else
         {
             warnEnd = true;
-            gameEndCount = 7f;
+            gameEndCount = 3f;
         }
         gameEndCountUi.transform.parent.gameObject.SetActive(true);
 
@@ -315,7 +338,7 @@ public class BoxManager : MonoBehaviour
     }
 
     // 수박 게임 상자 생성
-    public IEnumerator NextBigBoxCo(GameObject nextBox, Vector3 position)
+    public IEnumerator NextBigBoxCo(GameObject nextBox, Vector3 position, GameObject particle)
     {
         yield return new WaitForSeconds(0.2f);
         Quaternion randomRotation = Quaternion.Euler(
@@ -323,11 +346,64 @@ public class BoxManager : MonoBehaviour
         Random.Range(0f, 360f),
         Random.Range(0f, 360f)
         );
-        Instantiate(nextBox, position, randomRotation);
+        GameObject newBox = Instantiate(nextBox, position, randomRotation);
+        Instantiate(particle, position, particle.transform.rotation);
+
+        // 생성된 상자의 색상 판별
+        StickyBlock sticky = newBox.GetComponent<StickyBlock>();
+        if (sticky != null)
+        {
+            BlockColor spawnedColor = sticky.blockColor;
+
+            if (!spawnedColorFlags[spawnedColor])
+            {
+                spawnedColorFlags[spawnedColor] = true;
+                Debug.Log($"[BoxManager] 새 색상 등장: {spawnedColor}");
+            }
+        }
+
+        //Rigidbody rb = newBox.GetComponent<Rigidbody>();
+        //if (rb != null)
+        //{
+        //    rb.isKinematic = true;
+        //    StartCoroutine(EnablePhysicsDelayed(rb, 0.2f));
+        //}
     }
 
-    public void NextBigBox(GameObject nextBox, Vector3 position)
+    IEnumerator EnablePhysicsDelayed(Rigidbody rb, float delay)
     {
-        StartCoroutine(NextBigBoxCo(nextBox,position));
+        yield return new WaitForSeconds(delay);
+        if (rb != null)
+            rb.isKinematic = false;
+    }
+
+    public void NextBigBox(GameObject nextBox, Vector3 position, GameObject particle)
+    {
+        StartCoroutine(NextBigBoxCo(nextBox,position, particle));
+    }
+
+    // 색상이 등장했을 때 호출 (StickyBlock 등에서)
+    public void RegisterColor(BlockColor color)
+    {
+        if (!spawnedColorFlags[color])
+        {
+            spawnedColorFlags[color] = true;
+            Debug.Log($"색상 등장: {color}");
+        }
+    }
+
+    // 현재 단계 계산
+    public int GetCurrentStep()
+    {
+        int count = 0;
+        foreach (var entry in spawnedColorFlags)
+        {
+            if (entry.Value) count++;
+        }
+        if (count >= 6) return 5;
+        else if (count >= 5) return 4;
+        else if (count >= 4) return 3;
+        else if (count >= 3) return 2;
+        else return 1;
     }
 }

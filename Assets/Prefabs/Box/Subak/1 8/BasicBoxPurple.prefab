@@ -19,9 +19,8 @@ GameObject:
   - component: {fileID: 2331457959739206197}
   - component: {fileID: 9051295325702597984}
   - component: {fileID: 421384970653752979}
-  - component: {fileID: -5672184136686722683}
   m_Layer: 10
-  m_Name: PurpleBoxRg
+  m_Name: BasicBoxPurple
   m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: -0.987, z: -3.468}
-  m_LocalScale: {x: 51.11, y: 55.3, z: 62.2}
+  m_LocalScale: {x: 76.7, y: 80.6, z: 92.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3718887829539953201}
@@ -105,9 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3499937a4fe4048a6507ea3316222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxData: {fileID: 11400000, guid: 71f44148dd74ddd459f3d78039d8d923, type: 2}
+  boxData: {fileID: 11400000, guid: c0e5eba66e1d0944ab483831375975dc, type: 2}
   weight: 0
-  throwDone: 1
+  throwDone: 0
   throwHeightSli: {fileID: 0}
   forceMultiplier: 0
   zDirection: 1
@@ -124,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d386dae9dbb06d4f93a39c61048027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwDone: 1
-  vfxDone: 1
+  throwDone: 0
+  vfxDone: 0
 --- !u!114 &1531736629782336114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,33 +219,6 @@ MonoBehaviour:
   secondStack: {fileID: 100000, guid: 2f2d04c206be1c14989b3466783051eb, type: 3}
   thirdStack: {fileID: 100000, guid: 78e540651659e394a8af3fe2613ba06d, type: 3}
   nextBox: {fileID: 0}
---- !u!54 &-5672184136686722683
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329092548888659047}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &4425548336891814952
 PrefabInstance:
   m_ObjectHideFlags: 0

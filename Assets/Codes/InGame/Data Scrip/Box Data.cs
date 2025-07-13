@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Box", menuName = "Scriptable Object/Box Data")]
 public class BoxData : ScriptableObject
 {
-    public enum BoxType { basicV, longV, bigV, tallV ,smallV}
+    public enum BoxType { Red, Orange, Yellow, Green, Blue, Pink, Skyblue, Purple}
 
     public BoxType boxType;
 
@@ -15,17 +15,22 @@ public class BoxData : ScriptableObject
         {
             switch (boxType)
             {
-                case BoxType.basicV:
+                case BoxType.Red:
                     return 1f;
-                case BoxType.longV:
-                    return 2.0f;
-                case BoxType.bigV:
+                case BoxType.Orange:
                     return 3f;
-                case BoxType.tallV:
-                    return 4f;
-                case BoxType.smallV:
-                    return 0.5f;
-
+                case BoxType.Yellow:
+                    return 10f;
+                case BoxType.Green:
+                    return 30f;
+                case BoxType.Blue:
+                    return 80f;
+                case BoxType.Pink:
+                    return 200f;
+                case BoxType.Skyblue:
+                    return 500f;
+                case BoxType.Purple:
+                    return 1500f;
 
                 default:
                     return 1.0f;
@@ -39,20 +44,20 @@ public class BoxData : ScriptableObject
         {
             switch (boxType)
             {
-                case BoxType.basicV:
-                    return 1f;
-                case BoxType.longV:
-                    return 1.5f;
-                case BoxType.bigV:
-                    return 2f;
-                case BoxType.tallV:
-                    return 2.5f;
-                case BoxType.smallV:
-                    return 0.5f;
+                //case BoxType.basicV:
+                //    return 0.1f;
+                //case BoxType.longV:
+                //    return 1.5f;
+                //case BoxType.bigV:
+                //    return 2f;
+                //case BoxType.tallV:
+                //    return 2.5f;
+                //case BoxType.smallV:
+                //    return 0.5f;
 
 
                 default:
-                    return 1.0f;
+                    return 0.1f;
             }
         }
     }
@@ -63,20 +68,20 @@ public class BoxData : ScriptableObject
         {
             switch (boxType)
             {
-                case BoxType.basicV:
-                    return 15f;
-                case BoxType.longV:
-                    return 18f;
-                case BoxType.bigV:
-                    return 22f;
-                case BoxType.tallV:
-                    return 25f;
-                case BoxType.smallV:
-                    return 10f;
+                //case BoxType.basicV:
+                //    return 1.3f;
+                //case BoxType.longV:
+                //    return 18f;
+                //case BoxType.bigV:
+                //    return 22f;
+                //case BoxType.tallV:
+                //    return 25f;
+                //case BoxType.smallV:
+                //    return 10f;
 
 
                 default:
-                    return 10f;
+                    return 1.3f;
             }
         }
     }

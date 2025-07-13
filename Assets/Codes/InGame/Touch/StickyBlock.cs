@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.Collections.AllocatorManager;
 
-public enum BlockColor { Red, Blue, Green, Yellow , Orange, Purple}
+public enum BlockColor { Red, Blue, Green, Yellow , Orange, Purple, Skyblue, Pink}
 
 public class StickyBlock : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class StickyBlock : MonoBehaviour
     {
         // 시작 시 기존 material 저장
         var renderer = GetComponent<MeshRenderer>();
+        if (GameManager.Instance.eternalMode)
+            BoxManager.Instance.RegisterColor(blockColor);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -96,8 +98,8 @@ public class StickyBlock : MonoBehaviour
             }
             Vector3 centerPos = totalPos / group.Count;
 
-            if(nextBox != null)
-                BoxManager.Instance.NextBigBox(nextBox, centerPos);
+            
+            BoxManager.Instance.NextBigBox(nextBox, centerPos, thirdStack);
 
             // 연결된 그룹 전부 파괴
             foreach (var block in group)
@@ -150,30 +152,30 @@ public class StickyBlock : MonoBehaviour
         // 0.2초 대기
         yield return new WaitForSeconds(0.15f);
 
-        switch (VfxManager.instance.stack)
-        {
-            case 1:
-                Instantiate(firstStack, transform.position, firstStack.transform.rotation);
-                Debug.Log("첫 콤보");
-                break;
-            case 2:
-                Instantiate(secondStack, transform.position, secondStack.transform.rotation);
-                Debug.Log("둘 콤보");
+        //switch (VfxManager.instance.stack)
+        //{
+        //    case 1:
+        //        Instantiate(firstStack, transform.position, firstStack.transform.rotation);
+        //        Debug.Log("첫 콤보");
+        //        break;
+        //    case 2:
+        //        Instantiate(secondStack, transform.position, secondStack.transform.rotation);
+        //        Debug.Log("둘 콤보");
 
-                break;
-            case 3:
-                Instantiate(thirdStack, transform.position, thirdStack.transform.rotation);
-                InGameGoldUI.Instance.GetGold();
-                Debug.Log("셋 콤보");
+        //        break;
+        //    case 3:
+        //        Instantiate(thirdStack, transform.position, thirdStack.transform.rotation);
+        //        InGameGoldUI.Instance.GetGold();
+        //        Debug.Log("셋 콤보");
 
-                break;
-            default:
-                Instantiate(thirdStack, transform.position, thirdStack.transform.rotation);
-                InGameGoldUI.Instance.GetGold();
-                Debug.Log("무겐 콤보");
+        //        break;
+        //    default:
+        //        Instantiate(thirdStack, transform.position, thirdStack.transform.rotation);
+        //        InGameGoldUI.Instance.GetGold();
+        //        Debug.Log("무겐 콤보");
 
-                break;
-        }
+        //        break;
+        //}
 
         // 원래 마테리얼로 되돌릴 필요 없으니 Destroy
         Destroy(gameObject);

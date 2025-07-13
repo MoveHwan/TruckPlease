@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3499937a4fe4048a6507ea3316222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxData: {fileID: 11400000, guid: 71f44148dd74ddd459f3d78039d8d923, type: 2}
+  boxData: {fileID: 11400000, guid: ac972593495117844a67350b247267ee, type: 2}
   weight: 0
   throwDone: 1
   throwHeightSli: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 10b2c03f283474d4d97d5adf5948157c, type: 2}
   firstStack: {fileID: 100000, guid: 3e4172c566c171e49a82c8a6ae828063, type: 3}
   secondStack: {fileID: 100000, guid: 291118447fe3f9f4a84bdebf49681e41, type: 3}
-  thirdStack: {fileID: 100000, guid: d941903e1c6cd6843aee395dccfffebe, type: 3}
+  thirdStack: {fileID: 100000, guid: f1874070aef69bb4a824a98c58d9fabc, type: 3}
   nextBox: {fileID: 3472921667372705257, guid: 970524047d396b8438e841031a20be52, type: 3}
 --- !u!54 &-2114245956949554092
 Rigidbody:
