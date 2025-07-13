@@ -3,62 +3,39 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class StageUI : MonoBehaviour
 {
     public GameObject StageLock;
     public TextMeshProUGUI StageText;
-
+    public Transform Content;
     public Transform StarGroup;
 
-    public Image StageImage;
-    public Sprite StageClearSprite;
+    public bool isSymmetry;
+    public Vector2 truckVec;
 
     [Space]
     [SerializeField] int stageId;
     [SerializeField] int starCount;
 
+
+    void Start()
+    {
+        //truckVec = 
+    }
+
     public int SetStage(int id)
     {
         stageId = id;
 
-        int StageNum = int.Parse(StageText.text);
+        StageText.text = stageId.ToString();
 
-        if (StageNum == 1)
-        {
-            if (stageId != 1)
-            {
-                starCount = PlayerPrefs.GetInt("Stage" + (stageId - 4) + "_Star", 0);
-
-                if (starCount == 0)
-                    StageLock.SetActive(true);
-                else
-                    StageLock.SetActive(false);
-            }
-            else
-                StageLock.SetActive(false);
-
-        }
-        else
-        {
-            starCount = PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_Star", 0);
-
-            if (starCount == 0)
-                StageLock.SetActive(true);
-            else
-                StageLock.SetActive(false);
-        }
-
-        
+        StageLock.SetActive(stageId != 1 && PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_Star", 0) <= 0);
 
         starCount = PlayerPrefs.GetInt("Stage" + stageId + "_Star", 0);
 
         for (int i = 0; i < starCount; i++)
         {
-            if (i == 0)
-                StageImage.sprite = StageClearSprite;
-
             StarGroup.GetChild(i).gameObject.SetActive(true);
         }
 

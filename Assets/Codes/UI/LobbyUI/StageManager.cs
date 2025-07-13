@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
@@ -12,7 +11,7 @@ public class StageManager : MonoBehaviour
     public GameObject StagePopUp;
     public GameObject ChapterPopUp;
     public GameObject NoHeartPopUp;
-    public Transform[] Chapters;
+    public Transform[] ChapterLandMarks;
     public Transform[] Stages;
 
     int stageCount, totalStarCount;
@@ -22,42 +21,20 @@ public class StageManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-
-        //PlayerPrefs.SetInt("Chapter 2_new", 0);
     }
+
 
     void Start()
     {
-        string topRatingStage = PlayerPrefs.GetString("TopRatingStage", "1_0");
-        string[] ratingStr = topRatingStage.Split('_');
-
-        int topChapter = int.Parse(ratingStr[0]);
-        float topStage = int.Parse(ratingStr[1]);
-
         float starCount;
 
-        for (int i = 0; i < Chapters.Length; i++)
+        for (int i = 0; i < ChapterLandMarks.Length; i++)
         {
             starCount = 0;
 
-            if (i != 0)
+            for (int j = 0; j < Stages[i].childCount; j++)
             {
-                if (topChapter + 1 <= i || (topChapter == i && topStage < 9))
-                {
-                    Chapters[i].GetChild(3).gameObject.SetActive(true);
-                }
-                else
-                {
-                    Chapters[i].GetChild(4).GetComponent<NewChapter>().NewOn();
-                }
-                
-            }
-
-            Transform stagesPar = Stages[i].GetChild(0);
-
-            for (int j = 0; j < stagesPar.childCount; j++)
-            {
-                int star = stagesPar.GetChild(j).GetComponent<StageUI>().SetStage(++stageCount);
+                int star = Stages[i].GetChild(j).GetComponent<StageUI>().SetStage(++stageCount);
 
                 starCount += star;
 
@@ -65,32 +42,45 @@ public class StageManager : MonoBehaviour
                     totalClearStage++;
             }
 
-            Chapters[i].GetChild(2).GetComponent<Slider>().value = starCount / (stagesPar.childCount * 3);
-            Chapters[i].GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>().text = starCount + "/" + stagesPar.childCount * 3;
-
             totalStarCount += (int)starCount;
+
+            for (int j = 0;j < ChapterLandMarks[i].childCount; j++)
+            {
+                if (starCount >= 6)
+                {
+                    ChapterLandMarks[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
+                    starCount -= 6;
+                }
+                else
+                {
+                    ChapterLandMarks[i].GetChild(j).GetChild(0).GetChild(0).GetComponent<Slider>().value = starCount / 6;
+                    ChapterLandMarks[i].GetChild(j).GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = starCount + "/6";
+                    break;
+                }
+                   
+            }
         }
 
-        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
+        /*if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
         {
             PlayerPrefs.SetInt("NewChapter", 0);
             ChapterPopUp.SetActive(true);
-        }
+        }*/
 
-        Profile.Instance.SetTotalStat(totalStarCount, totalClearStage);
+        Profile.Instance.SetTotalStat(totalStarCount, PlayerPrefs.GetInt("TopStage", 0));
     }
 
-    public void OpenChapter(int chapter)
-    {
-        for (int i = 0; i < Stages.Length; i++)
-        {
-            Stages[i].gameObject.SetActive( chapter - 1 == i );
-        }
 
-        StagePopUp.SetActive(true);
 
-        ScrollHelper.instance.ChapterClick(chapter);
-    }
+    /*public void OpenChapter(int chapter)
+   {
+       for (int i = 0; i < Stages.Length; i++)
+       {
+           Stages[i].gameObject.SetActive( chapter - 1 == i );
+       }
 
-    
+       StagePopUp.SetActive(true);
+
+       ScrollHelper.instance.ChapterClick(chapter);
+   }*/
 }
