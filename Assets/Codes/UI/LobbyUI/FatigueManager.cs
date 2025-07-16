@@ -49,6 +49,8 @@ public class FatigueManager : MonoBehaviour
             PlayerPrefs.Save();
 
             Destroy(StageCheck.Instance.gameObject);
+
+            StageManager.instance.SetLandmark();
         }
 
         if (SceneManager.GetActiveScene().name == "Lobby" && PlayerPrefs.GetInt("StageIn") != 0)

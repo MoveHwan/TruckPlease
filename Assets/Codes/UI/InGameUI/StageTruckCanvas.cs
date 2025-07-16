@@ -18,6 +18,7 @@ public class StageTruckCanvas : MonoBehaviour
     public GameObject Count;
     public GameObject NoHeartPopUp;
     public GameObject ReviewPopUp;
+    public GameObject StageMap;
     public GameObject[] StarImages; // 3개의 별 이미지
 
     [Header("[ RectTransform ]")]
@@ -62,6 +63,8 @@ public class StageTruckCanvas : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        if (!StageMap.activeSelf) StageMap.SetActive(true);
     }
 
     void Start()
@@ -232,6 +235,10 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.AppendInterval(0.4f);
 
         Stamp();
+
+        ShowMap();
+
+        CourierActive();
 
         ButtonsUpMove();
 
@@ -416,16 +423,45 @@ public class StageTruckCanvas : MonoBehaviour
            })
            .Append(StampImage.DOScale(1f, 0.08f).SetEase(Ease.InSine))
            .Append(StampImage.DOPunchScale(Vector3.one * 0.1f, 0.2f, 10, 1f))
-
-           .AppendCallback(() =>
-           {
-               Courier.Reaction(starCount > 0);
-               ClearConfetti.SetActive(starCount > 0);
-
-               StartCoroutine(CourierSfxDelay());
-           })
            .AppendInterval(0.2f);
 
+    }
+
+
+    void ShowMap()
+    {
+        if (starCount <= 0) return;
+
+        CanvasGroup canvasGroup = StageMap.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+        {
+            canvasGroup = StageMap.AddComponent<CanvasGroup>();
+        }
+
+        StageMap.transform.localScale = Vector3.zero;
+        canvasGroup.alpha = 0;
+
+        resultSeq.AppendCallback(() => StageMap.SetActive(true))
+            .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
+            .Join(canvasGroup.DOFade(1f, 0.4f))
+            .AppendInterval(0.42f)
+            .AppendCallback(() => 
+            { 
+                StageManager.instance.StageMapView(starCount);
+                resultSeq.Pause();
+            });
+    }
+
+    void CourierActive()
+    {
+        resultSeq.AppendCallback(() =>
+        {
+            Courier.Reaction(starCount > 0);
+            ClearConfetti.SetActive(starCount > 0);
+
+            StartCoroutine(CourierSfxDelay());
+        }).AppendInterval(0.2f);
     }
 
     void ButtonsUpMove()
@@ -448,6 +484,11 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.Append(Buttons.DOAnchorPos(originalPos, 0.4f).SetEase(Ease.OutCubic))
                  .Join(canvasGroup.DOFade(1f, 0.4f));
 
+    }
+
+    public void ResultSeqPlay()
+    {
+        resultSeq.Play();
     }
 
 
@@ -475,6 +516,8 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.Play();
     }
 
+    
+
     IEnumerator CourierSfxDelay()
     {
         yield return new WaitForSeconds(1);
@@ -487,6 +530,8 @@ public class StageTruckCanvas : MonoBehaviour
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.loseMan);
         }
     }
+
+
 
     public void CheckPauseRetry()
     {
@@ -544,7 +589,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         GameManager.Instance.GameResume();
 
-        PlayerPrefs.SetInt("StageIn", 1);
+        FatigueManager.instance.StageIn();
 
         SceneManager.LoadScene("InGame");
     }
@@ -561,7 +606,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         GameManager.Instance.GameResume();
 
-        PlayerPrefs.SetInt("StageIn", 1);
+        FatigueManager.instance.StageIn();
 
         SceneManager.LoadScene("InGame");
     }
@@ -584,9 +629,8 @@ public class StageTruckCanvas : MonoBehaviour
             return;
         }
 
-
-        PlayerPrefs.SetInt("StageIn", 1);
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
+        FatigueManager.instance.StageIn();
 
         PlayerPrefs.Save();
 
