@@ -12,7 +12,7 @@ public class CheckBox : MonoBehaviour
         if (other.CompareTag("Box") && !BoxManager.Instance.GoaledBoxes.Contains(other.gameObject))
         {
             StickyBlock stickyBlock = other.transform.GetComponent<StickyBlock>();
-            if (!stickyBlock.effectTriggered) 
+            if (stickyBlock != null && !stickyBlock.effectTriggered) 
             { 
                 BoxManager.Instance.GoaledBoxes.Add(other.gameObject);
                 ThrowBox throwBox = other.GetComponent<ThrowBox>();

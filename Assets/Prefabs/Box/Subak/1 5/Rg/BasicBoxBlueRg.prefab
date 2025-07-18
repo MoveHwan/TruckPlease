@@ -218,7 +218,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 10b2c03f283474d4d97d5adf5948157c, type: 2}
   firstStack: {fileID: 100000, guid: 090ac7e4da2441940acfcd0b661d571d, type: 3}
   secondStack: {fileID: 100000, guid: 2f2d04c206be1c14989b3466783051eb, type: 3}
-  thirdStack: {fileID: 100000, guid: 78e540651659e394a8af3fe2613ba06d, type: 3}
+  thirdStack: {fileID: 100000, guid: 5054fd6555ad9fc498c8e25e1f95ccd6, type: 3}
   nextBox: {fileID: 1329092548888659047, guid: cda580b834c17034c9b0f58cecb94824, type: 3}
 --- !u!54 &-5672184136686722683
 Rigidbody:

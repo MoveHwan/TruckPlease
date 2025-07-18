@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.Collections.AllocatorManager;
 
-public enum BlockColor { Red, Blue, Green, Yellow , Orange, Purple, Skyblue, Pink}
+public enum BlockColor { Red, Blue, Green, Yellow , Orange, Purple, Skyblue, Pink, Mint}
 
 public class StickyBlock : MonoBehaviour
 {

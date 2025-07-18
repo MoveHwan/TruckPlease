@@ -68,7 +68,7 @@ public class Tutorial : MonoBehaviour
             Color tuto = tutoPanel.color;
             tuto.a = 0f;
             tutoPanel.color = tuto;
-            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 2f, 2f));
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 0.2f, 0.2f));
             yield return new WaitForSeconds(2f); // 2초 대기
             tuto.a = 0.6f;
             tutoPanel.color = tuto;
@@ -82,7 +82,7 @@ public class Tutorial : MonoBehaviour
             Color tuto = tutoPanel.color;
             tuto.a = 0f;
             tutoPanel.color = tuto;
-            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 5f, 5f));
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 0.5f, 0.5f));
             yield return new WaitForSeconds(2f); // 2초 대기
             tuto.a = 0.6f;
             tutoPanel.color = tuto;
@@ -97,7 +97,7 @@ public class Tutorial : MonoBehaviour
             Color tuto = tutoPanel.color;
             tuto.a = 0f;
             tutoPanel.color = tuto;
-            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 12f, 7f));
+            ThrowTouchPanel.Instance.controlBox.TutoThrow(new Vector3(0f, 1.2f, 0.7f));
             yield return new WaitForSeconds(3f); // 2초 대기
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();

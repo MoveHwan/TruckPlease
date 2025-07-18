@@ -215,6 +215,7 @@ public class BoxManager : MonoBehaviour
         {
             StartCoroutine(BoxWarn());
         }
+
     }
 
 
@@ -235,6 +236,11 @@ public class BoxManager : MonoBehaviour
 
                 }
             }
+        }
+
+        if (inBoxWeight >= GameManager.Instance.thirdStar)
+        {
+            StartCoroutine(BoxGameEnd());
         }
 
     }
@@ -347,6 +353,7 @@ public class BoxManager : MonoBehaviour
         Random.Range(0f, 360f)
         );
         GameObject newBox = Instantiate(nextBox, position, randomRotation);
+        newBox.transform.parent = transform;
         Instantiate(particle, position, particle.transform.rotation);
 
         // 생성된 상자의 색상 판별

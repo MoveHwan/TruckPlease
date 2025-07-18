@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Box", menuName = "Scriptable Object/Box Data")]
 public class BoxData : ScriptableObject
 {
-    public enum BoxType { Red, Orange, Yellow, Green, Blue, Pink, Skyblue, Purple}
+    public enum BoxType { Red, Orange, Yellow, Green, Blue, Pink, Skyblue, Purple, Mint}
 
     public BoxType boxType;
 
@@ -29,8 +29,10 @@ public class BoxData : ScriptableObject
                     return 200f;
                 case BoxType.Skyblue:
                     return 500f;
+                case BoxType.Mint:
+                    return 1200f;
                 case BoxType.Purple:
-                    return 1500f;
+                    return 3000f;
 
                 default:
                     return 1.0f;

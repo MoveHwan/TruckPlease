@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
 using DG.Tweening;
 using UnityEngine.SocialPlatforms.Impl;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     Animator truckAni;
 
+    public CinemachineVirtualCamera GameEndCamera;    // 게임 종료 카메라
+    public GameObject GameEndAim;                       // 게임 종료 에임
     public StageData[] stageData;
     public StageData eternalData;       // 무한모드 데이터
     public bool eternalMode;            // 무한모드 불
@@ -126,7 +129,7 @@ public class GameManager : MonoBehaviour
             firstStar = stageData[stage - 1].firstStar;
             secondStar = stageData[stage - 1].secondStar;
             thirdStar = stageData[stage - 1].thirdStar;
-            //BoxManager.Instance.box = stageData[stage - 1].boxes;
+            BoxManager.Instance.box = stageData[stage - 1].boxes;
             Instantiate(stageTruck);
             Instantiate(stageWall);
             Instantiate(stageCheckBox);
@@ -265,6 +268,8 @@ public class GameManager : MonoBehaviour
     public void GameEnd()
     {
         gameEnd = true;
+        GameEndCamera.Priority = 20;
+        GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        truckAni.SetTrigger("GameEnd");
         truckAni.SetTrigger("GameEnd");
         playableDirector.Play();
         if (BoxManager.Instance.inBoxWeight >= firstStar)

@@ -36,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: -0.987, z: -3.468}
-  m_LocalScale: {x: 43.55, y: 48.7, z: 61.2}
+  m_LocalScale: {x: 45.4, y: 46.4, z: 54.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3718887829539953201}
@@ -217,7 +217,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 10b2c03f283474d4d97d5adf5948157c, type: 2}
   firstStack: {fileID: 100000, guid: 090ac7e4da2441940acfcd0b661d571d, type: 3}
   secondStack: {fileID: 100000, guid: 2f2d04c206be1c14989b3466783051eb, type: 3}
-  thirdStack: {fileID: 100000, guid: 78e540651659e394a8af3fe2613ba06d, type: 3}
+  thirdStack: {fileID: 100000, guid: 4a70176661f04554fbdda027e486b0d9, type: 3}
   nextBox: {fileID: 1329092548888659047, guid: 97ec0c960932515409d5514fe857733b, type: 3}
 --- !u!1001 &4425548336891814952
 PrefabInstance:
