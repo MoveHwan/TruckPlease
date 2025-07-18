@@ -5,7 +5,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class StageUI : MonoBehaviour
 {
@@ -25,8 +24,8 @@ public class StageUI : MonoBehaviour
     public int SetStage(int id)
     {
         stageId = id;
-        starCount = PlayerPrefs.GetInt("Stage" + stageId + "_Star", 0);
-        isPrevActive = PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_Star", 0) > 0;
+        starCount = PlayerPrefs.GetInt("Stage" + stageId + "_star", 0);
+        isPrevActive = PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_star", 0) > 0;
 
         StageText.text = stageId.ToString();
         StageLock.SetActive(stageId != 1 && !isPrevActive);
@@ -36,7 +35,7 @@ public class StageUI : MonoBehaviour
             StarGroup.GetChild(i).gameObject.SetActive(true);
         }
 
-        if (isPrevActive && starCount <= 0)
+        if (isPrevActive && starCount <= 0 || id == 1 && starCount <= 0)
         {
             PlayerTruck.Instance.SetPlayerTruck(isLeft, gameObject.GetComponent<RectTransform>());
         }
@@ -46,6 +45,17 @@ public class StageUI : MonoBehaviour
 
     public void ClearStage(int star)
     {
+        StartCoroutine(ClearStageCoroutine(star));
+    }
+
+    IEnumerator ClearStageCoroutine(int star)
+    {
+        StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
+
+        yield return new WaitUntil(() => StageManager.instance.MapScroller.isMove == false);
+        yield return new WaitForSeconds(0.3f);
+
+
         CanvasGroup stageCvg = StageText.transform.parent.GetComponent<CanvasGroup>();
 
         if (stageCvg == null)
@@ -54,16 +64,12 @@ public class StageUI : MonoBehaviour
         stageCvg.transform.DOScale(0, 0.3f).SetEase(Ease.OutBack);
         stageCvg.DOFade(0, 0.3f);
 
-        StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
+        yield return new WaitForSeconds(0.2f);
 
-        StartCoroutine(ClearStageCoroutine(star));
-    }
-
-    IEnumerator ClearStageCoroutine(int star)
-    {
         PlayerTruck.Instance.DeliveryBoxOn();
 
         yield return new WaitUntil(() => PlayerTruck.Instance.moveEnd);
+
 
         for (int i = 0; i < star; i++)
         {
@@ -72,6 +78,8 @@ public class StageUI : MonoBehaviour
             StarGroup.GetChild(i).transform.localScale = Vector3.zero;
             StarGroup.GetChild(i).gameObject.SetActive(true);
             StarGroup.GetChild(i).transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
+
+            yield return new WaitForSeconds(0.15f);
         }
 
         StageManager.instance.stageShowEnd = true;

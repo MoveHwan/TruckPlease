@@ -22,7 +22,7 @@ public class ItemUnlock : MonoBehaviour
 
     void Start()
     {
-        unlock = PlayerPrefs.GetInt("Stage" + PlayerPrefs.GetInt("Stage", 1) + "_Star", 0) == 0;
+        unlock = PlayerPrefs.GetInt("Stage" + PlayerPrefs.GetInt("Stage", 1) + "_star", 0) == 0;
 
         TotalPopUp.SetActive(false);
 

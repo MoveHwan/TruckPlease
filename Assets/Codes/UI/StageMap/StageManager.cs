@@ -143,31 +143,25 @@ public class StageManager : MonoBehaviour
             return;
         }
         
-        StartCoroutine(WaitStageShowEnd(clearStar));
+        StartCoroutine(MapViewCoroutine(clearStar));
     }
 
-
-    IEnumerator WaitStageShowEnd(int clearStar)
+    IEnumerator MapViewCoroutine(int clearStar)
     {
         targetStage.ClearStage(clearStar);
 
-        while (stageShowEnd)
-            yield return null;
+        yield return new WaitUntil(() => stageShowEnd);
+        yield return new WaitForSeconds(0.2f);
 
-        StartCoroutine(WaitLandmarkShowEnd(clearStar));
+        landmark[landIdx].StarSliderShow(clearStar - targetStage.starCount);
 
-        yield break;
-    }
+        yield return new WaitUntil(() => landShowEnd);
+        yield return new WaitForSeconds(0.2f);
 
-    IEnumerator WaitLandmarkShowEnd(int clearStar)
-    {
-        landmark[landIdx].StarSliderShow(clearStar);
-
-        while (landShowEnd)
-            yield return null;
-        
         StageTruckCanvas.Instance.ResultSeqPlay();
 
         yield break;
     }
+
+    public bool EditorStageCheck() => stageCheck;
 }

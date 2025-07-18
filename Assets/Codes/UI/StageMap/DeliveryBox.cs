@@ -14,30 +14,43 @@ public class DeliveryBox : MonoBehaviour
 
     Vector2 dis;
 
-
     void OnEnable()
     {
-        Vector2 start = boxUI.anchoredPosition;
-        Vector2 end = Vector2.right * (-dir * dis.x + start.x) + Vector2.up * start.y;
+        CanvasGroup boxCanvas = boxUI.GetComponent<CanvasGroup>();
 
-        // 포물선 이동 중간 점 구하기 (y축만 높임)
-        Vector2 control = new((start.x - end.x) / 2f, start.y + dis.y);
+        if (boxCanvas == null)
+            boxCanvas = boxUI.AddComponent<CanvasGroup>();
 
-        // 포물선 이동을 위해 0~1까지 Lerp
-        float t = 0f;
+        boxUI.localScale = Vector2.zero;
+        boxCanvas.alpha = 0;
 
-        // 포물선 이동
-        DOTween.To(() => t, val =>
-        {
-            t = val;
-            Vector2 pos = CalculateParabola(start, control, end, t);
-            boxUI.anchoredPosition = pos;
+        boxUI.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+        boxCanvas.DOFade(1f, 0.3f)
+            .OnComplete(() => 
+            {
+                Vector2 start = boxUI.anchoredPosition + Vector2.up * dis.y;
+                Vector2 end = Vector2.right * (-dir * dis.x + start.x) + Vector2.up * start.y;
 
-        }, 1f, 0.3f).OnComplete(() => {
-            // 바닥에 '쿵' 떨어지는 연출
-            boxUI.DOAnchorPosY(boxUI.anchoredPosition.y - 30f, 0.25f).SetEase(Ease.OutBounce)
-            .OnComplete(() => isMove = false);
-        });
+                // 포물선 이동 중간 점 구하기 (y축만 높임)
+                Vector2 control = new((start.x - end.x) / 2f, start.y);
+
+                // 포물선 이동을 위해 0~1까지 Lerp
+                float t = 0f;
+
+                // 포물선 이동
+                DOTween.To(() => t, val =>
+                {
+                    t = val;
+                    Vector2 pos = CalculateParabola(start, control, end, t);
+                    boxUI.anchoredPosition = pos;
+
+                }, 1f, 0.3f).OnComplete(() => {
+                    // 바닥에 '쿵' 떨어지는 연출
+                    boxUI.DOAnchorPosY(boxUI.anchoredPosition.y - 30f, 0.25f).SetEase(Ease.OutBounce)
+                    .OnComplete(() => isMove = false);
+                });
+            }
+       );
     }
 
     // 베지어 포물선 계산
@@ -50,18 +63,12 @@ public class DeliveryBox : MonoBehaviour
 
     public void BoxMoveOn(int dir, Vector2 dis)
     {
+        isMove = true;
+
         this.dir = dir;
         this.dis = dis;
 
-        boxUI.localScale = Vector2.zero;
-
-        CanvasGroup boxCanvas = boxUI.GetComponent<CanvasGroup>();
-
-        if (boxCanvas == null )
-            boxCanvas = boxUI.AddComponent<CanvasGroup>();
-
-        boxUI.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
-        boxCanvas.DOFade(1f, 0.3f).OnComplete(() => gameObject.SetActive(true));
+        gameObject.SetActive(true);
     }
 
     public bool MoveCheck() => isMove;

@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class StageTruckCanvas : MonoBehaviour
 {
@@ -53,10 +54,9 @@ public class StageTruckCanvas : MonoBehaviour
     BoxManager BoxManager;
     GameManager GameManager;
 
-    Sequence resultSeq;
+    DG.Tweening.Sequence resultSeq;
 
-    int starCount, rewardCoin;
-    float stageNum, chapter;
+    int starCount, rewardCoin, stageNum;
     bool isResult, isSetTotal, tuto;
 
 
@@ -71,31 +71,20 @@ public class StageTruckCanvas : MonoBehaviour
     {
         tuto = PlayerPrefs.GetInt("Tutorial", 0) == 0;
 
-        stageNum = PlayerPrefs.GetInt("Stage", 1);
-
-        if (stageNum < 10)
-        {
-            chapter = (stageNum - 1) / 9 + 1;
-            stageNum = stageNum % 9 == 0 ? 9 : stageNum % 9;
-        }
+        if (StageManager.instance.EditorStageCheck())
+            stageNum = PlayerPrefs.GetInt("Stage", 1);
         else
-        {
-            stageNum -= 9;
+            stageNum = GameManager.stageSelect;
 
-            chapter = (stageNum - 1) / 12 + 2;
-            stageNum = stageNum % 12 == 0 ? 12 : stageNum % 12;
-        }
+        string str = "Stage - ";
 
-        chapter = (int)chapter;
-        stageNum = (int)stageNum;
+        if (stageNum == 999)
+            str += "∞";
+        else
+            str += stageNum;
 
-        string str = stageNum.ToString();
-
-        for (int i = 0; i < 3 - str.Length; i++)
-            str = "0" + str;
-
-        PauseStageText.text = "Chapter " + chapter + " - " + stageNum;
-        LicensePlateText.text = "CH" + chapter + " - " + str;
+        PauseStageText.text = str;
+        LicensePlateText.text = str;
 
         BoxManager = BoxManager.Instance;
         GameManager = GameManager.Instance;
@@ -148,7 +137,7 @@ public class StageTruckCanvas : MonoBehaviour
     {
         starCount = WeightSlider.instance.GetStarCount();
 
-        string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_Star";
+        string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_star";
 
         rewardCoin = InGameGoldUI.Instance.GetTotalRewardGold();
 
@@ -183,22 +172,6 @@ public class StageTruckCanvas : MonoBehaviour
         }
 
 
-
-        // 다음 스테이지가 새로운 챕터일시 Retry버튼 활성화
-        if (stageNum == 9 && starCount > 0)
-        {
-            PlayerPrefs.SetInt("NewChapter", 1);
-            PlayerPrefs.SetInt("Chapter " + (chapter + 1) + "_new", 1);
-        }
-        else if (stageNum == 12 && starCount > 0)
-        {
-            RetryButton.SetActive(true);
-
-        }
-
-
-
-
         if (PlayerPrefs.GetInt(str, 0) < starCount)
         {
             PlayerPrefs.SetInt(str, starCount);
@@ -208,13 +181,8 @@ public class StageTruckCanvas : MonoBehaviour
         }
 
 
-        string[] ratingStrs = PlayerPrefs.GetString("TopRatingStage", "1_0").Split('_');
-
-        int topChapter = int.Parse(ratingStrs[0]);
-        int topStage = int.Parse(ratingStrs[1]);
-
-        if (starCount > 0 && stageNum <= 9 && (chapter > topChapter || (chapter == topChapter && stageNum > topStage)))
-            PlayerPrefs.SetString("TopRatingStage", chapter + "_" + stageNum);
+        if (stageNum != 999 && stageNum > PlayerPrefs.GetInt("TopStage", 0))
+            PlayerPrefs.SetInt("TopStage", stageNum);
 
 
         resultSeq = DOTween.Sequence();
@@ -223,7 +191,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         ShowStars();
 
-        LeftMoveAndNumbering(TotalBox, BoxCountText, BoxManager.GoaledBoxes.Count);
+        //LeftMoveAndNumbering(TotalBox, BoxCountText, BoxManager.GoaledBoxes.Count);
 
         if ((int)BoxManager.inBoxWeight != BoxManager.inBoxWeight)
             LeftMoveAndNumbering(TotalWeight, BoxWeightText, BoxManager.inBoxWeight);
@@ -247,7 +215,7 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.AppendCallback(() => GameManager.StackIntAdClear())
             .AppendInterval(0.1f);
 
-        resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
+        //resultSeq.AppendCallback(() => ItemUnlock.UnlockCheck(starCount));
 
         resultSeq.AppendCallback(() =>
         {
@@ -340,8 +308,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         if (canvasGroup == null)
         {
-            canvasGroup.DOKill();
-            return;
+            canvasGroup = targetUI.AddComponent<CanvasGroup>();
         }
 
 
@@ -373,8 +340,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         if (canvasGroup == null)
         {
-            canvasGroup.DOKill();
-            return;
+            canvasGroup = targetUI.AddComponent<CanvasGroup>();
         }
 
         // 시작 상태: 오른쪽 밖 + 투명
@@ -404,8 +370,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         if (canvasGroup == null)
         {
-            canvasGroup.DOKill();
-            return;
+            canvasGroup = StampImage.AddComponent<CanvasGroup>();
         }
 
 
@@ -445,7 +410,7 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.AppendCallback(() => StageMap.SetActive(true))
             .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
             .Join(canvasGroup.DOFade(1f, 0.4f))
-            .AppendInterval(0.42f)
+            .AppendInterval(0.2f)
             .AppendCallback(() => 
             { 
                 StageManager.instance.StageMapView(starCount);
@@ -472,7 +437,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         if (canvasGroup == null)
         {
-            canvasGroup.DOKill();
+            canvasGroup = Buttons.AddComponent<CanvasGroup>();
             return;
         }
 
@@ -623,12 +588,6 @@ public class StageTruckCanvas : MonoBehaviour
 
         GameManager.Instance.GameResume();
 
-        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
-        {
-            SceneManager.LoadScene("Lobby");
-            return;
-        }
-
         PlayerPrefs.SetInt("Stage", PlayerPrefs.GetInt("Stage") + 1);
         FatigueManager.instance.StageIn();
 
@@ -639,12 +598,6 @@ public class StageTruckCanvas : MonoBehaviour
 
     public void Lobby()
     {
-        if (PlayerPrefs.GetInt("NewChapter", 0) == 1)
-        {
-            SceneManager.LoadScene("Lobby");
-            return;
-        }
-
         GameManager.Instance.GameResume();
 
         DOTween.KillAll();

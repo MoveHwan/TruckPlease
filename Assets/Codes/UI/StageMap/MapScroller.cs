@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,23 @@ public class MapScroller : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     public ScrollRect MapView;
 
-    RectTransform target;
+    public bool isMove;
+
+    RectTransform content;
+    RectTransform viewport;
+
     Scrollbar HorBar, VerBar;
 
-    float val, targetPosY;
+    float val;
 
     bool isDrag, isSetVal;
-
-    Vector2 targetContentPosition;
 
 
     void Start()
     {
+        content = MapView.content;
+        viewport = MapView.viewport;
+
         HorBar = MapView.horizontalScrollbar;
         VerBar = MapView.verticalScrollbar;
 
@@ -29,13 +35,7 @@ public class MapScroller : MonoBehaviour, IDragHandler, IEndDragHandler
 
     void Update()
     {
-        if (target != null && MapView.content.anchoredPosition != targetContentPosition)
-        {
-            // 부드럽게 이동
-            MapView.content.anchoredPosition = Vector2.Lerp(MapView.content.anchoredPosition, targetContentPosition, Time.deltaTime * 8);
-        }
-
-        else if (!isDrag)
+        if (!isDrag)
         {
             if (!isSetVal && val == VerBar.value)
             {
@@ -76,34 +76,48 @@ public class MapScroller : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void ScrollToTarget(RectTransform target)
     {
-        Canvas.ForceUpdateCanvases(); // UI 계산 강제 갱신
+        // Ensure target is under the content
+        target.SetParent(content);
+        Debug.LogWarning($"[ScrollToTarget] Target: {target.name}");
 
-        RectTransform viewport = MapView.viewport;
+        isMove = true;
 
-        // 타겟의 중심을 월드 좌표로
-        Vector3 worldTargetCenter = target.TransformPoint(target.rect.center);
+        // Force layout update
+        Canvas.ForceUpdateCanvases();
 
-        // Viewport 기준 로컬 좌표로 변환
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            viewport,
-            worldTargetCenter,
-            null,
-            out Vector2 localPoint
-        );
+        // Get target center position (anchoredPosition 기준)
+        Vector2 targetCenter = target.anchoredPosition + (target.rect.size * 0.5f);
 
-        // 타겟이 뷰포트 중앙에 오도록 content 위치 계산
-        Vector2 offset = localPoint;
-        targetContentPosition = MapView.content.anchoredPosition - offset;
+        // Calculate offsets from viewport center
+        Vector2 offset = targetCenter - (viewport.rect.size * 0.5f);
 
+        // Calculate scrollable size
+        Vector2 scrollable = content.rect.size - viewport.rect.size;
 
-        // 이동 가능한 최소/최대 위치 계산 (Content가 Viewport보다 클 경우만 유효)
-        Vector2 minPos = Vector2.zero;
-        Vector2 maxPos = new(Mathf.Max(0, MapView.content.rect.x - MapView.viewport.rect.x),Mathf.Max(0, MapView.content.rect.y - MapView.viewport.rect.y));
+        // Clamp to [0,1] normalized range
+        float verticalNormalized = Mathf.Clamp01(offset.y / scrollable.y);
+        float horizontalNormalized = 0;
 
-        // Content pivot이 (0,1)일 때: y좌표는 음수 방향으로 내려가야 함
-        targetContentPosition.y = Mathf.Clamp(targetContentPosition.y, -maxPos.y, -minPos.y);
-        targetContentPosition.x = Mathf.Clamp(targetContentPosition.x, -maxPos.x, -minPos.x);
+        float width = content.rect.size.x / 4;
 
-        this.target = target;
+        if (targetCenter.x >= width)
+            horizontalNormalized = 1;
+        else if (targetCenter.x <= -width)
+            horizontalNormalized = 0;
+        else
+            horizontalNormalized = 0.5f;
+
+        // Tween both directions
+        DOTween.Sequence()
+            .Append(DOTween.To(() => MapView.verticalNormalizedPosition,
+                               v => MapView.verticalNormalizedPosition = v,
+                               verticalNormalized, 0.4f).SetEase(Ease.OutCubic))
+            .Join(DOTween.To(() => MapView.horizontalNormalizedPosition,
+                             h => MapView.horizontalNormalizedPosition = h,
+                             horizontalNormalized, 0.4f).SetEase(Ease.OutCubic))
+            .AppendInterval(0.2f)
+            .AppendCallback(() => isMove = false);
     }
+
+
 }

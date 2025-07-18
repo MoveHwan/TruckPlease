@@ -15,9 +15,9 @@ public class Landmark : MonoBehaviour
     CanvasGroup LockCvG;
     Sequence UnlockSeq;
 
-    int totalStar;
-    float targetVal;
-    bool sliderOn;
+    [SerializeField] int totalStar, newStar;
+    [SerializeField] float targetVal;
+    [SerializeField] bool sliderOn;
 
     void Update()
     {
@@ -45,17 +45,13 @@ public class Landmark : MonoBehaviour
         SliderText.text = star + "/6";
     }
 
-    public void StarSliderShow(int getStar)
+    public void StarSliderShow(float getStar)
     {
-        totalStar += getStar;
+        newStar = (int)getStar;
 
-        StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
+        targetVal = Mathf.Clamp01((totalStar + getStar) / 6);
 
-        targetVal = totalStar / 6;
-
-        totalStar -= 6;
-
-        sliderOn = true;
+        StartCoroutine(WaitMapMove());
     }
 
 
@@ -90,5 +86,28 @@ public class Landmark : MonoBehaviour
 
             DOTween.Kill(UnlockSeq);
         });
+    }
+
+    IEnumerator WaitMapMove()
+    {
+        //transform.SetParent(transform.parent.parent.parent);
+
+        StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
+
+        yield return new WaitUntil(() => StageManager.instance.MapScroller.isMove == false);
+        yield return new WaitForSeconds(0.3f);
+
+        sliderOn = true;
+
+        int targetValue = totalStar + newStar >= 6 ? 6 : totalStar + newStar;
+
+        DOVirtual.Int(totalStar, targetValue, 0.3f, value =>
+        {
+            SliderText.text = value + "/6";
+        });
+
+        totalStar = totalStar + newStar - 6;
+
+        yield break;
     }
 }

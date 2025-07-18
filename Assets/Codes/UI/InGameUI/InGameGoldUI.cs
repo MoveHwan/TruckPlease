@@ -37,30 +37,27 @@ public class InGameGoldUI : MonoBehaviour
 
     void Start()
     {
-        stage = PlayerPrefs.GetInt("Stage", 1);
+        if (StageManager.instance.EditorStageCheck())
+            stage = PlayerPrefs.GetInt("Stage", 1);
+        else
+            stage = GameManager.Instance.stageSelect;
 
-        stageStarStr = "Stage" + stage + "_Star";
+        stageStarStr = "Stage" + stage + "_star";
 
-        if (stage < 10)
+        if (stage == 999)
         {
-            chapter = (stage - 1) / 9 + 1;
-            stage = stage % 9 == 0 ? 9 : stage % 9;
+            bonusGold = 50;
         }
         else
         {
-            stage -= 9;
+            chapter = stage / 6 + 1;
 
-            chapter = (stage - 1) / 12 + 2;
-            stage = stage % 12 == 0 ? 12 : stage % 12;
+            if (stage % 6 == 0)
+                chapter -= 1;
+
+            bonusGold = 10 + (chapter - 1) * 5;
         }
 
-        if (PlayerPrefs.GetInt(stageStarStr, 0) >= 3) 
-        { 
-            gameObject.SetActive(false);
-            return;
-        }
-
-        bonusGold = 10 + (chapter - 1) * 5;
 
         SetGoldEffect();
         SetGoldTextEffect();
@@ -151,13 +148,6 @@ public class InGameGoldUI : MonoBehaviour
         GoldTextSeq.Restart(); // 무조건 처음부터 재생
     }
 
-    void RefreshStarGold()
-    {
-        starCount = WeightSlider.instance.GetStarCount();
-
-        starGold = GetStageReward(GameManager.Instance.stage, starCount, stageStarStr);
-    }
-
     void RefreshGold()
     {
         if (gold > int.Parse(GoldText.text))
@@ -168,8 +158,16 @@ public class InGameGoldUI : MonoBehaviour
 
     public int GetTotalRewardGold()
     {
-        RefreshStarGold();
-
+        if (stage == 999)
+        {
+            starGold = 100;
+        }
+        else
+        {
+            starCount = WeightSlider.instance.GetStarCount();
+            starGold = GetStageReward(stage, starCount, stageStarStr);
+        }
+        
         return gold + starGold;
     }
 

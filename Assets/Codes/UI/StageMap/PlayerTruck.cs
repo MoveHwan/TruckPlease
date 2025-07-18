@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerTruck : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class PlayerTruck : MonoBehaviour
 
     public bool moveEnd;
 
-    static Vector2 defaultDis = Vector2.right * 180;
+    static Vector2 defaultDis = Vector2.right * 180 + Vector2.up * 50;
 
     int dir;
 
@@ -30,7 +28,7 @@ public class PlayerTruck : MonoBehaviour
         Vector3 scale = rect.localScale;
 
         dir = left ? -1 : 1;
-        scale.x *= dir;
+        scale.x = -dir;
         rect.localScale = scale;
 
         Vector3 localPos = content.InverseTransformPoint(target.position);
@@ -62,20 +60,23 @@ public class PlayerTruck : MonoBehaviour
                     break;
                 case 2:
                     dis = defaultDis;
-                    dis.y = 25;
+                    dis.y += 25;
                     break;
             }
 
-            box = Instantiate(DeliveryBox, transform.parent).GetComponent<DeliveryBox>();
+            GameObject boxObject = Instantiate(DeliveryBox, transform.parent);
+            boxObject.SetActive(false);
 
-            box.transform.position = transform.position;
+            box = boxObject.GetComponent<DeliveryBox>();
 
+            box.transform.localPosition = transform.localPosition + Vector3.up * rect.sizeDelta.y / 2;
             box.BoxMoveOn(dir, dis);
 
             yield return new WaitUntil(() => box.MoveCheck());
+            yield return new WaitForSeconds(0.2f);
         }
 
-        yield return new WaitUntil(() => box.MoveCheck());
+        yield return new WaitForSeconds(0.6f);
 
         moveEnd = true;
 
