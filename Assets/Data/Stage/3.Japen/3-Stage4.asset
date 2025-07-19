@@ -12,20 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24a5b41a2f1e484a84410fb8369cdb5, type: 3}
   m_Name: 3-Stage4
   m_EditorClassIdentifier: 
+  eternal: 0
   truck: {fileID: 4896329237258397798, guid: cbd1ba6b10fdf6f45ac83872743cef74, type: 3}
   stageWall: {fileID: 2715210221552253383, guid: 2549173c3163ffe4d867b0a74aa8a62a,
     type: 3}
   stageCheckBox: {fileID: 6187360229143178563, guid: cc22ccb51f23b5046a9c724031fb0df4,
     type: 3}
-  stageObstacle: {fileID: 0}
+  stageObstacle: {fileID: 4951445929497649119, guid: 1c950d126f5acc042b30ba49da6de506,
+    type: 3}
   boxes:
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  - {fileID: 7202059272974535253, guid: 790bd05ff4f13d04482400533dc28850, type: 3}
-  firstStar: 0.5
-  secondStar: 1
-  thirdStar: 1.5
-  useWind: 1
+  - {fileID: 5478178934625879587, guid: 9acc6871b501ad84c8a765639c42d7d3, type: 3}
+  - {fileID: 8340693998501053428, guid: f315195552b7d0d48ac1ae863ed68efa, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 8340693998501053428, guid: f315195552b7d0d48ac1ae863ed68efa, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 8340693998501053428, guid: f315195552b7d0d48ac1ae863ed68efa, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 8340693998501053428, guid: f315195552b7d0d48ac1ae863ed68efa, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 75ca0b98874174a4ab725e58405c41fe, type: 3}
+  - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
+  firstStep: []
+  secondStep: []
+  thirdStep: []
+  fourStep: []
+  fiveStep: []
+  firstStar: 700
+  secondStar: 750
+  thirdStar: 800
+  life: 0
+  useWind: 0
   random: 0
   windType: 2
   windSpeed: 2

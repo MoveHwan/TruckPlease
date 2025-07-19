@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class BombBox : MonoBehaviour
 {
@@ -69,6 +70,8 @@ public class BombBox : MonoBehaviour
         meshRenderer.material = highlightMaterial;
 
         yield return new WaitForSeconds(0.1f);
+        BoxManager.Instance.spawnedBoxes.Remove(gameObject);
+
         Instantiate(bombEffect, transform.position, Quaternion.identity);
         Explode();
     }
