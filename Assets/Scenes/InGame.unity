@@ -27021,7 +27021,7 @@ MonoBehaviour:
   eternalData: {fileID: 11400000, guid: 7b68e00123a047e47a5fa09988c0ab89, type: 2}
   eternalMode: 0
   stage: 11
-  stageSelect: 17
+  stageSelect: 18
   stageTruck: {fileID: 0}
   stageWall: {fileID: 0}
   stageCheckBox: {fileID: 0}
@@ -58028,8 +58028,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 329.19}
-  m_SizeDelta: {x: 515.3137, y: 431.8}
+  m_AnchoredPosition: {x: 0, y: 246.9}
+  m_SizeDelta: {x: 595.6, y: 541.9}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &2313695239790107134
 RectTransform:
@@ -64059,6 +64059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815a430ff826bed419bee64f06889c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetBox: {fileID: 0}
+  rotationSpeed: 0.2
 --- !u!4 &3369674531947291401
 Transform:
   m_ObjectHideFlags: 0

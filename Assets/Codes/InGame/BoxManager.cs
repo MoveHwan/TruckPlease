@@ -102,6 +102,7 @@ public class BoxManager : MonoBehaviour
         boxReady = true;
         curBox = Instantiate(box[count], transform);
         ThrowTouchPanel.Instance.controlBox = curBox.GetComponent<ThrowBox>();
+        RotateTouchPanel.instance.targetBox = curBox.GetComponent<RotationBox>();
         float randomY = Random.Range(0f, 360f);
         curBox.transform.localRotation = Quaternion.Euler(0f, randomY, randomY); // 부모 기준으로 Y축 회전
         if(GameManager.Instance.eternalMode)
