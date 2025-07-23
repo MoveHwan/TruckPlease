@@ -424,6 +424,10 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq.AppendCallback(() => StageMap.SetActive(true))
             .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
             .Join(canvasGroup.DOFade(1f, 0.4f))
+            .AppendCallback(() =>
+            {
+                GameManager.Instance.CameraAimUp();
+            })
             .AppendInterval(0.2f)
             .AppendCallback(() => 
             { 

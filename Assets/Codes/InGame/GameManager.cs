@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
     {
         gameEnd = true;
         GameEndCamera.Priority = 20;
-        GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        
+        //GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        
         truckAni.SetTrigger("GameEnd");
         playableDirector.Play();
         if (BoxManager.Instance.inBoxWeight >= firstStar)
@@ -357,5 +357,10 @@ public class GameManager : MonoBehaviour
         tutoZoneCount++;
         PlayerPrefs.SetInt("TutoThrowZone", tutoZoneCount);
         PlayerPrefs.Save();
+    }
+
+    public void CameraAimUp()
+    {
+        GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 0.3f); // 1.5초 동안 이동  
     }
 }

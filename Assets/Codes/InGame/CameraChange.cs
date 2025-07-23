@@ -19,6 +19,8 @@ public class CameraChange : MonoBehaviour
             originStor.SetActive(false);
             BoxManager.Instance.stopTouch = true;
             topStor.SetActive(true);
+
+            BottomPanel.instance.HideUI();
         }
         else if (topViewOn) 
         {
@@ -28,6 +30,7 @@ public class CameraChange : MonoBehaviour
             topStor.SetActive(false);
             BoxManager.Instance.stopTouch = false;
 
+            BottomPanel.instance.ShowUI();
         }
     }
 }

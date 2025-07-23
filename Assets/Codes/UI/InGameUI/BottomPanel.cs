@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class BottomPanel : MonoBehaviour
 {
+    public static BottomPanel instance;
+
     BoxManager BoxManager;
 
     [SerializeField] int nowBoxIdx;
@@ -34,6 +36,11 @@ public class BottomPanel : MonoBehaviour
     Vector2 defaultLeft, defaultRight, defaultBottom;
 
     int stage;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
