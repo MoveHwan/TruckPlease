@@ -13,9 +13,10 @@ public class StageTruckCanvas : MonoBehaviour
 
     [Header("[ GameOgject ]")]
     public GameObject InGamePanel;
+    public GameObject StageUI;
+    public GameObject InfiniteUI;
     public GameObject RetryButton;
     public GameObject ADButton;
-    public GameObject ClearConfetti;
     public GameObject Count;
     public GameObject NoHeartPopUp;
     public GameObject ReviewPopUp;
@@ -45,6 +46,7 @@ public class StageTruckCanvas : MonoBehaviour
     public Sprite Fail;
 
     [Header("[ Other ]")]
+    public GameObject ClearConfetti;
     public CanvasGroup ResultCanvas;
     public Courier Courier;
     public ItemUnlock ItemUnlock;
@@ -69,6 +71,9 @@ public class StageTruckCanvas : MonoBehaviour
 
     void Start()
     {
+        BoxManager = BoxManager.Instance;
+        GameManager = GameManager.Instance;
+
         tuto = PlayerPrefs.GetInt("Tutorial", 0) == 0;
 
         if (StageManager.instance.EditorStageCheck())
@@ -79,15 +84,22 @@ public class StageTruckCanvas : MonoBehaviour
         string str = "Stage - ";
 
         if (stageNum == 999)
+        {
+            StageUI.SetActive(false);
+            InfiniteUI.SetActive(true);
+
             str += "∞";
+        }
         else
+        {
+            StageUI.SetActive(true);
+            InfiniteUI.SetActive(false);
+
             str += stageNum;
+        }
 
         PauseStageText.text = str;
         LicensePlateText.text = str;
-
-        BoxManager = BoxManager.Instance;
-        GameManager = GameManager.Instance;
 
         for (int i = 0; i < StarImages.Length; i++)
             StarImages[i].SetActive(false);
@@ -135,6 +147,8 @@ public class StageTruckCanvas : MonoBehaviour
 
     void SetResult()
     {
+        if (stageNum == 999) return;
+
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_star";
@@ -181,7 +195,7 @@ public class StageTruckCanvas : MonoBehaviour
         }
 
 
-        if (stageNum != 999 && stageNum > PlayerPrefs.GetInt("TopStage", 0))
+        if (stageNum > PlayerPrefs.GetInt("TopStage", 0))
             PlayerPrefs.SetInt("TopStage", stageNum);
 
 

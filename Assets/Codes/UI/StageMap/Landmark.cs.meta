@@ -3,7 +3,13 @@ guid: c748b198e022fa44180a22fdd273d405
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Lock: {instanceID: 0}
+  - StarSlider: {instanceID: 0}
+  - SliderText: {instanceID: 0}
+  - NextLandmark: {instanceID: 0}
+  - Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

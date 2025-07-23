@@ -16,11 +16,11 @@ public class StageManager : MonoBehaviour
     [SerializeField] StageUI targetStage;
     [SerializeField] int totalClearStage;
 
-    public bool stageShowEnd, landShowEnd;
+    public bool stageShowEnd, landShowEnd, nextShowEnd;
 
     int stageCount, totalStarCount, landIdx;
 
-    bool setStage;
+    bool setStage, isNextStage;
 
     static bool stageCheck;
 
@@ -63,6 +63,10 @@ public class StageManager : MonoBehaviour
                 {
                     setStage = true;
                     targetStage = stage;
+                }
+                else if (setStage && targetStage.GetComponent<StageUI>().stageId + 1 == stage.stageId)
+                {
+                    targetStage.NextStage = stage;
                 }
 
             }
@@ -114,11 +118,15 @@ public class StageManager : MonoBehaviour
                     if (stage.stageId == nowStage)
                     {
                         targetStage = stage;
+                    }
+                    else if (stage.stageId == nowStage + 1)
+                    {
+                        targetStage.NextStage = stage;
                         break;
                     }
                 }
 
-                if (stage != null && stage.stageId == nowStage)
+                if (stage != null && stage.stageId == nowStage + 1)
                     break;
             }
         }
@@ -150,6 +158,8 @@ public class StageManager : MonoBehaviour
     {
         targetStage.ClearStage(clearStar);
 
+        isNextStage = targetStage.NextStage != null;
+
         yield return new WaitUntil(() => stageShowEnd);
         yield return new WaitForSeconds(0.2f);
 
@@ -157,6 +167,15 @@ public class StageManager : MonoBehaviour
 
         yield return new WaitUntil(() => landShowEnd);
         yield return new WaitForSeconds(0.2f);
+
+        if (isNextStage)
+        {
+            targetStage.NextStage.NextOpen();
+
+            yield return new WaitUntil(() => nextShowEnd);
+            yield return new WaitForSeconds(0.2f);
+        }
+
 
         StageTruckCanvas.Instance.ResultSeqPlay();
 

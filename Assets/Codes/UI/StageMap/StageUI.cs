@@ -12,6 +12,7 @@ public class StageUI : MonoBehaviour
     public TextMeshProUGUI StageText;
     public Transform Content;
     public Transform StarGroup;
+    public StageUI NextStage;
 
     public bool isLeft;
 
@@ -84,6 +85,33 @@ public class StageUI : MonoBehaviour
 
         StageManager.instance.stageShowEnd = true;
     }
+
+    public void NextOpen()
+    {
+        StartCoroutine(NextOpenCoroutine());
+    }
+
+    IEnumerator NextOpenCoroutine()
+    {
+        StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
+
+        yield return new WaitUntil(() => StageManager.instance.MapScroller.isMove == false);
+        yield return new WaitForSeconds(0.3f);
+
+
+        CanvasGroup lockCvg = StageLock.GetComponent<CanvasGroup>();
+
+        if (lockCvg == null)
+            lockCvg = StageLock.AddComponent<CanvasGroup>();
+
+        lockCvg.transform.DOScale(0, 0.3f).SetEase(Ease.InBack);
+        lockCvg.DOFade(0, 0.3f);
+
+        yield return new WaitForSeconds(0.3f);
+
+        StageManager.instance.nextShowEnd = true;
+    }
+
 
 
     public void LoadStage()

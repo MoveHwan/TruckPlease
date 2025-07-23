@@ -320,6 +320,8 @@ MonoBehaviour:
   StageText: {fileID: 2671449997926619508}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 5365727163251781998}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -1738,7 +1740,7 @@ RectTransform:
   m_GameObject: {fileID: 561285355406968893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4291750945617484326}
@@ -2008,6 +2010,8 @@ MonoBehaviour:
   StageText: {fileID: 5041575379000872724}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3829933697907708132}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -3355,6 +3359,8 @@ MonoBehaviour:
   StageText: {fileID: 881541531233908034}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7154025328345205315}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -3411,7 +3417,7 @@ RectTransform:
   m_Father: {fileID: 3700852112134848121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4169,7 +4175,7 @@ RectTransform:
   m_Father: {fileID: 7987641457617127093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4267,6 +4273,7 @@ MonoBehaviour:
   StarSlider: {fileID: 6816275727086588019}
   SliderText: {fileID: 3624683026307190276}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -6073,6 +6080,8 @@ MonoBehaviour:
   StageText: {fileID: 2548401750868176497}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7108380048358825219}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -6334,7 +6343,7 @@ RectTransform:
   m_Father: {fileID: 780952462297808052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7780,6 +7789,8 @@ MonoBehaviour:
   StageText: {fileID: 8306175294439592692}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2282140968978649034}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -9395,7 +9406,7 @@ RectTransform:
   m_Father: {fileID: 6987918182786848182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9495,6 +9506,8 @@ MonoBehaviour:
   StageText: {fileID: 8395798649075793794}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 845720790573218875}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -9576,6 +9589,8 @@ MonoBehaviour:
   StageText: {fileID: 3986020628160062320}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 613222787586691668}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -10327,6 +10342,8 @@ MonoBehaviour:
   StageText: {fileID: 5496730980816063986}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7891366765396571815}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -11440,6 +11457,8 @@ MonoBehaviour:
   StageText: {fileID: 5056808300645798297}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 969616433106326491}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -13247,6 +13266,8 @@ MonoBehaviour:
   StageText: {fileID: 2432856815283861131}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2243734803735064812}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -14351,9 +14372,9 @@ RectTransform:
   - {fileID: 1708959023279382001}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -3576}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110549300106795064
@@ -16986,6 +17007,8 @@ MonoBehaviour:
   StageText: {fileID: 3785709935329832351}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2768117276830931169}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -17272,6 +17295,7 @@ MonoBehaviour:
   StarSlider: {fileID: 4840876009056426568}
   SliderText: {fileID: 695162367623274316}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -18002,7 +18026,7 @@ RectTransform:
   m_Father: {fileID: 5445899648319458344}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18568,6 +18592,7 @@ MonoBehaviour:
   StarSlider: {fileID: 7105004852383301028}
   SliderText: {fileID: 3926562661410933703}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -20409,6 +20434,8 @@ MonoBehaviour:
   StageText: {fileID: 8715540815504348597}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 4819753133245880942}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -20471,8 +20498,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 4112}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.00048828125}
+  m_SizeDelta: {x: 120, y: 7152}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &538960036582364004
 MonoBehaviour:
@@ -20964,6 +20991,7 @@ MonoBehaviour:
   totalClearStage: 0
   stageShowEnd: 0
   landShowEnd: 0
+  nextShowEnd: 0
 --- !u!1 &5397764729449372731
 GameObject:
   m_ObjectHideFlags: 0
@@ -22629,9 +22657,9 @@ RectTransform:
   - {fileID: 2862334150472034337}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -5960}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2803375271903676650
@@ -22897,6 +22925,8 @@ MonoBehaviour:
   StageText: {fileID: 3947242419305592906}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2932017702958421487}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -23430,6 +23460,8 @@ MonoBehaviour:
   StageText: {fileID: 7664128452696447859}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3962333910620160969}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -24347,7 +24379,7 @@ RectTransform:
   m_Father: {fileID: 120978742370402054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24649,6 +24681,7 @@ MonoBehaviour:
   StarSlider: {fileID: 3828084610624175856}
   SliderText: {fileID: 3065955685095650700}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -24858,6 +24891,7 @@ MonoBehaviour:
   StarSlider: {fileID: 4776928760143859898}
   SliderText: {fileID: 7736088471615061409}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -26203,6 +26237,8 @@ MonoBehaviour:
   StageText: {fileID: 8384414811074418015}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7410867239230981509}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -27007,7 +27043,7 @@ RectTransform:
   m_Father: {fileID: 3624066358151123308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.8888889, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -28224,6 +28260,8 @@ MonoBehaviour:
   StageText: {fileID: 6905816984867082485}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3367120032117424401}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -30557,9 +30595,9 @@ RectTransform:
   - {fileID: 3500759000327201083}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -1192}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2912467196531936738
@@ -30670,8 +30708,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4605622343649450312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.000000014901161}
+  m_AnchorMax: {x: 1, y: 0.106263995}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30861,7 +30899,7 @@ RectTransform:
   m_Father: {fileID: 7619370764244136114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -32023,6 +32061,7 @@ MonoBehaviour:
   StarSlider: {fileID: 45534777355605968}
   SliderText: {fileID: 8295891836011697896}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -32361,6 +32400,7 @@ MonoBehaviour:
   StarSlider: {fileID: 838462896864243331}
   SliderText: {fileID: 5179485027135279157}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -32948,8 +32988,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6144386466771036028}
   m_HandleRect: {fileID: 8415395643798647688}
   m_Direction: 3
-  m_Value: 0
-  m_Size: 0.42505592
+  m_Value: 0.413
+  m_Size: 0.10626398
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -33010,6 +33050,7 @@ MonoBehaviour:
   StarSlider: {fileID: 8570843396678479614}
   SliderText: {fileID: 50038513580439328}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -33219,6 +33260,7 @@ MonoBehaviour:
   StarSlider: {fileID: 6152340109277494636}
   SliderText: {fileID: 206964438190645644}
   NextLandmark: {fileID: 0}
+  Sparkle: {fileID: 4033412786151888123, guid: ac16fd43f7a93f74d9d6398ebf08eada, type: 3}
   totalStar: 0
   newStar: 0
   targetVal: 0
@@ -33390,7 +33432,7 @@ RectTransform:
   m_Father: {fileID: 5210943794961782831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34601,7 +34643,7 @@ RectTransform:
   m_Father: {fileID: 7880303857173686135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -35275,6 +35317,8 @@ MonoBehaviour:
   StageText: {fileID: 3672511009575126425}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 8088660901630391443}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -37258,6 +37302,8 @@ MonoBehaviour:
   StageText: {fileID: 9011036628188322660}
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 1321203893276816017}
+  NextStage: {fileID: 0}
+  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0

@@ -1,7 +1,10 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BottomPanel : MonoBehaviour
 {
@@ -10,7 +13,12 @@ public class BottomPanel : MonoBehaviour
     [SerializeField] int nowBoxIdx;
 
     public GameObject Count;
-    
+
+    [Header("[ UI ]")]
+    public RectTransform LeftSide;
+    public RectTransform RightSide;
+    public RectTransform BottomWeight;
+
     [Header("[ Box ]")]
     public GameObject NextBox1;
     public GameObject NextBox2;
@@ -18,11 +26,35 @@ public class BottomPanel : MonoBehaviour
     public TextMeshProUGUI NextBox1WeightText;
     public TextMeshProUGUI NextBox2WeightText;
 
+    [Header("[ Infinite ]")]
+    public GameObject NextCount;
+    public Image NextMask;
+    public Sprite infiniteMask;
+
+    Vector2 defaultLeft, defaultRight, defaultBottom;
+
+    int stage;
+
     void Start()
     {
         BoxManager = BoxManager.Instance;
 
         nowBoxIdx = -1;
+
+        if (StageManager.instance.EditorStageCheck())
+            stage = PlayerPrefs.GetInt("Stage", 1);
+        else
+            stage = GameManager.Instance.stageSelect;
+
+        if (stage == 999)
+        {
+            NextMask.sprite = infiniteMask;
+            NextCount.SetActive(false);
+        }
+
+        defaultLeft = LeftSide.GetComponent<RectTransform>().anchoredPosition;
+        defaultRight = LeftSide.GetComponent<RectTransform>().anchoredPosition;
+        defaultBottom = LeftSide.GetComponent<RectTransform>().anchoredPosition;
     }
 
     
@@ -34,7 +66,7 @@ public class BottomPanel : MonoBehaviour
 
     void SetCargoBoxUI_Update()
     {
-        if (nowBoxIdx == BoxManager.count || (BoxManager.count != 6 && BoxManager.count + 1 != BoxManager.transform.childCount)) return;
+        if (nowBoxIdx == BoxManager.count || !BoxManager.boxReady /*|| (BoxManager.count != 6 && BoxManager.count + 1 != BoxManager.transform.childCount)*/) return;
 
         nowBoxIdx = BoxManager.count;
 
@@ -92,4 +124,71 @@ public class BottomPanel : MonoBehaviour
         }
 
     }
+
+
+    public void HideUI()
+    {
+        CanvasGroup canvasGroup;
+
+
+        canvasGroup = LeftSide.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = LeftSide.AddComponent<CanvasGroup>();
+
+        LeftSide.DOAnchorPosX(defaultLeft.x - LeftSide.rect.width, 0.5f).SetEase(Ease.InQuad);
+        canvasGroup.DOFade(0f, 0.5f);
+
+
+        canvasGroup = RightSide.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = RightSide.AddComponent<CanvasGroup>();
+
+        RightSide.DOAnchorPosX(defaultRight.x + RightSide.rect.width, 0.5f).SetEase(Ease.InQuad);
+        canvasGroup.DOFade(0f, 0.5f);
+
+
+        canvasGroup = BottomWeight.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = BottomWeight.AddComponent<CanvasGroup>();
+
+        BottomWeight.DOAnchorPosY(defaultBottom.y - LeftSide.rect.height, 0.5f).SetEase(Ease.InQuad);
+        canvasGroup.DOFade(0f, 0.5f);
+    }
+
+    public void ShowUI()
+    {
+        CanvasGroup canvasGroup;
+
+
+        canvasGroup = LeftSide.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = LeftSide.AddComponent<CanvasGroup>();
+
+        LeftSide.DOAnchorPosX(defaultLeft.x, 0.5f).SetEase(Ease.OutQuad);
+        canvasGroup.DOFade(1f, 0.5f);
+
+
+        canvasGroup = RightSide.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = RightSide.AddComponent<CanvasGroup>();
+
+        RightSide.DOAnchorPosX(defaultRight.x, 0.5f).SetEase(Ease.OutQuad);
+        canvasGroup.DOFade(1f, 0.5f);
+
+
+        canvasGroup = BottomWeight.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = BottomWeight.AddComponent<CanvasGroup>();
+
+        BottomWeight.DOAnchorPosY(defaultBottom.y, 0.5f).SetEase(Ease.OutQuad);
+        canvasGroup.DOFade(1f, 0.5f);
+    }
+
+
 }

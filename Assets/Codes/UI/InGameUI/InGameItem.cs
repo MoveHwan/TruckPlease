@@ -58,8 +58,10 @@ public class InGameItem : MonoBehaviour
 
         if (currentItems.ToString() == "Item_Save")
         {
-            Lock.SetActive(!(PlayerPrefs.GetInt("Stage", 1) > 6));
-            ItemCountTexts[0].transform.parent.gameObject.SetActive(PlayerPrefs.GetInt("Stage", 1) > 6);
+            int topStage = PlayerPrefs.GetInt("TopStage", 0);
+
+            Lock.SetActive(!(topStage > 6));
+            ItemCountTexts[0].transform.parent.gameObject.SetActive(topStage > 6);
         }
         
     }

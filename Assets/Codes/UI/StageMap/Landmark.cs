@@ -11,6 +11,7 @@ public class Landmark : MonoBehaviour
     public Slider StarSlider;
     public TextMeshProUGUI SliderText;
     public Landmark NextLandmark;
+    public GameObject Sparkle;
 
     CanvasGroup LockCvG;
     Sequence UnlockSeq;
@@ -79,6 +80,8 @@ public class Landmark : MonoBehaviour
         {
             Lock.SetActive(false);
 
+            //Instantiate(Sparkle, transform);
+
             if (totalStar > 0)
                 NextLandmark.StarSliderShow(totalStar);
             else
@@ -90,8 +93,6 @@ public class Landmark : MonoBehaviour
 
     IEnumerator WaitMapMove()
     {
-        //transform.SetParent(transform.parent.parent.parent);
-
         StageManager.instance.MapScroller.ScrollToTarget(gameObject.GetComponent<RectTransform>());
 
         yield return new WaitUntil(() => StageManager.instance.MapScroller.isMove == false);
