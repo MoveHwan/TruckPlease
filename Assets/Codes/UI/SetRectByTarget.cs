@@ -8,6 +8,15 @@ public class SetRectByTarget : MonoBehaviour
     public RectTransform target;
     [SerializeField] Vector2 rect;
     public Vector2 times = Vector2.one;
+    void Start()
+    {
+        if (target == null) return;
+
+        rect.x = target.rect.width * times.x;
+        rect.y = target.rect.height * times.y;
+
+        GetComponent<RectTransform>().sizeDelta = rect;
+    }
 
     void OnEnable()
     {

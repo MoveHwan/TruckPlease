@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 901a457b297c08b46857ce3e6be09710
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Count: {instanceID: 0}
+  - NextBox1: {instanceID: 0}
+  - NextBox2: {instanceID: 0}
+  - NowBoxWeightText: {instanceID: 0}
+  - NextBox1WeightText: {instanceID: 0}
+  - NextBox2WeightText: {instanceID: 0}
+  - NextCount: {instanceID: 0}
+  - NextMask: {instanceID: 0}
+  - infiniteMask: {fileID: 21300000, guid: f678a4330ce9344e9964317a0b9183db, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
