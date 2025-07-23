@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOutlined: 0
-  outlineMat: {fileID: 2100000, guid: e77d83591d02c15488e05555f5f21738, type: 2}
+  outlineMat: {fileID: 2100000, guid: 732f13b8b9fedf64eb94f2ef6f454a16, type: 2}
   targetLayer:
     serializedVersion: 2
     m_Bits: 2

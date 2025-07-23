@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            stageTruck = stageData[stage - 1].truck;
+            //stageTruck = stageData[stage - 1].truck;
             stageWall = stageData[stage - 1].stageWall;
             stageCheckBox = stageData[stage - 1].stageCheckBox;
             life = stageData[stage - 1].life;
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
             secondStar = stageData[stage - 1].secondStar;
             thirdStar = stageData[stage - 1].thirdStar;
             BoxManager.Instance.box = stageData[stage - 1].boxes;
-            Instantiate(stageTruck);
+            //(stageTruck);
             Instantiate(stageWall);
             Instantiate(stageCheckBox);
             BoxManager.Instance.CalcTotalWei();
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
     void SetEternalMode()
     {
         eternalMode = true;
-        stageTruck = eternalData.truck;
+        //stageTruck = eternalData.truck;
         stageWall = eternalData.stageWall;
         stageCheckBox = eternalData.stageCheckBox;
         life = eternalData.life;
@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
         //BoxManager.Instance.box = stageData[stage - 1].boxes;
         BoxManager.Instance.AddOneRandomBox();
         BoxManager.Instance.AddOneRandomBox();
-        Instantiate(stageTruck);
+        //Instantiate(stageTruck);
         Instantiate(stageWall);
         Instantiate(stageCheckBox);
         BoxManager.Instance.CalcTotalWei();
@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
     {
         gameEnd = true;
         GameEndCamera.Priority = 20;
-        GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        truckAni.SetTrigger("GameEnd");
+        GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        
         truckAni.SetTrigger("GameEnd");
         playableDirector.Play();
         if (BoxManager.Instance.inBoxWeight >= firstStar)

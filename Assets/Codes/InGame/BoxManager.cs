@@ -10,6 +10,8 @@ public class BoxManager : MonoBehaviour
 {
     public static BoxManager Instance;
 
+    public bool stopTouch;              // 터치 막아야될때
+
     BoxCollider storageCollider;
 
     public GameObject[] boxPool;        // 박스로 쓸 종류들
@@ -356,6 +358,13 @@ public class BoxManager : MonoBehaviour
         GameObject newBox = Instantiate(nextBox, position, randomRotation);
         newBox.transform.parent = transform;
         Instantiate(particle, position, particle.transform.rotation);
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.popBox);
+
+        if (VfxManager.instance.stack >= 4)
+        {
+            InGameGoldUI.Instance.GetGold();
+        }
 
         // 생성된 상자의 색상 판별
         StickyBlock sticky = newBox.GetComponent<StickyBlock>();

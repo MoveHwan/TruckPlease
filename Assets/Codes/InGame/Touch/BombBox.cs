@@ -72,6 +72,11 @@ public class BombBox : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         BoxManager.Instance.spawnedBoxes.Remove(gameObject);
 
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.boxBomb);
+        }
+
         Instantiate(bombEffect, transform.position, Quaternion.identity);
         Explode();
     }

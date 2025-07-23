@@ -18,7 +18,7 @@ public class RotateTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (targetBox == null || targetBox.throwDone)
+        if (targetBox == null || targetBox.throwDone || BoxManager.Instance.keepItem || GameManager.Instance.gameEnd || BoxManager.Instance.stopTouch)
             return;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(

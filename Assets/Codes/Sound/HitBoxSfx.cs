@@ -10,9 +10,14 @@ public class HitBoxSfx : MonoBehaviour
     float sfxTerm;
     bool cantTerm;
 
+    void Awake()
+    {
+        cantSfx = GetComponent<ThrowBox>().throwDone;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        //PlayHitSfx();
+        PlayHitSfx();
     }
 
     void OnTriggerEnter(Collider other)
@@ -34,16 +39,16 @@ public class HitBoxSfx : MonoBehaviour
             switch (VfxManager.instance.stack)
             {
                 case 0:
-                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
                     break;
                 case 1:
                     AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
                     break;
                 case 2:
-                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox3);
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
                     break;
                 default:
-                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox2);
                     break;
             }
 

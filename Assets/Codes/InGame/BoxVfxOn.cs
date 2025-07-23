@@ -10,18 +10,18 @@ public class BoxVfxOn : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("일단 부딫힘");
-        if (!vfxOn && BoxManager.Instance.GoaledBoxes.Contains(gameObject))
-        {
-            ParticlePlay();
-            vfxOn = true;
-        }
-        else if (!vfxOn)
-        {
-            // 바깥에 부딫히거나 할때 효과음
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
-            vfxOn = true;
-        }
+        //Debug.Log("일단 부딫힘");
+        //if (!vfxOn && BoxManager.Instance.GoaledBoxes.Contains(gameObject))
+        //{
+        //    ParticlePlay();
+        //    vfxOn = true;
+        //}
+        //else if (!vfxOn)
+        //{
+        //    // 바깥에 부딫히거나 할때 효과음
+        //    AudioManager.instance.PlaySfx(AudioManager.Sfx.hitBox1);
+        //    vfxOn = true;
+        //}
     }
 
     // 파티클과 효과음 플레이

@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     bool needPlaySfx;
 
 
-    public enum Sfx {throwBox, hitBox1,hitBox2, hitBox3, loseMan, winMan, stamp, star1, star2 , star3 , coinSound}
+    public enum Sfx {throwBox, hitBox1,hitBox2, hitBox3, loseMan, winMan, stamp, star1, star2 , star3 , coinSound, popBox, boxBomb}
 
     void Awake()
     {

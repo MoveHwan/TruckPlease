@@ -16,8 +16,9 @@ Properties
 		Pass
 		{
 			Blend SrcAlpha OneMinusSrcAlpha
-			Cull Front // 뒷면만 그리기
 			ZWrite Off
+			ZTest Always
+			Cull Front // 뒷면만 그리기
 
 			CGPROGRAM
 
@@ -83,6 +84,8 @@ Properties
 		Pass
 		{
 			Blend SrcAlpha OneMinusSrcAlpha
+			ZWrite Off
+			ZTest Always
 
 			CGPROGRAM
 
