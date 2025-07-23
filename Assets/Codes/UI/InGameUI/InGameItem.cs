@@ -38,7 +38,7 @@ public class InGameItem : MonoBehaviour
 
     GameObject SaveBox;
 
-    int count, useCount;
+    int count, useCount, stage;
     float hue = 0f;
 
     bool rainbowOn;
@@ -48,6 +48,11 @@ public class InGameItem : MonoBehaviour
     {
         BoxManager = BoxManager.Instance;
         DeleteCourier = DeleteCourier.Instance;
+
+        if (StageManager.instance.EditorStageCheck())
+            stage = PlayerPrefs.GetInt("Stage", 1);
+        else
+            stage = GameManager.Instance.stageSelect;
 
         useCount = 3;
 
@@ -59,9 +64,10 @@ public class InGameItem : MonoBehaviour
         if (currentItems.ToString() == "Item_Save")
         {
             int topStage = PlayerPrefs.GetInt("TopStage", 0);
+            bool unlock = topStage >= 6 || (stage != 999 && stage > 6);
 
-            Lock.SetActive(!(topStage > 6));
-            ItemCountTexts[0].transform.parent.gameObject.SetActive(topStage > 6);
+            Lock.SetActive(!unlock);
+            ItemCountTexts[0].transform.parent.gameObject.SetActive(unlock);
         }
         
     }

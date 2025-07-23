@@ -81,7 +81,7 @@ public class StageTruckCanvas : MonoBehaviour
         else
             stageNum = GameManager.stageSelect;
 
-        string str = "Stage - ";
+        string str = "STAGE - ";
 
         if (stageNum == 999)
         {
