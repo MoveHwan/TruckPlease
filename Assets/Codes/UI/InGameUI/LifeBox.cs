@@ -8,17 +8,28 @@ public class LifeBox : MonoBehaviour
 
     public GameObject[] BoxLlfes;
 
-    int boxIdx;
+    [SerializeField] int life;
 
     void Awake()
     {
         instance = this;
     }
 
-    public void SubLife()
+    void Update()
     {
-        if (boxIdx > BoxLlfes.Length - 1) return;
+        LifeRefresh();
+    }
 
-        BoxLlfes[boxIdx++].SetActive(true);
+    void LifeRefresh()
+    {
+        if (life == GameManager.Instance.life) return;
+
+        life = GameManager.Instance.life;
+
+        for (int i = 0; i < BoxLlfes.Length; i++)
+        {
+            BoxLlfes[i].SetActive(i >= life);
+        }
+
     }
 }
