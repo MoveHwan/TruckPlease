@@ -24,4 +24,6 @@ public class InfiniteScore : MonoBehaviour
             ScoreText.text = score.ToString();
         }
     }
+
+    public int GetScore() => (int)score;
 }

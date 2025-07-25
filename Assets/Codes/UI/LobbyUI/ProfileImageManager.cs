@@ -12,7 +12,6 @@ public class ProfileImageManager : MonoBehaviour
 
     [Space]
     public GameObject ProfilePrefab;
-    public List<Texture> ProfileTextures;
 
     [Header("[ ProfileImageUI ]")]
     public GameObject ProfileImageUI;
@@ -27,6 +26,7 @@ public class ProfileImageManager : MonoBehaviour
     public RawImage BuyImage;
     public Button BuyButton;
 
+    ProfilImageList ProfilImageList;
 
     static List<string> BuyImages;
 
@@ -36,22 +36,29 @@ public class ProfileImageManager : MonoBehaviour
 
     void Awake()
     {
-        //PlayerPrefs.SetInt("Gold", 1000);
-
         if (Instance == null) 
             Instance = this;
+    }
+
+    void Start()
+    {
+        ProfilImageList = ProfilImageList.Instance;
 
         BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Human_1").Split(","));
 
         if (Content.childCount <= 0)
         {
             GameObject profileObj;
+            Texture texture;
 
-            for (int i = 0; i < ProfileTextures.Count; i++)
+            for (int i = 0; i < ProfilImageList.Textures.Count; i++)
             {
                 profileObj = Instantiate(ProfilePrefab, Content);
-                profileObj.name = ProfileTextures[i].name;
-                profileObj.transform.GetChild(1).GetChild(0).GetComponent<RawImage>().texture = ProfileTextures[i];
+
+                texture = ProfilImageList.Textures[i];
+
+                profileObj.name = texture.name;
+                profileObj.transform.GetChild(1).GetChild(0).GetComponent<RawImage>().texture = texture;
 
                 profileObj.SetActive(true);
             }
@@ -59,15 +66,14 @@ public class ProfileImageManager : MonoBehaviour
 
         string imageName = PlayerPrefs.GetString("ProfileImage", "Human_1");
 
-        PlayerTexture = ProfileTextures.Find(texture => texture.name == imageName);
-        
+        PlayerTexture = ProfilImageList.GetTexture(imageName);
+
         ProfileRawImage.texture = PlayerTexture;
         PopupRawImage.texture = PlayerTexture;
         ChangeRawImage.texture = PlayerTexture;
 
         NoGoldMessage.gameObject.SetActive(false);
     }
-
 
     public void ConfirmSelectImage(Transform btn)
     {
@@ -103,7 +109,7 @@ public class ProfileImageManager : MonoBehaviour
         PrevSelectObj = SelectObj;
 
 
-        ChangeTexture = ProfileTextures.Find(texture => texture.name == name);
+        ChangeTexture = ProfilImageList.GetTexture(name);
         ChangeRawImage.texture = ChangeTexture;
     }
 
@@ -116,7 +122,7 @@ public class ProfileImageManager : MonoBehaviour
         }
 
 
-        BuyImage.texture = ProfileTextures.Find(texture => texture.name == name);
+        BuyImage.texture = ProfilImageList.GetTexture(name);
 
         BuyButton.onClick.RemoveAllListeners();
         BuyButton.onClick.AddListener(() => 
