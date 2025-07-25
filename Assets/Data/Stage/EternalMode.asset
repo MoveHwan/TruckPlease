@@ -38,9 +38,9 @@ MonoBehaviour:
   - {fileID: 2007196811123898680, guid: 13a3e468cafb6bb4ba57de0234a77af4, type: 3}
   - {fileID: 8340693998501053428, guid: f315195552b7d0d48ac1ae863ed68efa, type: 3}
   - {fileID: 3472921667372705257, guid: 9eee47fb56933ee429245ce9dc20180f, type: 3}
-  firstStar: 2
-  secondStar: 3
-  thirdStar: 4
+  firstStar: 999999
+  secondStar: 999999
+  thirdStar: 1e+12
   life: 5
   useWind: 0
   random: 0

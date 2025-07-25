@@ -105,7 +105,7 @@ public class ModeManager : MonoBehaviour
 
                 .AppendInterval(0.2f)
 
-                .AppendCallback(() => 
+                .AppendCallback(() =>
                 {
                     Content.transform.localScale = Vector3.one * 0.7f;
                     Content.gameObject.SetActive(true);

@@ -14,7 +14,13 @@ using System.Xml.Linq;
 using UnityEngine.SocialPlatforms.Impl;
 using System;
 using Unity.Services.Leaderboards.Models;
-
+using Unity.Services.Core;
+using UnityEngine;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using System.Threading.Tasks;
 
 public class LeaderBoard : MonoBehaviour
 {
@@ -42,15 +48,13 @@ public class LeaderBoard : MonoBehaviour
 
     private bool isAuthenticated = false; // 인증 여부 저장
 
-    void Awake()
-    {
-    }
 
     void OnEnable()
     {
         LoadingPanel.SetActive(true);
         GetPlayerScore(rankingId);
         GetTopPlayers(rankingId);
+
     }
 
     // 로그인을 안했을시 로그인을 하라는 메시지
@@ -141,3 +145,4 @@ public class LeaderBoard : MonoBehaviour
         }
     }
 }
+    

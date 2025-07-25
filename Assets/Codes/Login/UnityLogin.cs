@@ -31,7 +31,40 @@ public class UnityLogin : MonoBehaviour
     async Task TryInitializeUnityServices()
     {
         await InitializeUnityServices();
-        InitializeGooglePlayGames(); // Google Play Games 활성화
+
+#if UNITY_EDITOR
+        await SignInAnonymouslyEditor(); // 에디터에서 익명 로그인
+#else
+    InitializeGooglePlayGames(); // 안드로이드에서 GPGS 로그인
+#endif
+    }
+
+    async Task SignInAnonymouslyEditor()
+    {
+        try
+        {
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                Debug.Log("Editor: Signed in anonymously with PlayerID: " + AuthenticationService.Instance.PlayerId);
+
+                // 닉네임 설정
+                string nickname = "EditorPlayer";
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(nickname);
+            }
+
+            await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 100);
+            // 테스트용: 리더보드 점수 확인
+            GetPlayerScore(rankingId);
+        }
+        catch (AuthenticationException ex)
+        {
+            Debug.LogError($"Editor Anonymous Auth failed: {ex.Message}");
+        }
+        catch (RequestFailedException ex)
+        {
+            Debug.LogError($"Editor Request failed: {ex.Message}");
+        }
     }
 
     async Task InitializeUnityServices()
@@ -39,7 +72,7 @@ public class UnityLogin : MonoBehaviour
         if (UnityServices.State == ServicesInitializationState.Initialized)
         {
             Debug.Log("Unity Services already initialized.");
-            gdprSet.GDPRFormAvail();
+            //gdprSet.GDPRFormAvail();
             return;
         }
 
@@ -47,7 +80,7 @@ public class UnityLogin : MonoBehaviour
         {
             await UnityServices.InitializeAsync();
             Debug.Log("Unity Services Initialized");
-            gdprSet.GDPRFormAvail();
+            //gdprSet.GDPRFormAvail();
 
 
         }
