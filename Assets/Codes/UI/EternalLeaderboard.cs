@@ -11,6 +11,8 @@ using Unity.Services.Leaderboards;
 using UnityEngine;
 using UnityEngine.UI;
 using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms.Impl;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EternalLeaderboard : MonoBehaviour
 {
@@ -22,6 +24,7 @@ public class EternalLeaderboard : MonoBehaviour
     //public Text score;
     public GameObject[] rankSet;
     TextMeshProUGUI[] rankText;
+    Image[] chaImages;
     TextMeshProUGUI[] playerIdText;
     TextMeshProUGUI[] playerScoreText;
     GameObject[] myRankFrame;
@@ -81,7 +84,21 @@ public class EternalLeaderboard : MonoBehaviour
 
             GetPlayerScore(rankingId);
 
-            //await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 100);
+            string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
+
+            var metadata = new Dictionary<string, object>
+            {
+                { "myImage", myImage },
+            };
+
+            // AddPlayerScoreOptions 객체 생성
+            var options = new AddPlayerScoreOptions
+            {
+                Metadata = metadata, // 여기에 메타데이터 설정
+            };
+
+            Debug.Log("options" + options.ToString());
+            await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 103, options);
             // 테스트용: 리더보드 점수 확인
         }
         catch (AuthenticationException ex)
@@ -224,6 +241,7 @@ public class EternalLeaderboard : MonoBehaviour
 
         // 배열 초기화
         rankText = new TextMeshProUGUI[count];
+        chaImages = new Image[count];
         playerIdText = new TextMeshProUGUI[count];
         playerScoreText = new TextMeshProUGUI[count];
         myRankFrame = new GameObject[count];
@@ -234,6 +252,7 @@ public class EternalLeaderboard : MonoBehaviour
 
             // 자식 인덱스: 1, 3, 4, 6
             rankText[i] = parent.GetChild(0).GetComponent<TextMeshProUGUI>();
+            chaImages[i] = parent.GetChild(1).GetChild(0).GetComponent<Image>();
             playerIdText[i] = parent.GetChild(2).GetComponent<TextMeshProUGUI>();
             playerScoreText[i] = parent.GetChild(3).GetComponent<TextMeshProUGUI>();
             myRankFrame[i] = parent.GetChild(5).gameObject;
@@ -247,12 +266,18 @@ public class EternalLeaderboard : MonoBehaviour
     // 유니티 나의 랭크 가져오기
     public async void GetPlayerScore(string leaderboardId)
     {
+        var options = new GetPlayerScoreOptions
+        {
+            IncludeMetadata = true
+        };
+
         var scoreResponse = await LeaderboardsService.Instance
-            .GetPlayerScoreAsync(leaderboardId);
+            .GetPlayerScoreAsync(leaderboardId, options);
         Debug.Log(JsonConvert.SerializeObject(scoreResponse));
         myScore = (int)scoreResponse.Score;
         myNickname = scoreResponse.PlayerName;
         myRank = scoreResponse.Rank;
+
         Debug.Log(myScore.ToString());
         Debug.Log(myNickname);
 
@@ -276,7 +301,14 @@ public class EternalLeaderboard : MonoBehaviour
     {
         try
         {
-            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, new GetScoresOptions { Limit = 100 });
+            var options = new GetScoresOptions
+            {
+                IncludeMetadata = true,
+                Limit = 100
+            };
+
+
+            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, options);
 
             if (scoresResponse == null || scoresResponse.Results == null)
             {
@@ -293,6 +325,39 @@ public class EternalLeaderboard : MonoBehaviour
                 string nameOnly = parts.Length > 0 ? parts[0] : playername;
                 string tagOnly = parts.Length > 1 ? "#" + parts[1] : "";
 
+                string chaImage;
+
+                if (!string.IsNullOrEmpty(playerScore.Metadata))
+                {
+                    try
+                    {
+                        var metadataDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(playerScore.Metadata);
+
+                        if (metadataDict != null && metadataDict.TryGetValue("myImage", out var myImage))
+                        {
+                            Debug.Log("myImage: " + myImage); // 출력: Human_1
+                            chaImage = myImage;
+                        }
+                        else
+                        {
+                            Debug.LogWarning("myImage 키가 metadata에 없습니다.");
+                            chaImage = "Human_1";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError("Metadata JSON 파싱 실패: " + ex.Message);
+                        chaImage = "Human_1";
+
+                    }
+                }
+                else
+                {
+                    chaImage = "Human_1";
+
+                    Debug.LogWarning("Metadata가 비어 있거나 null입니다.");
+                }
+
                 // 색상 + 크기 조합 (태그는 70% 사이즈)
                 string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
 
@@ -302,9 +367,11 @@ public class EternalLeaderboard : MonoBehaviour
                 }
                 playerIdText[index].text = coloredNickname;
                 playerScoreText[index].text = playerScore.Score.ToString();
+                chaImages[index].sprite = ProfilImageList.Instance.GetSprite(chaImage);
                 index++;
             }
 
+            Debug.Log(chaImages[0].sprite);
             foreach (var playerScore in scoresResponse.Results)
             {
                 Debug.Log($"Rank {playerScore.Rank}: {playerScore.PlayerName} - {playerScore.Score}");

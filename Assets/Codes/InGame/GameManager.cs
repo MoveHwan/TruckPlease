@@ -303,6 +303,19 @@ public class GameManager : MonoBehaviour
     // 유니티 점수 전달
     public async void AddScore(string leaderboardId, int score)
     {
+        string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
+
+        var metadata = new Dictionary<string, object>
+        {
+            { "myImage", myImage },
+        };
+
+        // AddPlayerScoreOptions 객체 생성
+        var options = new AddPlayerScoreOptions
+        {
+            Metadata = metadata, // 여기에 메타데이터 설정
+        };
+
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(leaderboardId, score);
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
