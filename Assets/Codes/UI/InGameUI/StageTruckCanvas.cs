@@ -107,6 +107,7 @@ public class StageTruckCanvas : MonoBehaviour
 
             PauseStageText.text = "STAGE - " + stageNum;
             LicensePlateText.text = "STAGE - " + stageNum;
+            LicensePlateText.GetComponent<RectTransform>().sizeDelta -= Vector2.up * 5;
         }
 
 
@@ -115,8 +116,6 @@ public class StageTruckCanvas : MonoBehaviour
 
         ResultCanvas.gameObject.SetActive(false);
         IfnCvg.gameObject.SetActive(false);
-
-        InfiniteResult();
     }
 
     void Update()
@@ -287,8 +286,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         ClearConfetti.SetActive(false);
 
-        //int score = InfiniteScore.Instance.GetScore();
-        int score = 90;
+        int score = InfiniteScore.Instance.GetScore();
         int topScore = int.Parse(IfnTopScore.text);
 
         newTopScore = topScore < score;
@@ -385,11 +383,13 @@ public class StageTruckCanvas : MonoBehaviour
 
                 Courier.Reaction(true);
                 StartCoroutine(CourierSfxDelay());
-            })
-            .AppendInterval(0.15f);
+            });
 
         // 버튼
         ButtonsUpMove(IfnButtons);
+
+        resultSeq.AppendInterval(0.1f);
+
         LeftMoveAndNumbering(IfnLobbyButton, null, 0);
 
         // 광고 or 리뷰
@@ -610,7 +610,7 @@ public class StageTruckCanvas : MonoBehaviour
             ClearConfetti.SetActive(starCount > 0);
 
             StartCoroutine(CourierSfxDelay());
-        }).AppendInterval(0.2f);
+        });
     }
 
     void ButtonsUpMove(RectTransform Buttons)

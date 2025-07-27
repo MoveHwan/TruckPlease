@@ -7,6 +7,7 @@ public class CameraChange : MonoBehaviour
     public GameObject topView;
     public GameObject originStor;
     public GameObject topStor;
+    public GameObject Outline;
 
     bool topViewOn;
 
@@ -19,6 +20,7 @@ public class CameraChange : MonoBehaviour
             originStor.SetActive(false);
             BoxManager.Instance.stopTouch = true;
             topStor.SetActive(true);
+            Outline.SetActive(true);
 
             BottomPanel.instance.HideUI();
         }
@@ -28,6 +30,7 @@ public class CameraChange : MonoBehaviour
             topView.SetActive(false);
             originStor.SetActive(true);
             topStor.SetActive(false);
+            Outline.SetActive(false);
             BoxManager.Instance.stopTouch = false;
 
             BottomPanel.instance.ShowUI();
