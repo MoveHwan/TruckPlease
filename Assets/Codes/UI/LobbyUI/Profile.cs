@@ -62,12 +62,12 @@ public class Profile : MonoBehaviour
 
         if (PlayerPrefs.GetInt("FreeNick", 0) == 0)
         {
-            FreeMessage.SetActive(true);
+            //FreeMessage.SetActive(true);
             NickPrice.text = "Free";
         }
         else
         {
-            FreeMessage.SetActive(false);
+            //FreeMessage.SetActive(false);
             NickPrice.text = "200";
         }
 

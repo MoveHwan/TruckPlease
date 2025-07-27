@@ -52,6 +52,17 @@ public class StageTruckCanvas : MonoBehaviour
     public ItemUnlock ItemUnlock;
     //public NoHeart NoHeart;
 
+    [Header("[ Infinite ]")]
+    public CanvasGroup IfnCvg;
+    public CanvasGroup TotalScoreTextCgv;
+    public CanvasGroup NewTopScoreTextCgv;
+    public CanvasGroup RankingPanel;
+    public TextMeshProUGUI IfnTotalScore;
+    public TextMeshProUGUI IfnTopScore;
+    public TextMeshProUGUI IfnReward;
+    public RectTransform IfnButtons;
+    public RectTransform IfnLobbyButton;
+    
 
     BoxManager BoxManager;
     GameManager GameManager;
@@ -59,7 +70,7 @@ public class StageTruckCanvas : MonoBehaviour
     DG.Tweening.Sequence resultSeq;
 
     int starCount, rewardCoin, stageNum;
-    bool isResult, isSetTotal, tuto;
+    bool isResult, isSetTotal, tuto, newTopScore;
 
 
     private void Awake()
@@ -81,30 +92,31 @@ public class StageTruckCanvas : MonoBehaviour
         else
             stageNum = GameManager.stageSelect;
 
-        string str = "STAGE - ";
-
         if (stageNum == 999)
         {
             StageUI.SetActive(false);
             InfiniteUI.SetActive(true);
 
-            str += "∞";
+            PauseStageText.text = "Eternal Challenge";
+            LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>32</color>";
         }
         else
         {
             StageUI.SetActive(true);
             InfiniteUI.SetActive(false);
 
-            str += stageNum;
+            PauseStageText.text = "STAGE - " + stageNum;
+            LicensePlateText.text = "STAGE - " + stageNum;
         }
 
-        PauseStageText.text = str;
-        LicensePlateText.text = str;
 
         for (int i = 0; i < StarImages.Length; i++)
             StarImages[i].SetActive(false);
 
         ResultCanvas.gameObject.SetActive(false);
+        IfnCvg.gameObject.SetActive(false);
+
+        InfiniteResult();
     }
 
     void Update()
@@ -147,7 +159,11 @@ public class StageTruckCanvas : MonoBehaviour
 
     void SetResult()
     {
-        if (stageNum == 999) return;
+        if (stageNum == 999)
+        {
+            InfiniteResult();
+            return;
+        }
 
         starCount = WeightSlider.instance.GetStarCount();
 
@@ -201,7 +217,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         resultSeq = DOTween.Sequence();
 
-        ShowResultUI();
+        ShowResultUI(ResultCanvas);
 
         ShowStars();
 
@@ -222,7 +238,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         CourierActive();
 
-        ButtonsUpMove();
+        ButtonsUpMove(Buttons);
 
         LeftMoveAndNumbering(LobbyButton, null, 0);
 
@@ -260,16 +276,163 @@ public class StageTruckCanvas : MonoBehaviour
 
     }
 
-    void ShowResultUI()
+    void InfiniteResult()
+    {
+        rewardCoin = InGameGoldUI.Instance.GetTotalRewardGold();
+
+        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + rewardCoin);
+
+        if (rewardCoin <= 0)
+            ADButton.SetActive(false);
+
+        ClearConfetti.SetActive(false);
+
+        //int score = InfiniteScore.Instance.GetScore();
+        int score = 90;
+        int topScore = int.Parse(IfnTopScore.text);
+
+        newTopScore = topScore < score;
+
+
+        resultSeq = DOTween.Sequence();
+
+        // 결과창
+        resultSeq
+            .AppendCallback(() =>
+            {
+                IfnCvg.gameObject.SetActive(true);
+                IfnCvg.alpha = 0;
+                IfnCvg.transform.localScale = Vector3.one * 0.7f;
+            })
+            .Append(IfnCvg.transform.DOScale(1, 0.6f).SetEase(Ease.OutBounce))
+            .Join(IfnCvg.DOFade(1f, 0.6f))
+            .AppendInterval(0.35f);
+
+        // 점수
+        resultSeq
+            .AppendInterval(1f)
+            .Append(DOVirtual.Int(0, score, 2f, value =>
+            {
+                IfnTotalScore.text = value.ToString();
+
+                if (topScore < value)
+                {
+                    topScore = value;
+                    IfnTopScore.text = topScore.ToString();
+                }
+            })).SetEase(Ease.OutQuad)
+            .AppendInterval(0.5f);
+
+
+        // newtopScore 효과
+        if (newTopScore)
+        {
+            resultSeq
+                .AppendCallback(() =>
+                {
+                    NewTopScoreTextCgv.transform.localScale = Vector3.zero;
+                    NewTopScoreTextCgv.alpha = 0;
+                    NewTopScoreTextCgv.gameObject.SetActive(true);
+                })
+                .Append(TotalScoreTextCgv.DOFade(0, 0.3f))
+
+                .Append(NewTopScoreTextCgv.transform.DOScale(1, 0.4f).SetEase(Ease.OutBounce))
+                .Join(NewTopScoreTextCgv.DOFade(1, 0.4f))
+                .AppendInterval(0.5f);
+        }
+
+        // 골드
+        resultSeq
+            .Append(DOVirtual.Int(0, rewardCoin, 0.5f, value =>
+            {
+                IfnReward.text = value.ToString();
+            }))
+            .AppendInterval(0.5f);
+
+
+        // 순위
+        if (newTopScore)
+        {
+            resultSeq
+                .AppendCallback(() =>
+                {
+                    GameManager.Instance.CameraAimUp();
+                })
+                .AppendInterval(0.2f)
+                .AppendCallback(() => 
+                {
+                    RankingPanel.transform.localScale = Vector3.one * 0.5f;
+                    RankingPanel.alpha = 0;
+                    RankingPanel.gameObject.SetActive(true);
+                })
+                .Append(RankingPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce))
+                .Join(RankingPanel.DOFade(1f, 0.4f))
+                .AppendInterval(0.2f)
+                .AppendCallback(() =>
+                {
+                    // 순위 움직임
+                    //resultSeq.Pause();
+                });
+        }
+
+
+        // 축하
+        resultSeq
+            .AppendCallback(() =>
+            {
+                ClearConfetti.SetActive(newTopScore);
+                if (!newTopScore) return;
+
+                Courier.Reaction(true);
+                StartCoroutine(CourierSfxDelay());
+            })
+            .AppendInterval(0.15f);
+
+        // 버튼
+        ButtonsUpMove(IfnButtons);
+        LeftMoveAndNumbering(IfnLobbyButton, null, 0);
+
+        // 광고 or 리뷰
+        resultSeq.AppendCallback(() => GameManager.StackIntAdClear())
+            .AppendInterval(0.1f);
+
+        resultSeq.AppendCallback(() =>
+        {
+            if (PlayerPrefs.GetInt("Review", 0) < 5)
+            {
+                PlayerPrefs.SetInt("Review", PlayerPrefs.GetInt("Review", 0) + 1);
+            }
+
+            if (PlayerPrefs.GetInt("ReviewOn", 0) != 1 && PlayerPrefs.GetInt("Review", 0) >= 5)
+            {
+                Debug.LogWarning("ReviewOn");
+
+                ReviewPopUp.SetActive(true);
+                PlayerPrefs.SetInt("ReviewOn", 1);
+            }
+
+        });
+
+        PlayerPrefs.Save();
+
+
+        if (Application.internetReachability != NetworkReachability.NotReachable && GameDatas.instance)
+        {
+            GameDatas.instance.CloudSave();
+        }
+    }
+
+
+    void ShowResultUI(CanvasGroup cgv)
     {
         resultSeq.AppendCallback(() =>
         {
-            ResultCanvas.gameObject.SetActive(true);
-            ResultCanvas.alpha = 0;
-            ResultCanvas.transform.localScale = Vector3.one * 0.8f;
+            cgv.gameObject.SetActive(true);
+            cgv.alpha = 0;
+            cgv.transform.localScale = Vector3.one * 0.8f;
 
-            ResultCanvas.transform.DOScale(1, 0.3f).SetEase(Ease.OutBack);
-            ResultCanvas.DOFade(1f, 0.3f);
+            cgv.transform.DOScale(1, 0.3f).SetEase(Ease.OutBack);
+            cgv.DOFade(1f, 0.3f);
         }).AppendInterval(0.35f);
     }
 
@@ -421,7 +584,9 @@ public class StageTruckCanvas : MonoBehaviour
         StageMap.transform.localScale = Vector3.zero;
         canvasGroup.alpha = 0;
 
-        resultSeq.AppendCallback(() => StageMap.SetActive(true))
+        resultSeq
+            .AppendInterval(0.2f)
+            .AppendCallback(() => StageMap.SetActive(true))
             .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
             .Join(canvasGroup.DOFade(1f, 0.4f))
             .AppendCallback(() =>
@@ -433,7 +598,8 @@ public class StageTruckCanvas : MonoBehaviour
             { 
                 StageManager.instance.StageMapView(starCount);
                 resultSeq.Pause();
-            });
+            })
+            .AppendInterval(0.2f);
     }
 
     void CourierActive()
@@ -447,7 +613,7 @@ public class StageTruckCanvas : MonoBehaviour
         }).AppendInterval(0.2f);
     }
 
-    void ButtonsUpMove()
+    void ButtonsUpMove(RectTransform Buttons)
     {
         Vector2 originalPos = Buttons.anchoredPosition;
 

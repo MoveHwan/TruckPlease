@@ -7,7 +7,7 @@ public class Courier : MonoBehaviour
 {
     public Transform courier;
     public Animator animator;
-    public Vector3 targetVec;
+    public Vector3 targetVec, defaultVec;
     public bool isPush, pushOn;
 
     AnimatorStateInfo animStateInfo;
@@ -17,6 +17,11 @@ public class Courier : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Lobby")
         {
             animator.SetTrigger("Hello");
+        }
+        else
+        {
+            defaultVec = transform.position;
+            transform.position += Vector3.up * 100;
         }
     }
 
@@ -55,7 +60,7 @@ public class Courier : MonoBehaviour
 
     public void PushStart()
     {
-        gameObject.SetActive(true);
+        transform.position = defaultVec;
 
         animator.SetTrigger("Push");
         isPush = true;

@@ -8,7 +8,6 @@ public class ProfilImageList : MonoBehaviour
 
     public Sprite PlayerImage;
 
-    public List<Texture> Textures;
     public List<Sprite> Sprites;
 
 
@@ -25,7 +24,6 @@ public class ProfilImageList : MonoBehaviour
         }
     }
 
-    public Texture GetTexture(string name) => Textures.Find(x => x.name == name);
     public Sprite GetSprite(string name) => Sprites.Find(x => x.name == name);
 
 }

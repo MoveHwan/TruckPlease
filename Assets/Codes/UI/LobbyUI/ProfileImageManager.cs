@@ -12,6 +12,7 @@ public class ProfileImageManager : MonoBehaviour
 
     [Space]
     public GameObject ProfilePrefab;
+    public List<Texture> ProfileImages;
 
     [Header("[ ProfileImageUI ]")]
     public GameObject ProfileImageUI;
@@ -25,8 +26,6 @@ public class ProfileImageManager : MonoBehaviour
     public GameObject BuyImageCheckUI;
     public RawImage BuyImage;
     public Button BuyButton;
-
-    ProfilImageList ProfilImageList;
 
     static List<string> BuyImages;
 
@@ -42,8 +41,6 @@ public class ProfileImageManager : MonoBehaviour
 
     void Start()
     {
-        ProfilImageList = ProfilImageList.Instance;
-
         BuyImages = new List<string>(PlayerPrefs.GetString("BuyImages", "Human_1").Split(","));
 
         if (Content.childCount <= 0)
@@ -51,11 +48,11 @@ public class ProfileImageManager : MonoBehaviour
             GameObject profileObj;
             Texture texture;
 
-            for (int i = 0; i < ProfilImageList.Textures.Count; i++)
+            for (int i = 0; i < ProfileImages.Count; i++)
             {
                 profileObj = Instantiate(ProfilePrefab, Content);
 
-                texture = ProfilImageList.Textures[i];
+                texture = ProfileImages[i];
 
                 profileObj.name = texture.name;
                 profileObj.transform.GetChild(1).GetChild(0).GetComponent<RawImage>().texture = texture;
@@ -66,7 +63,7 @@ public class ProfileImageManager : MonoBehaviour
 
         string imageName = PlayerPrefs.GetString("ProfileImage", "Human_1");
 
-        PlayerTexture = ProfilImageList.GetTexture(imageName);
+        PlayerTexture = ProfileImages.Find(x => x.name == imageName);
 
         ProfileRawImage.texture = PlayerTexture;
         PopupRawImage.texture = PlayerTexture;
@@ -79,18 +76,18 @@ public class ProfileImageManager : MonoBehaviour
     {
         if (ChangeTexture.name == PlayerTexture.name) return;
 
-        if (PlayerPrefs.GetInt("Gold", 0) < 500)
+        /*if (PlayerPrefs.GetInt("Gold", 0) < 500)
         {
             PlayMessage(btn);
             return;
-        }
+        }*/
 
         PlayerTexture = ChangeTexture;
-
+        ProfilImageList.Instance.PlayerImage = ProfilImageList.Instance.GetSprite(PlayerTexture.name);
         ProfileRawImage.texture = PlayerTexture;
         PopupRawImage.texture = PlayerTexture;
 
-        PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) - 500);
+        //PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) - 500);
         PlayerPrefs.SetString("ProfileImage", PlayerTexture.name);
         PlayerPrefs.Save();
 
@@ -109,7 +106,7 @@ public class ProfileImageManager : MonoBehaviour
         PrevSelectObj = SelectObj;
 
 
-        ChangeTexture = ProfilImageList.GetTexture(name);
+        ChangeTexture = ProfileImages.Find(x => x.name == name);
         ChangeRawImage.texture = ChangeTexture;
     }
 
@@ -122,7 +119,7 @@ public class ProfileImageManager : MonoBehaviour
         }
 
 
-        BuyImage.texture = ProfilImageList.GetTexture(name);
+        BuyImage.texture = ProfileImages.Find(x => x.name == name);
 
         BuyButton.onClick.RemoveAllListeners();
         BuyButton.onClick.AddListener(() => 
