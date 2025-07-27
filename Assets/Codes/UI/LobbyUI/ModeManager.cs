@@ -10,6 +10,7 @@ public class ModeManager : MonoBehaviour
     public GameObject InfiniteUI;
     public GameObject StageRankButton;
     public GameObject Block;
+    public ScrollRect RankView;
 
     public CanvasGroup Content;
 
@@ -19,6 +20,8 @@ public class ModeManager : MonoBehaviour
     public Sprite InfiniteSprite;
 
     Sequence seq;
+
+    bool scrollStop;
 
     void Start()
     {
@@ -95,6 +98,9 @@ public class ModeManager : MonoBehaviour
 
             ModeButtonImg.sprite = StageSprite;
 
+            scrollStop = true;
+            StartCoroutine(ScrollStop());
+
             seq?.Kill();
             seq = DOTween.Sequence();
 
@@ -114,12 +120,24 @@ public class ModeManager : MonoBehaviour
                 .Join(Content.DOFade(1, 0.3f))
                 .OnComplete(() =>
                 {
+                    scrollStop = false;
                     Block.SetActive(false);
                 });
 
         }
     }
     
+    IEnumerator ScrollStop()
+    {
+        while(scrollStop)
+        {
+            RankView.normalizedPosition = Vector2.up;
+            yield return null;
+        }
+
+        yield break;
+    }
+
     public void LoadInfinite()
     {
         if (!FatigueManager.instance.CheckFatigue())
