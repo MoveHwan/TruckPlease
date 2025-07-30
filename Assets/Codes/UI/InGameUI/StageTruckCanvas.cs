@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using Sequence = DG.Tweening.Sequence;
 
 public class StageTruckCanvas : MonoBehaviour
 {
@@ -62,12 +63,13 @@ public class StageTruckCanvas : MonoBehaviour
     public TextMeshProUGUI IfnReward;
     public RectTransform IfnButtons;
     public RectTransform IfnLobbyButton;
-    
+    public GameObject IfnADBtn;
+
 
     BoxManager BoxManager;
     GameManager GameManager;
 
-    DG.Tweening.Sequence resultSeq;
+    Sequence resultSeq;
 
     int starCount, rewardCoin, stageNum;
     bool isResult, isSetTotal, tuto, newTopScore;
@@ -96,6 +98,7 @@ public class StageTruckCanvas : MonoBehaviour
         {
             StageUI.SetActive(false);
             InfiniteUI.SetActive(true);
+            Courier.gameObject.SetActive(false);
 
             PauseStageText.text = "Eternal Challenge";
             LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>32</color>";
@@ -145,10 +148,19 @@ public class StageTruckCanvas : MonoBehaviour
     {
         InGamePanel.SetActive(false);
 
-        yield return new WaitForSeconds(3);
+        if (stageNum == 999)
+        {
+            yield return new WaitForSeconds(2);
 
-        SetResult();
+            InfiniteResult();
+        }
+        else
+        {
+            yield return new WaitForSeconds(3);
 
+            SetResult();
+        }
+            
         Count.SetActive(false);
 
         resultSeq.Play();
@@ -158,12 +170,6 @@ public class StageTruckCanvas : MonoBehaviour
 
     void SetResult()
     {
-        if (stageNum == 999)
-        {
-            InfiniteResult();
-            return;
-        }
-
         starCount = WeightSlider.instance.GetStarCount();
 
         string str = "Stage" + PlayerPrefs.GetInt("Stage") + "_star";
@@ -349,15 +355,13 @@ public class StageTruckCanvas : MonoBehaviour
 
 
         // 순위
-        if (newTopScore)
-        {
-            resultSeq
+        resultSeq
                 .AppendCallback(() =>
                 {
                     GameManager.Instance.CameraAimUp();
                 })
                 .AppendInterval(0.2f)
-                .AppendCallback(() => 
+                .AppendCallback(() =>
                 {
                     RankingPanel.transform.localScale = Vector3.one * 0.5f;
                     RankingPanel.alpha = 0;
@@ -371,7 +375,6 @@ public class StageTruckCanvas : MonoBehaviour
                     // 순위 움직임
                     //resultSeq.Pause();
                 });
-        }
 
 
         // 축하
@@ -379,10 +382,6 @@ public class StageTruckCanvas : MonoBehaviour
             .AppendCallback(() =>
             {
                 ClearConfetti.SetActive(newTopScore);
-                if (!newTopScore) return;
-
-                Courier.Reaction(true);
-                StartCoroutine(CourierSfxDelay());
             });
 
         // 버튼
@@ -585,14 +584,14 @@ public class StageTruckCanvas : MonoBehaviour
         canvasGroup.alpha = 0;
 
         resultSeq
-            .AppendInterval(0.2f)
-            .AppendCallback(() => StageMap.SetActive(true))
-            .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
-            .Join(canvasGroup.DOFade(1f, 0.4f))
             .AppendCallback(() =>
             {
                 GameManager.Instance.CameraAimUp();
             })
+            .AppendInterval(0.2f)
+            .AppendCallback(() => StageMap.SetActive(true))
+            .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
+            .Join(canvasGroup.DOFade(1f, 0.4f))
             .AppendInterval(0.2f)
             .AppendCallback(() => 
             { 
@@ -641,7 +640,6 @@ public class StageTruckCanvas : MonoBehaviour
     }
 
 
-
     public void AdReward()
     {
         if (PlayerPrefs.GetInt("isCoinReward", 0) == 0) return;
@@ -651,18 +649,30 @@ public class StageTruckCanvas : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        ADButton.SetActive(false);
+        GameObject btn;
+        TextMeshProUGUI coinText;
 
-        resultSeq.Kill();
-        resultSeq.Pause();
-
-        resultSeq.AppendInterval(0.3f);
-        resultSeq.Append(DOVirtual.Int(rewardCoin, rewardCoin * 4, 0.2f, value =>
+        if (stageNum == 999)
         {
-            CoinText.text = value.ToString();
+            btn = IfnADBtn;
+            coinText = IfnReward;
+        }
+        else
+        {
+            btn = ADButton;
+            coinText = CoinText;
+        }
+
+        btn.SetActive(false);
+
+        Sequence rewardSeq = DOTween.Sequence();
+
+        rewardSeq.AppendInterval(0.3f);
+        rewardSeq.Append(DOVirtual.Int(rewardCoin, rewardCoin * 4, 0.2f, value =>
+        {
+            coinText.text = value.ToString();
         }));
 
-        resultSeq.Play();
     }
 
     

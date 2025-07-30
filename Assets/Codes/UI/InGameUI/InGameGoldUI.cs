@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +16,12 @@ public class InGameGoldUI : MonoBehaviour
 
     Sequence GoldSeq, GoldTextSeq;
 
-    [SerializeField] int gold;
+    [SerializeField] int accGold;
     [SerializeField] int bonusGold;
-    [SerializeField] int starGold;
+    [SerializeField] int resultGold;
 
     bool isRefresh;
-    int stage, chapter, starCount;
+    int stage, chapter, starCount, prevBox;
     string stageStarStr;
 
     int[] stageRewards = {
@@ -65,7 +66,7 @@ public class InGameGoldUI : MonoBehaviour
 
     void Update()
     {
-        fireOn = VfxManager.instance.stack >= 2;
+        /*fireOn = VfxManager.instance.stack >= 2;
 
         if (fireOn && !FireAni.activeSelf)
         {
@@ -74,20 +75,27 @@ public class InGameGoldUI : MonoBehaviour
         else if (!fireOn && FireAni.activeSelf)
         {
             FireAni.SetActive(false);
-        }
+        }*/
 
-        //RefreshStarGold();
+        //RefreshresultGold();
 
-        if (!isRefresh && gold + starGold != int.Parse(GoldText.text)) 
+        if (!isRefresh && accGold + resultGold != int.Parse(GoldText.text)) 
         {
             isRefresh = true;
             RefreshGold();
+        }
+
+        if (prevBox != BoxManager.Instance.GoaledBoxes.Count)
+        {
+            prevBox = BoxManager.Instance.GoaledBoxes.Count;
+
+            resultGold = GetTopBoxReward();
         }
     }
 
     public void GetGold()
     {
-        gold += bonusGold;
+        //accGold += bonusGold;
     }
 
 
@@ -115,7 +123,7 @@ public class InGameGoldUI : MonoBehaviour
         {
             int prevGold = int.Parse(GoldText.text);
 
-            DOVirtual.Int(prevGold, gold + starGold, 0.4f, value =>
+            DOVirtual.Int(prevGold, accGold + resultGold, 0.4f, value =>
             {
                 GoldText.text = (Mathf.Round(value * 100f) / 100f).ToString();
             }).OnComplete(() =>
@@ -150,7 +158,7 @@ public class InGameGoldUI : MonoBehaviour
 
     void RefreshGold()
     {
-        if (gold > int.Parse(GoldText.text))
+        if (accGold > int.Parse(GoldText.text))
             PlayGoldEffect();
 
         PlayGoldTextEffect();
@@ -160,15 +168,15 @@ public class InGameGoldUI : MonoBehaviour
     {
         if (stage == 999)
         {
-            starGold = 100;
+            resultGold = GetTopBoxReward();
         }
         else
         {
             starCount = WeightSlider.instance.GetStarCount();
-            starGold = GetStageReward(stage, starCount, stageStarStr);
+            resultGold = GetStageReward(stage, starCount, stageStarStr);
         }
         
-        return gold + starGold;
+        return accGold + resultGold;
     }
 
 
@@ -202,6 +210,33 @@ public class InGameGoldUI : MonoBehaviour
             amount += rewards[i];
         }
 
+
+        return amount;
+    }
+
+    int GetTopBoxReward()
+    {
+        if (BoxManager.Instance.GoaledBoxes.Count == 0) return resultGold;
+
+        float topBox = BoxManager.Instance.GoaledBoxes.Max(box => box.GetComponent<ThrowBox>().weight);
+
+        int amount = 0;
+
+        switch (topBox)
+        {
+            case 3000:
+                amount = 50;
+                break;
+            case 1200:
+                amount = 30;
+                break;
+            case 500:
+                amount = 10;
+                break;
+            default:
+                amount = 0;
+                break;
+        }
 
         return amount;
     }

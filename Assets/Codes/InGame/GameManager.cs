@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
         GameEndCamera.Priority = 20;
         //GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        
         truckAni.SetTrigger("GameEnd");
-        playableDirector.Play();
+        if (!eternalMode) playableDirector.Play();
         if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
             StageSave();
