@@ -101,6 +101,7 @@ public class Tutorial : MonoBehaviour
             yield return new WaitForSeconds(3f); // 2√  ¥Î±‚
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();
+            GameManager.Instance.life = 3;
             tutoPanel.gameObject.SetActive(false);
             GameManager.Instance.gamePause = false;
         }
