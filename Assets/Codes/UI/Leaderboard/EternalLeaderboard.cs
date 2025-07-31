@@ -52,7 +52,7 @@ public class EternalLeaderboard : MonoBehaviour
         SetRankData();
     }
 
-    void Start()
+    void OnEnable()
     {
         LoadingPanel.SetActive(true);
         // 다음 프레임에서 스크롤을 맨 위로 설정
@@ -63,6 +63,11 @@ public class EternalLeaderboard : MonoBehaviour
 
     IEnumerator WaitForLeaderboardData()
     {
+        while (LeaderboardSet.instance == null)
+        {
+            yield return new WaitForSeconds(0.2f); // 0.2초마다 체크
+        }
+
         float timeout = 10f; // 최대 5초까지 기다림 (원하면 무제한으로도 가능)
         float elapsedTime = 0f;
 

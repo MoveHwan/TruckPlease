@@ -55,10 +55,6 @@ public class ResultEternal : MonoBehaviour
             playerScoreText[i] = parent.GetChild(3).GetComponent<TextMeshProUGUI>();
             myRankFrame[i] = parent.GetChild(4).gameObject;
         }
-        for (int i = 3; i < count; i++)
-        {
-            rankText[i].text = (i + 1).ToString();
-        }
     }
 
     IEnumerator WaitForLeaderboardData()
@@ -135,7 +131,7 @@ public class ResultEternal : MonoBehaviour
                 
                 rankText[index].text = (playerScore.Rank + 1).ToString();
 
-                if (LeaderboardSet.instance.myRank == playerScore.Rank)
+                if (LeaderboardSet.instance.myRank - 1 == playerScore.Rank)
                 {
                     myRankFrame[index].SetActive(true);
                 }
