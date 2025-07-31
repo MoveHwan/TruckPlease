@@ -8,7 +8,6 @@ using Unity.Services.Leaderboards.Models;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.SocialPlatforms.Impl;
-using static UnityEditor.Progress;
 
 
 public class LeaderboardSet : MonoBehaviour
