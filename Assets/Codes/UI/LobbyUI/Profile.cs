@@ -118,6 +118,8 @@ public class Profile : MonoBehaviour
 
             PlayerPrefs.SetString("nickname", changeName);
 
+            AuthenticationService.Instance.UpdatePlayerNameAsync(changeName);
+
             FreeMessage.SetActive(false);
 
             NickPrice.text = "200";

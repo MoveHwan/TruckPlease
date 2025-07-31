@@ -17,11 +17,13 @@ public class Tutorial : MonoBehaviour
     public GameObject throwHeightImage;
 
     public Image tutoPanel;
+    public GameObject tutoBlock;
+
 
     void Start()
     {
         GameManager.Instance.gamePause = true;
-
+        tutoBlock.SetActive(true);
         StartCoroutine(ShowNextImage());
     }
 
@@ -59,7 +61,7 @@ public class Tutorial : MonoBehaviour
         if (currentIndex <= 1)
         {
             images[currentIndex].SetActive(true);
-            yield return new WaitForSeconds(3f); // 2초 대기
+            yield return new WaitForSeconds(2f); // 2초 대기
             canProceed = true;
             currentIndex++; // 다음 인덱스로 이동
         }
@@ -102,6 +104,8 @@ public class Tutorial : MonoBehaviour
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();
             GameManager.Instance.life = 3;
+            tutoBlock.SetActive(false);
+
             tutoPanel.gameObject.SetActive(false);
             GameManager.Instance.gamePause = false;
         }

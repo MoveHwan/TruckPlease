@@ -14,6 +14,8 @@ public class LeaderboardSet : MonoBehaviour
 {
     public static LeaderboardSet instance;
 
+    public LoadingLogin loadingLogin;
+
     public bool setComp;
 
     public int myRank;          // 무한모드 등수
@@ -53,10 +55,7 @@ public class LeaderboardSet : MonoBehaviour
         await SignInAnonymouslyEditor(); // 에디터에서 익명 로그인
 #else
     InitializeGooglePlayGames(); // 안드로이드에서 GPGS 로그인
-                SetLobby();
-            SetIngame();
-            SetResultEternal();
-
+FirstIn();
 #endif
 
 
@@ -95,7 +94,7 @@ public class LeaderboardSet : MonoBehaviour
 
             SetLobby();
             SetIngame();
-            SetResultEternal();
+            await SetResultEternal();
             // 테스트용: 리더보드 점수 확인
         }
         catch (AuthenticationException ex)
@@ -244,7 +243,10 @@ public class LeaderboardSet : MonoBehaviour
     }
 
     // 인게임 결과창 준비
-    public async void SetResultEternal()
+    public async 
+    // 인게임 결과창 준비
+    Task
+SetResultEternal()
     {
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
@@ -264,6 +266,15 @@ public class LeaderboardSet : MonoBehaviour
 
         readyResult = true;
     }
+
+    public async void FirstIn()
+    {
+        SetLobby();
+        SetIngame();
+        await SetResultEternal();
+        StartCoroutine(loadingLogin.WaitLoadingSecond());
+    }
+
 
     async void SetNoData()
     {

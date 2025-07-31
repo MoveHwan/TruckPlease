@@ -113,7 +113,6 @@ public class UnityLogin : MonoBehaviour
                     // 비동기 실행을 위해 Task 사용
                     await SignInWithGooglePlayGamesAsync(Token);
                     leaderboardSet.SetActive(true);
-                    StartCoroutine(loadingLogin.WaitLoadingSecond());
                 });
             }
             else
@@ -131,8 +130,6 @@ public class UnityLogin : MonoBehaviour
             await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
             Debug.Log("Sign-in is successful.");
 
-            // 구글 플레이 닉네임 가져오기
-            //string googleNickname = GetGooglePlayNickname();
             string SetNickname = PlayerPrefs.GetString("nickname");
             Debug.Log($"Google Play Nickname: {SetNickname}");
 

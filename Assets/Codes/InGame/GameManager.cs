@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(unityLeaderboardEternal, score, options);
 
-        LeaderboardSet.instance.SetResultEternal();
+        await LeaderboardSet.instance.SetResultEternal();
 
         var playerEntryDaily = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(unityLeaderboardEternalDaily, score, options);
