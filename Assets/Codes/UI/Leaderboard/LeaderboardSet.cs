@@ -54,6 +54,9 @@ public class LeaderboardSet : MonoBehaviour
         await SignInAnonymouslyEditor(); // 에디터에서 익명 로그인
 #else
     InitializeGooglePlayGames(); // 안드로이드에서 GPGS 로그인
+                SetLobby();
+            SetIngame();
+            SetResultEternal();
 
 #endif
 
