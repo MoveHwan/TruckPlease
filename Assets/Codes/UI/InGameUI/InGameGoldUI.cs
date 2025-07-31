@@ -89,7 +89,7 @@ public class InGameGoldUI : MonoBehaviour
         {
             prevBox = BoxManager.Instance.GoaledBoxes.Count;
 
-            resultGold = GetTopBoxReward();
+            //resultGold = GetTopBoxReward();
         }
     }
 
@@ -168,7 +168,7 @@ public class InGameGoldUI : MonoBehaviour
     {
         if (stage == 999)
         {
-            resultGold = GetTopBoxReward();
+            //resultGold = GetTopBoxReward();
         }
         else
         {
@@ -239,5 +239,13 @@ public class InGameGoldUI : MonoBehaviour
         }
 
         return amount;
+    }
+
+    public void AddBoxGold(int boxGold)
+    {
+        if (stage == 999)
+        {
+            resultGold += boxGold;
+        }
     }
 }

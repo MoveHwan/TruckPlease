@@ -384,6 +384,18 @@ public class BoxManager : MonoBehaviour
                 spawnedColorFlags[spawnedColor] = true;
                 Debug.Log($"[BoxManager] 새 색상 등장: {spawnedColor}");
             }
+            if(spawnedColor == BlockColor.Pink)
+            {
+                InGameGoldUI.Instance.AddBoxGold(5);
+            }
+            else if(spawnedColor == BlockColor.Mint)
+            {
+                InGameGoldUI.Instance.AddBoxGold(10);
+            }
+            else if(spawnedColor == BlockColor.Purple)
+            {
+                InGameGoldUI.Instance.AddBoxGold(30);
+            }
         }
 
         //Rigidbody rb = newBox.GetComponent<Rigidbody>();
