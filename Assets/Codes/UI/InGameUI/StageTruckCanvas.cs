@@ -392,7 +392,7 @@ public class StageTruckCanvas : MonoBehaviour
         LeftMoveAndNumbering(IfnLobbyButton, null, 0);
 
         // 광고 or 리뷰
-        resultSeq.AppendCallback(() => GameManager.StackIntAdClear())
+        resultSeq.AppendCallback(() => GameManager.EternalAd())
             .AppendInterval(0.1f);
 
         resultSeq.AppendCallback(() =>

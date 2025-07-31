@@ -382,6 +382,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void EternalAd()
+    {
+        GoogleAd.instance.ShowInterstitialAd();
+    }
+
     public void ShowAdBack()
     {
         ADBack.SetActive(true);
