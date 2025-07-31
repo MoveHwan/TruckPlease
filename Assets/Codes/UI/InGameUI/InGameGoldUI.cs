@@ -25,10 +25,9 @@ public class InGameGoldUI : MonoBehaviour
     string stageStarStr;
 
     int[] stageRewards = {
-        40, 40, 60, 40, 40, 60, 40, 40, 60,
-        50, 50, 75, 50, 50, 75, 50, 50, 75,
-        50, 50, 75, 60, 60, 90, 60, 60, 90,
-        60, 60, 90, 60, 60, 90
+        40, 40, 40, 40, 40, 60,
+        50, 50, 50, 50, 50, 75,
+        60, 60, 60, 60, 60, 90
     };
 
     private void Awake()
@@ -85,12 +84,12 @@ public class InGameGoldUI : MonoBehaviour
             RefreshGold();
         }
 
-        if (prevBox != BoxManager.Instance.GoaledBoxes.Count)
+        /*if (prevBox != BoxManager.Instance.GoaledBoxes.Count)
         {
             prevBox = BoxManager.Instance.GoaledBoxes.Count;
 
             //resultGold = GetTopBoxReward();
-        }
+        }*/
     }
 
     public void GetGold()
@@ -214,7 +213,7 @@ public class InGameGoldUI : MonoBehaviour
         return amount;
     }
 
-    int GetTopBoxReward()
+   /* int GetTopBoxReward()
     {
         if (BoxManager.Instance.GoaledBoxes.Count == 0) return resultGold;
 
@@ -239,7 +238,7 @@ public class InGameGoldUI : MonoBehaviour
         }
 
         return amount;
-    }
+    }*/
 
     public void AddBoxGold(int boxGold)
     {

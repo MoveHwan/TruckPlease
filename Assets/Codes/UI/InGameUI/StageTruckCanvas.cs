@@ -721,6 +721,12 @@ public class StageTruckCanvas : MonoBehaviour
 
     public void CheckPauseRetry()
     {
+        if (stageNum == 999)
+        {
+            CheckStageRetry();
+            return;
+        }
+
         if (!FatigueManager.instance.CheckRetryFatigue())
         {
             NoHeartPopUp.SetActive(true);

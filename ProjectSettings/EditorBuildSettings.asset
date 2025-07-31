@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 33d4e52e0f21d9e4aa7b82980434e831
+  - enabled: 1
+    path: Assets/Scenes/GoLobby.unity
+    guid: c4a802d691a5f93409f93b8a377dcf95
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 33079046d824ad0429ed32d5013d33ff,
       type: 2}
