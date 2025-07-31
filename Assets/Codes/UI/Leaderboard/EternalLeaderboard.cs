@@ -52,7 +52,7 @@ public class EternalLeaderboard : MonoBehaviour
         SetRankData();
     }
 
-    void OnEnable()
+    void Start()
     {
         LoadingPanel.SetActive(true);
         // 다음 프레임에서 스크롤을 맨 위로 설정
