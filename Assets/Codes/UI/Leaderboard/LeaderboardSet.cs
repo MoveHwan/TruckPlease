@@ -202,7 +202,6 @@ public class LeaderboardSet : MonoBehaviour
         topScoresResponse = await LeaderboardsService.Instance
             .GetScoresAsync("StageClear", optionsTop);
 
-
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
