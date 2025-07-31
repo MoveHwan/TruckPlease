@@ -133,7 +133,7 @@ public class ResultEternal : MonoBehaviour
                 // 색상 + 크기 조합 (태그는 70% 사이즈)
                 string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
                 
-                rankText[index].text = playerScore.Rank.ToString();
+                rankText[index].text = (playerScore.Rank + 1).ToString();
 
                 if (LeaderboardSet.instance.myRank == playerScore.Rank)
                 {

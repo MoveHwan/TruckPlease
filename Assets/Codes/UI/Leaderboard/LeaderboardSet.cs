@@ -213,7 +213,7 @@ public class LeaderboardSet : MonoBehaviour
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
-        myRank = playerScoreResponseEternal.Rank;
+        myRank = playerScoreResponseEternal.Rank + 1;
 
         var optionsTopEternal = new GetScoresOptions
         {
@@ -231,7 +231,7 @@ public class LeaderboardSet : MonoBehaviour
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
-        myRank = playerScoreResponseEternal.Rank;
+        myRank = playerScoreResponseEternal.Rank + 1;
 
         var optionsTopEternalDaily = new GetScoresOptions
         {
@@ -250,9 +250,10 @@ public class LeaderboardSet : MonoBehaviour
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
-        myRank = playerScoreResponseEternal.Rank;
+        myRank = playerScoreResponseEternal.Rank + 1;
 
-        int startRank = Mathf.Max(myRank - 2, 0);
+        int startRank = Mathf.Max(myRank - 3, 0);
+
         playerRangeResponseEternal = await LeaderboardsService.Instance.GetScoresAsync(
             "EternalMode",
             new GetScoresOptions
