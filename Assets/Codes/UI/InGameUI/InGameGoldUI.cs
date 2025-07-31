@@ -225,13 +225,13 @@ public class InGameGoldUI : MonoBehaviour
         switch (topBox)
         {
             case 3000:
-                amount = 50;
-                break;
-            case 1200:
                 amount = 30;
                 break;
-            case 500:
+            case 1200:
                 amount = 10;
+                break;
+            case 500:
+                amount = 5;
                 break;
             default:
                 amount = 0;

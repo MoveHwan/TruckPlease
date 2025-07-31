@@ -61,6 +61,7 @@ public class StageTruckCanvas : MonoBehaviour
     public TextMeshProUGUI IfnTotalScore;
     public TextMeshProUGUI IfnTopScore;
     public TextMeshProUGUI IfnReward;
+    public TextMeshProUGUI IfnInGameTopScore;
     public RectTransform IfnButtons;
     public RectTransform IfnLobbyButton;
     public GameObject IfnADBtn;
@@ -100,8 +101,20 @@ public class StageTruckCanvas : MonoBehaviour
             InfiniteUI.SetActive(true);
             Courier.gameObject.SetActive(false);
 
-            PauseStageText.text = "Eternal Challenge";
-            LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>32</color>";
+            PauseStageText.text = "Eternal Mode";
+
+            if (LeaderboardSet.instance != null)
+            {
+                string rank = LeaderboardSet.instance.myRank == 0 ? "-" : LeaderboardSet.instance.myRank.ToString();
+                LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>" + rank + "</color>";
+            }
+            else
+                LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>-</color>";
+
+            string str = PlayerPrefs.GetInt("EternalMode", 0).ToString();
+
+            IfnInGameTopScore.text = str;
+            IfnTopScore.text = str;
         }
         else
         {
@@ -160,7 +173,7 @@ public class StageTruckCanvas : MonoBehaviour
 
             SetResult();
         }
-            
+
         Count.SetActive(false);
 
         resultSeq.Play();
@@ -358,7 +371,9 @@ public class StageTruckCanvas : MonoBehaviour
         resultSeq
                 .AppendCallback(() =>
                 {
-                    GameManager.Instance.CameraAimUp();
+                    resultSeq.Pause();
+
+                    StartCoroutine(WaitLeaderboard());
                 })
                 .AppendInterval(0.2f)
                 .AppendCallback(() =>
@@ -593,8 +608,8 @@ public class StageTruckCanvas : MonoBehaviour
             .Append(StageMap.transform.DOScale(1f, 0.4f).SetEase(Ease.OutCubic))
             .Join(canvasGroup.DOFade(1f, 0.4f))
             .AppendInterval(0.2f)
-            .AppendCallback(() => 
-            { 
+            .AppendCallback(() =>
+            {
                 StageManager.instance.StageMapView(starCount);
                 resultSeq.Pause();
             })
@@ -675,7 +690,19 @@ public class StageTruckCanvas : MonoBehaviour
 
     }
 
-    
+    IEnumerator WaitLeaderboard()
+    {
+        while (!LeaderboardSet.instance.readyResult)
+            yield return null;
+
+        LeaderboardSet.instance.readyResult = false;
+
+        GameManager.Instance.CameraAimUp();
+
+        ResultSeqPlay();
+
+        yield break;
+    }
 
     IEnumerator CourierSfxDelay()
     {
@@ -796,7 +823,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         DOTween.KillAll();
 
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("GoLobby");
     }
 
 

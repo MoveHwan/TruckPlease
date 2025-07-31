@@ -14,7 +14,7 @@ public class FatigueManager : MonoBehaviour
     private const int MaxFatigue = 10;
     private const int RecoveryMinutes = 5;
 
-    [SerializeField] int currentFatigue;
+    [SerializeField] int currentFatigue, stage;
 
     bool CheckStageIn;
 
@@ -45,10 +45,26 @@ public class FatigueManager : MonoBehaviour
         {
             CheckStageIn = false;
 
-            PlayerPrefs.SetInt("StageIn", 1);
-            PlayerPrefs.Save();
-
             Destroy(StageCheck.Instance.gameObject);
+
+            if (StageManager.instance != null) 
+            {
+                if (StageManager.instance.EditorStageCheck())
+                    stage = PlayerPrefs.GetInt("Stage", 1);
+                else
+                    stage = GameManager.Instance.stageSelect;
+            }
+
+            if (stage == 999)
+            {
+                SubFatigue();
+                CheckStageIn = true;
+            }
+            else
+            {
+                PlayerPrefs.SetInt("StageIn", 1);
+                PlayerPrefs.Save();
+            }
 
             StageManager.instance.SetLandmark();
         }
