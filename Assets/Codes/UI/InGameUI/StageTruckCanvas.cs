@@ -72,7 +72,7 @@ public class StageTruckCanvas : MonoBehaviour
 
     Sequence resultSeq;
 
-    int starCount, rewardCoin, stageNum;
+    int starCount, rewardCoin, stageNum, prevRank;
     bool isResult, isSetTotal, tuto, newTopScore;
 
 
@@ -107,6 +107,8 @@ public class StageTruckCanvas : MonoBehaviour
             {
                 string rank = LeaderboardSet.instance.myRank == 0 ? "-" : LeaderboardSet.instance.myRank.ToString();
                 LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>" + rank + "</color>";
+
+                prevRank = LeaderboardSet.instance.myRank;
             }
             else
                 LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>-</color>";
@@ -388,7 +390,10 @@ public class StageTruckCanvas : MonoBehaviour
                 .AppendCallback(() =>
                 {
                     // 순위 움직임
-                    //resultSeq.Pause();
+                    DOVirtual.Int(prevRank, LeaderboardSet.instance.myRank, 0.5f, value =>
+                    {
+                        LicensePlateText.text = "<size=7>Rank</size>\n<color=#1E90FF>" + value + "</color>";
+                    });
                 });
 
 
