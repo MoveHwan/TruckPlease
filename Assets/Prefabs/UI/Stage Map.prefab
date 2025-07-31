@@ -321,7 +321,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 5365727163251781998}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -2011,7 +2010,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3829933697907708132}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -3360,7 +3358,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7154025328345205315}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -3417,7 +3414,7 @@ RectTransform:
   m_Father: {fileID: 3700852112134848121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4175,7 +4172,7 @@ RectTransform:
   m_Father: {fileID: 7987641457617127093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6081,7 +6078,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7108380048358825219}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -6343,7 +6339,7 @@ RectTransform:
   m_Father: {fileID: 780952462297808052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6403,7 +6399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4658568594280378497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6420,8 +6416,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 249}
+  m_AnchoredPosition: {x: 0, y: 200}
+  m_SizeDelta: {x: 400, y: 450}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8334552713926270148
 CanvasRenderer:
@@ -6445,13 +6441,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 67009ca88c9c14f08b4c85973a54347a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7790,7 +7786,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2282140968978649034}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -9406,7 +9401,7 @@ RectTransform:
   m_Father: {fileID: 6987918182786848182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9507,7 +9502,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 845720790573218875}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -9590,7 +9584,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 613222787586691668}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -10343,7 +10336,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7891366765396571815}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -11458,7 +11450,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 969616433106326491}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -13267,7 +13258,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2243734803735064812}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -14372,9 +14362,9 @@ RectTransform:
   - {fileID: 1708959023279382001}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -3576}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110549300106795064
@@ -17008,7 +16998,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2768117276830931169}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -18026,7 +18015,7 @@ RectTransform:
   m_Father: {fileID: 5445899648319458344}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20435,7 +20424,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 4819753133245880942}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -20498,8 +20486,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00048828125}
-  m_SizeDelta: {x: 120, y: 7152}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &538960036582364004
 MonoBehaviour:
@@ -20951,7 +20939,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5387133342827003689}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22657,9 +22645,9 @@ RectTransform:
   - {fileID: 2862334150472034337}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -5960}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2803375271903676650
@@ -22926,7 +22914,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 2932017702958421487}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -23461,7 +23448,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3962333910620160969}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -24379,7 +24365,7 @@ RectTransform:
   m_Father: {fileID: 120978742370402054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -26238,7 +26224,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 7410867239230981509}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -27043,7 +27028,7 @@ RectTransform:
   m_Father: {fileID: 3624066358151123308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8888889, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -28261,7 +28246,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 3367120032117424401}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 0
   stageId: 0
   starCount: 0
@@ -30595,9 +30579,9 @@ RectTransform:
   - {fileID: 3500759000327201083}
   m_Father: {fileID: 4291750945617484326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -1192}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 2384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2912467196531936738
@@ -30708,8 +30692,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4605622343649450312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000000014901161}
-  m_AnchorMax: {x: 1, y: 0.106263995}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30899,7 +30883,7 @@ RectTransform:
   m_Father: {fileID: 7619370764244136114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -32988,8 +32972,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6144386466771036028}
   m_HandleRect: {fileID: 8415395643798647688}
   m_Direction: 3
-  m_Value: 0.413
-  m_Size: 0.10626398
+  m_Value: 1
+  m_Size: 0.26845637
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -33432,7 +33416,7 @@ RectTransform:
   m_Father: {fileID: 5210943794961782831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34643,7 +34627,7 @@ RectTransform:
   m_Father: {fileID: 7880303857173686135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -35318,7 +35302,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 8088660901630391443}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0
@@ -37303,7 +37286,6 @@ MonoBehaviour:
   Content: {fileID: 4291750945617484326}
   StarGroup: {fileID: 1321203893276816017}
   NextStage: {fileID: 0}
-  Sparkle: {fileID: 0}
   isLeft: 1
   stageId: 0
   starCount: 0

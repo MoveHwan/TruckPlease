@@ -31,7 +31,7 @@ public class DataSettings
     public float SfxVol = 0.5f;
     public float TotalWeight = 0;
 
-    public List<int> StageStar = new List<int>();
+    public List<int> StageStars = new List<int>();
     public List<string> BuyImages = new List<string>();
 }
 
@@ -253,9 +253,9 @@ public class GameDatas : MonoBehaviour
     // dataSettings 스테이지별 플레이어프렙에 저장
     void SetStageStar()
     {
-        for (int i = 0; i < dataSettings.StageStar.Count; i++)
+        for (int i = 0; i < dataSettings.StageStars.Count; i++)
         {
-            PlayerPrefs.SetInt("Stage" + (i + 1) + "_star", dataSettings.StageStar[i]);
+            PlayerPrefs.SetInt("Stage" + (i + 1) + "_star", dataSettings.StageStars[i]);
         }
 
     }
@@ -269,13 +269,13 @@ public class GameDatas : MonoBehaviour
         if (starCount <= 0 || stage <= 0) return;
 
         // 리스트가 targetIndex보다 작으면 0으로 채우기
-        while (dataSettings.StageStar.Count <= stage-1)
+        while (dataSettings.StageStars.Count <= stage-1)
         {
-            dataSettings.StageStar.Add(0);
+            dataSettings.StageStars.Add(0);
         }
 
-        if (dataSettings.StageStar[stage - 1] < starCount)
-            dataSettings.StageStar[stage - 1] = starCount;
+        if (dataSettings.StageStars[stage - 1] < starCount)
+            dataSettings.StageStars[stage - 1] = starCount;
     }
 
     // 플레이어프렙 스테이지 별 dataSettings에 저장
@@ -287,7 +287,7 @@ public class GameDatas : MonoBehaviour
         {
             Debug.Log($"stage: {stage}, star: {PlayerPrefs.GetInt("Stage" + stage + "_star", 0)}");
 
-            dataSettings.StageStar.Add(PlayerPrefs.GetInt("Stage" + stage + "_star", 0));
+            dataSettings.StageStars.Add(PlayerPrefs.GetInt("Stage" + stage + "_star", 0));
         }
 
     }
