@@ -28,14 +28,14 @@ public class IngameDailyRank : MonoBehaviour
 
     void GetTopPlayers(string leaderboardId)
     {
-        if (LeaderboardSet.instance.topScoresResponse == null)
+        if (LeaderboardSet.instance.topScoresResponseEternalDaily == null)
             return;
 
         try
         {
             int index = 0;
 
-            foreach (var playerScore in LeaderboardSet.instance.topScoresResponse.Results)
+            foreach (var playerScore in LeaderboardSet.instance.topScoresResponseEternalDaily.Results)
             {
                 if (index >= 3)
                     return;

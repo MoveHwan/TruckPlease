@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 using UnityEngine.SceneManagement;
 
-public class LoadingScene : MonoBehaviour
+public class GoLobby : MonoBehaviour
 {
     public Slider slider;
     public float fakeLoadingTime = 2f; // 슬라이더가 채워지는 시간 (초)
@@ -22,11 +23,8 @@ public class LoadingScene : MonoBehaviour
         operation.allowSceneActivation = false;
 
         float elapsed = 0f;
-        
-        if (eternalMode) 
-        { 
-            LeaderboardSet.instance.SetIngame();
-        }
+
+        LeaderboardSet.instance.SetLobby();
 
         while (elapsed < fakeLoadingTime)
         {

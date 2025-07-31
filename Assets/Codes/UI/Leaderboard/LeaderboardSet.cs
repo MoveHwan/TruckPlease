@@ -8,6 +8,7 @@ using Unity.Services.Leaderboards.Models;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.SocialPlatforms.Impl;
+using static UnityEditor.Progress;
 
 
 public class LeaderboardSet : MonoBehaviour
@@ -16,8 +17,18 @@ public class LeaderboardSet : MonoBehaviour
 
     public bool setComp;
 
+    public int myRank;          // 무한모드 등수
+
     public LeaderboardEntry playerScoreResponse;
     public LeaderboardScoresPage topScoresResponse;
+    public LeaderboardScoresPage topScoresResponseEternal;
+    public LeaderboardScoresPage topScoresResponseEternalDaily;
+    public LeaderboardScoresPage playerRangeResponseEternal;
+    public LeaderboardEntry playerScoreResponseEternal;
+
+    int rangeLimit = 5;
+
+    public bool readyResult;
 
     async void Awake()
     {
@@ -43,7 +54,6 @@ public class LeaderboardSet : MonoBehaviour
         await SignInAnonymouslyEditor(); // 에디터에서 익명 로그인
 #else
     InitializeGooglePlayGames(); // 안드로이드에서 GPGS 로그인
-                GetPlayerScore("StageClear");
 
 #endif
 
@@ -79,9 +89,11 @@ public class LeaderboardSet : MonoBehaviour
             };
 
             Debug.Log("options" + options.ToString());
-            await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 103, options);
+            await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 32, options);
 
-            GetPlayerScore("StageClear");
+            SetLobby();
+            SetIngame();
+            SetResultEternal();
             // 테스트용: 리더보드 점수 확인
         }
         catch (AuthenticationException ex)
@@ -120,33 +132,6 @@ public class LeaderboardSet : MonoBehaviour
     void InitializeGooglePlayGames()
     {
         PlayGamesPlatform.Activate();
-        LoginGooglePlayGames();
-    }
-
-    public void LoginGooglePlayGames()
-    {
-        //PlayGamesPlatform.Instance.Authenticate((success) =>
-        //{
-        //    if (success == SignInStatus.Success)
-        //    {
-        //        Debug.Log("Login with Google Play Games successful.");
-
-        //        PlayGamesPlatform.Instance.RequestServerSideAccess(true, async (code) =>
-        //        {
-        //            Debug.Log("Authorization code: " + code);
-        //            Token = code;
-
-        //            // 비동기 실행을 위해 Task 사용
-        //            await SignInWithGooglePlayGamesAsync(Token);
-        //            StartCoroutine(loadingLogin.WaitLoadingSecond());
-        //        });
-        //    }
-        //    else
-        //    {
-        //        Error = "Failed to retrieve Google Play Games authorization code";
-        //        Debug.LogError("Login Unsuccessful");
-        //    }
-        //});
     }
 
     async Task SignInWithGooglePlayGamesAsync(string authCode)
@@ -197,7 +182,8 @@ public class LeaderboardSet : MonoBehaviour
         return "UnknownPlayer"; // 로그인 실패 시 기본 닉네임
     }
 
-    async void GetPlayerScore(string leaderboardId)
+    // 로비 리더보드 준비
+    public async void SetLobby()
     {
         var options = new GetPlayerScoreOptions
         {
@@ -205,7 +191,7 @@ public class LeaderboardSet : MonoBehaviour
         };
 
         playerScoreResponse = await LeaderboardsService.Instance
-            .GetPlayerScoreAsync(leaderboardId, options);
+            .GetPlayerScoreAsync("StageClear", options);
 
         var optionsTop = new GetScoresOptions
         {
@@ -214,9 +200,61 @@ public class LeaderboardSet : MonoBehaviour
         };
 
         topScoresResponse = await LeaderboardsService.Instance
-            .GetScoresAsync(leaderboardId, optionsTop);
+            .GetScoresAsync("StageClear", optionsTop);
+
+
+        playerScoreResponseEternal = await LeaderboardsService.Instance
+            .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
+
+        myRank = playerScoreResponseEternal.Rank;
+
+        var optionsTopEternal = new GetScoresOptions
+        {
+            IncludeMetadata = true,
+            Limit = 100
+        };
+
+        topScoresResponseEternal = await LeaderboardsService.Instance
+            .GetScoresAsync("EternalMode", optionsTopEternal);
+    }
+
+    // 인게임 리더보드 준비
+    public async void SetIngame()
+    {
+        playerScoreResponseEternal = await LeaderboardsService.Instance
+            .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
+
+        myRank = playerScoreResponseEternal.Rank;
+
+        var optionsTopEternalDaily = new GetScoresOptions
+        {
+            IncludeMetadata = true,
+            Limit = 3
+        };
+
+        topScoresResponseEternalDaily = await LeaderboardsService.Instance
+            .GetScoresAsync("EternalMode", optionsTopEternalDaily);
 
     }
 
+    // 인게임 결과창 준비
+    public async void SetResultEternal()
+    {
+        playerScoreResponseEternal = await LeaderboardsService.Instance
+            .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
+        myRank = playerScoreResponseEternal.Rank;
+
+        int startRank = Mathf.Max(myRank - 2, 0);
+        playerRangeResponseEternal = await LeaderboardsService.Instance.GetScoresAsync(
+            "EternalMode",
+            new GetScoresOptions
+            {
+                IncludeMetadata = true,
+                Offset = startRank,
+                Limit = rangeLimit
+            });
+
+        readyResult = true;
+    }
 }

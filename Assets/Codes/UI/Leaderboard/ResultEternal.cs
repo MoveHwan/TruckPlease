@@ -1,20 +1,12 @@
-using GooglePlayGames;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
-using System.Threading.Tasks;
-using Unity.Services.Leaderboards;
 using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames.BasicApi;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEngine.EventSystems.EventTrigger;
 
-public class EternalLeaderboard : MonoBehaviour
+public class ResultEternal : MonoBehaviour
 {
     // 색상 설정
     string nicknameColor = "#3A8DFF"; // 선명한 파란색
@@ -29,57 +21,16 @@ public class EternalLeaderboard : MonoBehaviour
     TextMeshProUGUI[] playerScoreText;
     GameObject[] myRankFrame;
 
-    public TextMeshProUGUI myPlayerIdText;
-    public TextMeshProUGUI myPlayerScore;
-    public TextMeshProUGUI myPlayerRankText;
-    //public GameObject setting;
-    public TextMeshProUGUI messageText; // 로그인 필요 메시지
     public GameObject LoadingPanel;
-
-    string rankingId = "StageClear";
-
-    public ScrollRect scrollRect;
-
-    [Header("[MyScore]")]
-    string myNickname;
-    int myScore;
-    int myRank;
-
-    private bool isAuthenticated = false; // 인증 여부 저장
 
     void Awake()
     {
         SetRankData();
     }
 
-    void OnEnable()
+    void Start()
     {
-        LoadingPanel.SetActive(true);
-        // 다음 프레임에서 스크롤을 맨 위로 설정
-        StartCoroutine(ResetScrollPosition());
-
         StartCoroutine(WaitForLeaderboardData());
-    }
-
-    IEnumerator WaitForLeaderboardData()
-    {
-        float timeout = 10f; // 최대 5초까지 기다림 (원하면 무제한으로도 가능)
-        float elapsedTime = 0f;
-
-        while (LeaderboardSet.instance.topScoresResponseEternal == null)
-        {
-            yield return new WaitForSeconds(0.2f); // 0.2초마다 체크
-            elapsedTime += 0.2f;
-
-            if (elapsedTime >= timeout)
-            {
-                Debug.LogWarning("Leaderboard 데이터 준비 시간 초과");
-                yield break; // 또는 오류 처리 UI 띄우기
-            }
-        }
-
-        GetPlayerScore(); // 데이터가 준비된 후 호출
-        LoadingPanel.SetActive(false);
     }
 
     void SetRankData()
@@ -100,68 +51,46 @@ public class EternalLeaderboard : MonoBehaviour
             // 자식 인덱스: 1, 3, 4, 6
             rankText[i] = parent.GetChild(0).GetComponent<TextMeshProUGUI>();
             chaImages[i] = parent.GetChild(1).GetChild(0).GetComponent<Image>();
-            chaImages[i].sprite = null;
             playerIdText[i] = parent.GetChild(2).GetComponent<TextMeshProUGUI>();
             playerScoreText[i] = parent.GetChild(3).GetComponent<TextMeshProUGUI>();
-            myRankFrame[i] = parent.GetChild(5).gameObject;
+            myRankFrame[i] = parent.GetChild(4).gameObject;
         }
-        
         for (int i = 3; i < count; i++)
         {
             rankText[i].text = (i + 1).ToString();
         }
     }
 
-    // 유니티 나의 랭크 가져오기
-    void GetPlayerScore()
+    IEnumerator WaitForLeaderboardData()
     {
-        if (LeaderboardSet.instance.playerScoreResponseEternal == null)
-            return;
+        float timeout = 10f; // 최대 5초까지 기다림 (원하면 무제한으로도 가능)
+        float elapsedTime = 0f;
 
-        var scoreResponse = LeaderboardSet.instance.playerScoreResponseEternal;
+        while (LeaderboardSet.instance.playerRangeResponseEternal == null)
+        {
+            yield return new WaitForSeconds(0.2f); // 0.2초마다 체크
+            elapsedTime += 0.2f;
 
-        myScore = (int)scoreResponse.Score;
-        myNickname = scoreResponse.PlayerName;
-        myRank = scoreResponse.Rank;
+            if (elapsedTime >= timeout)
+            {
+                Debug.LogWarning("Leaderboard 데이터 준비 시간 초과");
+                yield break; // 또는 오류 처리 UI 띄우기
+            }
+        }
 
-        Debug.Log(myScore.ToString());
-        Debug.Log(myNickname);
-
-        // 닉네임과 태그 분리
-        string[] parts = myNickname.Split('#');
-        string nameOnly = parts.Length > 0 ? parts[0] : myNickname;
-        string tagOnly = parts.Length > 1 ? "#" + parts[1] : "";
-
-        // 색상 + 크기 조합 (태그는 70% 사이즈)
-        string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
-
-
-        //myPlayerIdText.text = coloredNickname;
-        myPlayerScore.text = myScore.ToString();
-        myPlayerRankText.text = (myRank + 1).ToString(); // 등수 UI에 표시
-
-        GetTopPlayers(rankingId);
+        GetTopPlayers(); // 데이터가 준비된 후 호출
     }
 
-    void GetTopPlayers(string leaderboardId)
+    // 유니티 나의 랭크 가져오기
+    void GetTopPlayers()
     {
-        if (LeaderboardSet.instance.topScoresResponseEternal == null)
-            return;
+        LoadingPanel.SetActive(false);
 
         try
         {
-            //var options = new GetScoresOptions
-            //{
-            //    IncludeMetadata = true,
-            //    Limit = 100
-            //};
-
-
-            //var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, options);
-
             int index = 0;
 
-            foreach (var playerScore in LeaderboardSet.instance.topScoresResponseEternal.Results)
+            foreach (var playerScore in LeaderboardSet.instance.playerRangeResponseEternal.Results)
             {
                 string playername = playerScore.PlayerName;
                 string[] parts = playername.Split('#');
@@ -203,11 +132,14 @@ public class EternalLeaderboard : MonoBehaviour
 
                 // 색상 + 크기 조합 (태그는 70% 사이즈)
                 string coloredNickname = $"<b><color={nicknameColor}>{nameOnly}</color></b>";
+                
+                rankText[index].text = playerScore.Rank.ToString();
 
-                if (myNickname == playername)
+                if (LeaderboardSet.instance.myRank == playerScore.Rank)
                 {
                     myRankFrame[index].SetActive(true);
                 }
+
                 playerIdText[index].text = coloredNickname;
                 playerScoreText[index].text = playerScore.Score.ToString();
                 chaImages[index].sprite = ProfilImageList.Instance.GetSprite(chaImage);
@@ -220,10 +152,4 @@ public class EternalLeaderboard : MonoBehaviour
         }
     }
 
-
-    IEnumerator ResetScrollPosition()
-    {
-        yield return null; // 1프레임 대기 (UI 레이아웃이 잡힌 후 실행)
-        scrollRect.verticalNormalizedPosition = 1f;
-    }
 }

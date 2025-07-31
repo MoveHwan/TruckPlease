@@ -146,6 +146,10 @@ public class BoxManager : MonoBehaviour
         {
             int index = spawnedBoxes.Count - 1; // 뒤에서 첫 번째
             GameObject objToDelete = spawnedBoxes[index];
+            if (!objToDelete.activeInHierarchy)
+            {
+                GameManager.Instance.life++;
+            }
             spawnedBoxes.RemoveAt(index);
             GoaledBoxes.Remove(objToDelete);
             spawnedBoxes.Clear();
@@ -255,6 +259,7 @@ public class BoxManager : MonoBehaviour
             yield break;
 
         gameEndBox = true;
+        stopTouch = true;
         GameManager.Instance.gamePause = true;
 
         float gameEndCount;
@@ -270,13 +275,15 @@ public class BoxManager : MonoBehaviour
         }
         gameEndCountUi.transform.parent.gameObject.SetActive(true);
 
+
         while (gameEndCount >= 0)
         {
-            if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Count && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar) // 조건이 깨졌는지 다시 확인
+            if (inBoxWeight < GameManager.Instance.thirdStar && count < box.Count && remainBoxWeight + inBoxWeight >= GameManager.Instance.firstStar || GameManager.Instance.life > 0 && GameManager.Instance.eternalMode) // 조건이 깨졌는지 다시 확인
             {
                 gameEndBox = false;
                 GameManager.Instance.gamePause = false;
                 gameEndCountUi.transform.parent.gameObject.SetActive(false);
+                stopTouch = false;
 
                 warnEnd = false;
                 yield break;

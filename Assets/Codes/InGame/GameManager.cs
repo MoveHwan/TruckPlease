@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     public bool tutoNeed;
 
     string unityLeaderboard = "StageClear";
+    string unityLeaderboardEternal = "EternalMode";
+    string unityLeaderboardEternalDaily = "DailyEternal";
     string unityLeaderboardWeight = "TotalWeight";
 
     public GameObject ADBack;
@@ -110,7 +112,7 @@ public class GameManager : MonoBehaviour
     {
         SelectStage(); // 겜 출시시 주석요망
 
-        if(stage == 999)
+        if (stage == 999)
         {
             SetEternalMode();
         }
@@ -142,8 +144,8 @@ public class GameManager : MonoBehaviour
             if (stageData[stage - 1].useWind && !stageData[stage - 1].random)
             {
                 WindManager.instance.SetFixedWind(stageData[stage - 1].windType, stageData[stage - 1].windSpeed);
-            }       
-            else if(stageData[stage - 1].random)
+            }
+            else if (stageData[stage - 1].random)
             {
                 WindManager.instance.RandomWind();
             }
@@ -207,7 +209,7 @@ public class GameManager : MonoBehaviour
 
     void SelectStage()
     {
-    #if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE
         stage = stageSelect;
 #elif UNITY_ANDROID || UNITY_IOS
         Debug.Log("모바일(Android 또는 iOS)에서 실행됨");
@@ -272,7 +274,14 @@ public class GameManager : MonoBehaviour
         //GameEndAim.transform.DOMove(new Vector3(0, 0.807f, -1.77f), 3f); // 1.5초 동안 이동        
         truckAni.SetTrigger("GameEnd");
         if (!eternalMode) playableDirector.Play();
-        if (BoxManager.Instance.inBoxWeight >= firstStar)
+        
+        if (eternalMode)
+        {
+            PlayerPrefs.SetInt("EternalMode", (int)Mathf.Round(BoxManager.Instance.inBoxWeight));
+            PlayerPrefs.Save();
+            AddScoreEternal((int)Mathf.Round(BoxManager.Instance.inBoxWeight));
+        }
+        else if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
             StageSave();
         }
@@ -317,7 +326,33 @@ public class GameManager : MonoBehaviour
         };
 
         var playerEntry = await LeaderboardsService.Instance
-            .AddPlayerScoreAsync(leaderboardId, score);
+            .AddPlayerScoreAsync(leaderboardId, score, options);
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
+    public async void AddScoreEternal(int score)
+    {
+        string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
+
+        var metadata = new Dictionary<string, object>
+        {
+            { "myImage", myImage },
+        };
+
+        // AddPlayerScoreOptions 객체 생성
+        var options = new AddPlayerScoreOptions
+        {
+            Metadata = metadata, // 여기에 메타데이터 설정
+        };
+
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(unityLeaderboardEternal, score, options);
+
+        LeaderboardSet.instance.SetResultEternal();
+
+        var playerEntryDaily = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(unityLeaderboardEternalDaily, score, options);
+
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
     }
 

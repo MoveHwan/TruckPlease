@@ -21,6 +21,7 @@ public class UnityLogin : MonoBehaviour
     public LoadingLogin loadingLogin;
 
     public GDPRSet gdprSet;
+    public GameObject leaderboardSet;
 
     async void Awake()
     {
@@ -111,6 +112,7 @@ public class UnityLogin : MonoBehaviour
 
                     // 비동기 실행을 위해 Task 사용
                     await SignInWithGooglePlayGamesAsync(Token);
+                    leaderboardSet.SetActive(true);
                     StartCoroutine(loadingLogin.WaitLoadingSecond());
                 });
             }
