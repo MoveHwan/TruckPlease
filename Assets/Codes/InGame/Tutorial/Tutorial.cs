@@ -23,7 +23,6 @@ public class Tutorial : MonoBehaviour
     void Start()
     {
         GameManager.Instance.gamePause = true;
-        tutoBlock.SetActive(true);
         StartCoroutine(ShowNextImage());
     }
 
@@ -104,7 +103,6 @@ public class Tutorial : MonoBehaviour
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();
             GameManager.Instance.life = 3;
-            tutoBlock.SetActive(false);
 
             tutoPanel.gameObject.SetActive(false);
             GameManager.Instance.gamePause = false;
