@@ -13,7 +13,7 @@ public class GoLobby : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(LoadSceneWithFakeProgress("InGame"));
+        StartCoroutine(LoadSceneWithFakeProgress("Lobby"));
     }
 
     IEnumerator LoadSceneWithFakeProgress(string sceneName)

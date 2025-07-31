@@ -188,6 +188,11 @@ public class LeaderboardSet : MonoBehaviour
     // 로비 리더보드 준비
     public async void SetLobby()
     {
+        if (!PlayerPrefs.HasKey("YesData"))
+        {
+            SetNoData();
+        }
+
         var options = new GetPlayerScoreOptions
         {
             IncludeMetadata = true
@@ -235,7 +240,7 @@ public class LeaderboardSet : MonoBehaviour
         };
 
         topScoresResponseEternalDaily = await LeaderboardsService.Instance
-            .GetScoresAsync("EternalMode", optionsTopEternalDaily);
+            .GetScoresAsync("DailyEternal", optionsTopEternalDaily);
 
     }
 
@@ -258,5 +263,34 @@ public class LeaderboardSet : MonoBehaviour
             });
 
         readyResult = true;
+    }
+
+    async void SetNoData()
+    {
+        PlayerPrefs.SetInt("YesData",1);
+        PlayerPrefs.Save();
+
+        string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
+
+        var metadata = new Dictionary<string, object>
+        {
+            { "myImage", myImage },
+        };
+
+        // AddPlayerScoreOptions 객체 생성
+        var options = new AddPlayerScoreOptions
+        {
+            Metadata = metadata, // 여기에 메타데이터 설정
+        };
+
+        var playerEntryStage = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync("StageClear", 0, options);
+
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync("EternalMode", 0, options);
+
+        var playerEntryDaily = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync("DailyEternal", 0, options);
+
     }
 }
