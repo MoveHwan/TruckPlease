@@ -46,8 +46,8 @@ MonoBehaviour:
   fourStep: []
   fiveStep: []
   firstStar: 50
-  secondStar: 50
-  thirdStar: 50
+  secondStar: 70
+  thirdStar: 80
   life: 0
   useWind: 0
   random: 0

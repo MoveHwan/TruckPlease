@@ -20,9 +20,33 @@ public class IngameDailyRank : MonoBehaviour
 
     void Start()
     {
-        // 다음 프레임에서 스크롤을 맨 위로 설정
+        StartCoroutine(WaitForLeaderboardData());
+    }
+
+    IEnumerator WaitForLeaderboardData()
+    {
+        while (LeaderboardSet.instance == null)
+        {
+            yield return new WaitForSeconds(0.2f); // 0.2초마다 체크
+        }
+
+        float timeout = 10f; // 최대 5초까지 기다림 (원하면 무제한으로도 가능)
+        float elapsedTime = 0f;
+
+        while (LeaderboardSet.instance.topScoresResponseEternalDaily == null)
+        {
+            yield return new WaitForSeconds(0.2f); // 0.2초마다 체크
+            elapsedTime += 0.2f;
+
+            if (elapsedTime >= timeout)
+            {
+                Debug.LogWarning("Leaderboard 데이터 준비 시간 초과");
+                yield break; // 또는 오류 처리 UI 띄우기
+            }
+        }
 
         GetTopPlayers(rankingId);
+
     }
 
 

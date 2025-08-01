@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class LoadingScene : MonoBehaviour
 {
@@ -45,4 +46,5 @@ public class LoadingScene : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // 연출용 약간의 딜레이
         operation.allowSceneActivation = true;
     }
+
 }

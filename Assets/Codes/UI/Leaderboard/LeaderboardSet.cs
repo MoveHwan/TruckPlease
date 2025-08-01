@@ -243,10 +243,7 @@ FirstIn();
     }
 
     // 인게임 결과창 준비
-    public async 
-    // 인게임 결과창 준비
-    Task
-SetResultEternal()
+    public async Task SetResultEternal()
     {
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수

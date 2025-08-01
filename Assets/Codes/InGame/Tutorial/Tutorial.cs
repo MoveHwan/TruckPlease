@@ -17,8 +17,6 @@ public class Tutorial : MonoBehaviour
     public GameObject throwHeightImage;
 
     public Image tutoPanel;
-    public GameObject tutoBlock;
-
 
     void Start()
     {
