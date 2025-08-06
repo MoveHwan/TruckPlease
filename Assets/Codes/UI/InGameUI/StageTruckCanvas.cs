@@ -788,7 +788,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         FatigueManager.instance.StageIn();
 
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void StageRetry()
@@ -805,7 +805,7 @@ public class StageTruckCanvas : MonoBehaviour
 
         FatigueManager.instance.StageIn();
 
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void NextStage()

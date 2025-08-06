@@ -17,6 +17,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
     {
         if (Instance == null)
         {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -43,7 +44,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
     /* 상품 정보 반환 */
     public Product GetProduct(string productId)
     {
-        return storeController.products.WithID(productId);
+        if (storeController != null && storeController.products != null)
+            return storeController.products.WithID(productId);
+
+        return null;
     }
 
     public void BuyRemoveAds()
