@@ -278,8 +278,11 @@ public class GameManager : MonoBehaviour
         
         if (eternalMode)
         {
-            PlayerPrefs.SetInt("EternalMode", (int)Mathf.Round(BoxManager.Instance.inBoxWeight));
-            PlayerPrefs.Save();
+            if(PlayerPrefs.GetInt("EternalMode")< (int)Mathf.Round(BoxManager.Instance.inBoxWeight))
+            {
+                PlayerPrefs.SetInt("EternalMode", (int)Mathf.Round(BoxManager.Instance.inBoxWeight));
+                PlayerPrefs.Save();
+            }
             if (UnityServices.State != ServicesInitializationState.Initialized)
             {
                 Debug.LogWarning("Unity Services가 초기화되지 않았습니다. 저장/점수 등록을 건너뜁니다.");
