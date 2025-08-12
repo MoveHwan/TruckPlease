@@ -283,12 +283,6 @@ FirstIn();
         PlayerPrefs.SetInt("YesData",1);
         PlayerPrefs.Save();
 
-        if (playerScoreResponseEternal != null)
-        {
-            PlayerPrefs.SetInt("EternalMode", (int)playerScoreResponseEternal.Score);
-            PlayerPrefs.Save();
-        }
-
         string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
 
         var metadata = new Dictionary<string, object>
@@ -307,6 +301,15 @@ FirstIn();
 
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync("EternalMode", 0, options);
+
+        playerScoreResponseEternal = await LeaderboardsService.Instance
+            .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
+
+        if (playerScoreResponseEternal != null)
+        {
+            PlayerPrefs.SetInt("EternalMode", (int)playerScoreResponseEternal.Score);
+            PlayerPrefs.Save();
+        }
 
         var playerEntryDaily = await LeaderboardsService.Instance
             .AddPlayerScoreAsync("DailyEternal", 0, options);
