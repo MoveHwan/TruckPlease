@@ -16,7 +16,7 @@ public class PlayerTruck : MonoBehaviour
 
     static Vector2 defaultDis = Vector2.right * 180 + Vector2.up * 50;
 
-    Vector3 targetPosition;
+    Vector3 localPos;
     int dir;
     bool isleft;
 
@@ -27,7 +27,7 @@ public class PlayerTruck : MonoBehaviour
 
     void Update()
     {
-        if (target != null && targetPosition != target.position)
+        if (target != null && Vector3.Distance(content.InverseTransformPoint(target.position), localPos) > 0.001f)
         {
             SetPlayerTruck(isleft, target);
         }
@@ -38,20 +38,16 @@ public class PlayerTruck : MonoBehaviour
         this.target = target;
         isleft = left;
 
-        targetPosition = target.position;
-
         Vector3 scale = rect.localScale;
 
         dir = left ? -1 : 1;
         scale.x = -dir;
         rect.localScale = scale;
 
-        Vector3 localPos = content.InverseTransformPoint(target.position);
+        localPos = content.InverseTransformPoint(target.position);
 
         rect.localPosition = localPos;
         rect.anchoredPosition += dir * defaultDis * Vector2.right - 40 * Vector2.up;
-
-        Debug.LogWarning($"PlayerTruck Target: {target.name}, Pos: {localPos}, pos2: {target.position}");
     }
 
     public void DeliveryBoxOn()
