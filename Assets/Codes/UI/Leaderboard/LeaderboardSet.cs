@@ -90,10 +90,8 @@ FirstIn();
             };
 
             Debug.Log("options" + options.ToString());
-            await LeaderboardsService.Instance.AddPlayerScoreAsync("StageClear", 32, options);
-
-            SetLobby();
-            SetIngame();
+            await SetLobby();
+            await SetIngame();
             await SetResultEternal();
             // 테스트용: 리더보드 점수 확인
         }
@@ -184,11 +182,11 @@ FirstIn();
     }
 
     // 로비 리더보드 준비
-    public async void SetLobby()
+    public async Task SetLobby()
     {
         if (!PlayerPrefs.HasKey("YesData"))
         {
-            SetNoData();
+            await SetNoData();
         }
 
         var options = new GetPlayerScoreOptions
@@ -211,6 +209,7 @@ FirstIn();
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
 
+
         myRank = playerScoreResponseEternal.Rank + 1;
 
         var optionsTopEternal = new GetScoresOptions
@@ -224,7 +223,7 @@ FirstIn();
     }
 
     // 인게임 리더보드 준비
-    public async void SetIngame()
+    public async Task SetIngame()
     {
         playerScoreResponseEternal = await LeaderboardsService.Instance
             .GetPlayerScoreAsync("EternalMode");            // 무한모드 내점수
@@ -266,17 +265,29 @@ FirstIn();
 
     public async void FirstIn()
     {
-        SetLobby();
-        SetIngame();
-        await SetResultEternal();
-        StartCoroutine(loadingLogin.WaitLoadingSecond());
+        StartCoroutine(loadingLogin.LoadDataAndContinue());
+
+        if (UnityServices.State == ServicesInitializationState.Initialized)
+        {        
+            await SetLobby();
+            await SetIngame();
+            await SetResultEternal();
+        }
+
+        loadingLogin.dataLoad = true;
     }
 
 
-    async void SetNoData()
+    async Task SetNoData()
     {
         PlayerPrefs.SetInt("YesData",1);
         PlayerPrefs.Save();
+
+        if (playerScoreResponseEternal != null)
+        {
+            PlayerPrefs.SetInt("EternalMode", (int)playerScoreResponseEternal.Score);
+            PlayerPrefs.Save();
+        }
 
         string myImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
 

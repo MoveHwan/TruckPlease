@@ -375,9 +375,13 @@ public class BoxManager : MonoBehaviour
 
         // 생성된 상자의 색상 판별
         StickyBlock sticky = newBox.GetComponent<StickyBlock>();
+
+        LevelManager.instance.AddExpFromBox(sticky);
+
         if (sticky != null)
         {
             BlockColor spawnedColor = sticky.blockColor;
+
 
             if (!spawnedColorFlags[spawnedColor])
             {
@@ -397,20 +401,6 @@ public class BoxManager : MonoBehaviour
                 InGameGoldUI.Instance.AddBoxGold(30);
             }
         }
-
-        //Rigidbody rb = newBox.GetComponent<Rigidbody>();
-        //if (rb != null)
-        //{
-        //    rb.isKinematic = true;
-        //    StartCoroutine(EnablePhysicsDelayed(rb, 0.2f));
-        //}
-    }
-
-    IEnumerator EnablePhysicsDelayed(Rigidbody rb, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (rb != null)
-            rb.isKinematic = false;
     }
 
     public void NextBigBox(GameObject nextBox, Vector3 position, GameObject particle)

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: 25fe7ee57ee00704abdf4807208d7270, type: 3}
-  ingameClip: {fileID: 8300000, guid: 5ecb3b0f9f45c244b9100f492265732b, type: 3}
+  ingameClip: {fileID: 8300000, guid: 025f59d9742975447b0809758238e981, type: 3}
   bgmVolume: 0.5
   sfxClips:
   - {fileID: 8300000, guid: b49270b3e47c9ad4193615c58d143890, type: 3}

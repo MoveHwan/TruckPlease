@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 using UnityEngine.SceneManagement;
+using Unity.Services.Core;
 
 public class GoLobby : MonoBehaviour
 {
@@ -24,7 +26,11 @@ public class GoLobby : MonoBehaviour
 
         float elapsed = 0f;
 
-        LeaderboardSet.instance.SetLobby();
+        if (UnityServices.State == ServicesInitializationState.Initialized)
+        {
+            yield return WaitForTask(LeaderboardSet.instance.SetLobby());
+        }
+
 
         while (elapsed < fakeLoadingTime)
         {
@@ -43,4 +49,18 @@ public class GoLobby : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // 연출용 약간의 딜레이
         operation.allowSceneActivation = true;
     }
+
+    private IEnumerator WaitForTask(Task task)
+    {
+        while (!task.IsCompleted)
+        {
+            yield return null;
+        }
+
+        if (task.IsFaulted)
+        {
+            Debug.LogError("Task Exception: " + task.Exception);
+        }
+    }
+
 }

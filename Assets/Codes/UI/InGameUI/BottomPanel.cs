@@ -30,6 +30,7 @@ public class BottomPanel : MonoBehaviour
 
     [Header("[ Infinite ]")]
     public GameObject NextCount;
+    public TextMeshProUGUI remainCount;
     public Image NextMask;
     public Sprite infiniteMask;
 
@@ -78,6 +79,8 @@ public class BottomPanel : MonoBehaviour
         nowBoxIdx = BoxManager.count;
 
         GameObject sourceBox;
+
+        remainCount.text = BoxManager.Instance.remainBoxCount.ToString();
 
         // 3번째 남은 박스
         if (BoxManager.remainBoxCount >= 3)

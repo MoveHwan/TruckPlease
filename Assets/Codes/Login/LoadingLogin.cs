@@ -23,6 +23,8 @@ public class LoadingLogin : MonoBehaviour
     int loginGoogle = 1;
     int guest = 2;
 
+    public bool dataLoad;
+
     void Awake()
     {
         loadingSlider = slider.GetComponent<Slider>();
@@ -86,11 +88,17 @@ public class LoadingLogin : MonoBehaviour
             PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
         }
     }
+    void UnityConnect()
+    {
+        // 인터넷 연결됨
+        unityLogin.SetActive(true);
+        
+    }
 
     // 로딩 슬라이더
     IEnumerator WaitLoadingfirst()
     {
-        while (loadingSlider.value < 0.7f)
+        while (loadingSlider.value < 0.4f)
         {
             elapsed += Time.deltaTime;
             loadingSlider.value = Mathf.Lerp(0, 1, elapsed / duration);
@@ -100,11 +108,24 @@ public class LoadingLogin : MonoBehaviour
         SignIn();
     }
 
-    void UnityConnect()
+
+    // 데이터 로딩 + 중간 로딩 (0.4 → 0.7)
+    public IEnumerator LoadDataAndContinue()
     {
-        // 인터넷 연결됨
-        unityLogin.SetActive(true);
-        
+        float midTarget = 0.7f;
+        float progressSpeed = 0.05f; // 천천히 증가
+
+        // 데이터 로딩 중간에도 슬라이더를 조금씩 증가
+        while (!dataLoad)
+        {
+            // 목표치까지만 증가
+            loadingSlider.value = Mathf.MoveTowards(
+            loadingSlider.value, midTarget, progressSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // 데이터 로딩 완료 → 두 번째 로딩 시작
+        StartCoroutine(WaitLoadingSecond());
     }
 
     // 로딩 두번째

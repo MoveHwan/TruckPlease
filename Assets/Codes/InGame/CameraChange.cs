@@ -11,6 +11,15 @@ public class CameraChange : MonoBehaviour
 
     bool topViewOn;
 
+
+    void Update()
+    {
+        if (topViewOn && BoxManager.Instance.gameEndBox)
+        {
+            TopviewChange();
+        }
+    }
+
     public void TopviewChange()
     {
         if (!topViewOn)

@@ -10,8 +10,12 @@ public class InAppUpdateManager : MonoBehaviour
 
     void Start()
     {
-
+#if UNITY_EDITOR
+        loadingLogin.CheckNickName();
+#else
         StartCoroutine(CheckForUpdate());
+#endif
+
     }
 
     IEnumerator CheckForUpdate()

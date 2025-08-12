@@ -13,6 +13,7 @@ using Unity.Services.Leaderboards;
 using DG.Tweening;
 using UnityEngine.SocialPlatforms.Impl;
 using Cinemachine;
+using Unity.Services.Core;
 
 public class GameManager : MonoBehaviour
 {
@@ -279,10 +280,21 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("EternalMode", (int)Mathf.Round(BoxManager.Instance.inBoxWeight));
             PlayerPrefs.Save();
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                Debug.LogWarning("Unity Services가 초기화되지 않았습니다. 저장/점수 등록을 건너뜁니다.");
+                return;
+            }
             AddScoreEternal((int)Mathf.Round(BoxManager.Instance.inBoxWeight));
         }
         else if (BoxManager.Instance.inBoxWeight >= firstStar)
         {
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                Debug.LogWarning("Unity Services가 초기화되지 않았습니다. 저장/점수 등록을 건너뜁니다.");
+                return;
+            }
+
             StageSave();
         }
     }
