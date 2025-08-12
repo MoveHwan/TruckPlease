@@ -28,7 +28,7 @@ public class GoogleAd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("RemoveAd") == 1)
+        if (PlayerPrefs.GetInt("RemoveAD") == 1)
         {
             buyAdDel = true;
         }
@@ -65,7 +65,7 @@ public class GoogleAd : MonoBehaviour
     public void LoadAd()
     {
         // ±¤°íÁ¦°Å ±¸¸ÅÇßÀ» ½Ã
-        if (PlayerPrefs.GetInt("RemoveAd") == 1)
+        if (PlayerPrefs.GetInt("RemoveAD") == 1)
         {
             buyAdDel = true;
         }
@@ -237,6 +237,9 @@ public class GoogleAd : MonoBehaviour
                 dailyAd.SubTicket();
                 BuyItem_InGame.instance.AD_Gift();
                 AdBackRemove.instance.ADEnd = true;
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
             });
 
         }
@@ -247,9 +250,12 @@ public class GoogleAd : MonoBehaviour
                 PlayerPrefs.SetInt("isItemReward", 1);
                 dailyAd.SubTicket();
                 BuyItem_InGame.instance.AD_Gift();
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
             }
 
-            Debug.Log("No have RewardAd");
+            Debug.LogWarning("No have RewardAd");
         }
     }
 
@@ -327,6 +333,9 @@ public class GoogleAd : MonoBehaviour
                 PlayerPrefs.SetInt("isHeartReward", 1);
                 dailyAd.SubTicket();
                 AdBackRemove.instance.ADEnd = true;
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
             });
 
         }
@@ -336,9 +345,59 @@ public class GoogleAd : MonoBehaviour
             {
                 PlayerPrefs.SetInt("isHeartReward", 1);
                 dailyAd.SubTicket();
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
             }
 
-            Debug.Log("No have RewardAd");
+            Debug.LogWarning("No have RewardAd");
+        }
+    }
+
+    public void ShowRewardedAdShopCoin(DailyAdManager dailyAd)
+    {
+        //const string rewardMsg =
+        //"Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (buyAdDel)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + 100);
+                dailyAd.SubTicket();
+            }
+
+            Debug.Log("RemoveAd");
+            return;
+        }
+
+        if (rewardedAd != null && rewardedAd.CanShowAd())
+        {
+            ADBackOn();
+
+            rewardedAd.Show((Reward reward) =>
+            {
+                PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + 100);
+                dailyAd.SubTicket();
+                AdBackRemove.instance.ADEnd = true;
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
+            });
+
+        }
+        else
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                PlayerPrefs.SetInt("Gold", PlayerPrefs.GetInt("Gold", 0) + 100);
+                dailyAd.SubTicket();
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandler(rewardedAd);
+            }
+
+            Debug.LogWarning("No have RewardAd");
         }
     }
 
@@ -432,6 +491,9 @@ public class GoogleAd : MonoBehaviour
                 PlayerPrefs.SetInt("isCoinReward", 1);
                 StageTruckCanvas.Instance.AdReward();
                 AdBackRemove.instance.ADEnd = true;
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandlerCoin(rewardedAdCoin);
             });
 
         }
@@ -441,6 +503,9 @@ public class GoogleAd : MonoBehaviour
             {
                 PlayerPrefs.SetInt("isCoinReward", 1);
                 StageTruckCanvas.Instance.AdReward();
+
+                // ±¤°í ´Ù½Ã ·Îµå
+                RegisterReloadHandlerCoin(rewardedAdCoin);
             }
 
         }
@@ -449,7 +514,9 @@ public class GoogleAd : MonoBehaviour
     // ±¤°í µÞÆÇ ¶ç¿ì±â
     void ADBackOn()
     {
-        GameManager.Instance.ShowAdBack();
+        //GameManager.Instance.ShowAdBack();
+
+        AdBackRemove.instance.AdBackOn();
         StartCoroutine(ADBackOffCoroutine());
     }
 
@@ -457,7 +524,9 @@ public class GoogleAd : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
-        GameManager.Instance.HideAdBack();
+        //GameManager.Instance.HideAdBack();
+
+        AdBackRemove.instance.ADEnd = true;
 
         yield break;
     }
