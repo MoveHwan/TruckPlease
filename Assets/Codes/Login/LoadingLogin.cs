@@ -17,7 +17,7 @@ public class LoadingLogin : MonoBehaviour
     public GameObject unityLogin;
     public GameObject cloudLoad;
     Slider loadingSlider;
-    float duration = 3f; // 3초 동안 채우기
+    float duration = 6f; // 3초 동안 채우기
     float elapsed = 0f;  // 경과 시간
 
     int loginGoogle = 1;
@@ -98,7 +98,7 @@ public class LoadingLogin : MonoBehaviour
     // 로딩 슬라이더
     IEnumerator WaitLoadingfirst()
     {
-        while (loadingSlider.value < 0.4f)
+        while (loadingSlider.value < 0.2f)
         {
             elapsed += Time.deltaTime;
             loadingSlider.value = Mathf.Lerp(0, 1, elapsed / duration);
@@ -112,18 +112,17 @@ public class LoadingLogin : MonoBehaviour
     // 데이터 로딩 + 중간 로딩 (0.4 → 0.7)
     public IEnumerator LoadDataAndContinue()
     {
-        float midTarget = 0.7f;
-        float progressSpeed = 0.05f; // 천천히 증가
-
         // 데이터 로딩 중간에도 슬라이더를 조금씩 증가
-        while (!dataLoad)
+        while (loadingSlider.value < 0.7)
         {
-            // 목표치까지만 증가
-            loadingSlider.value = Mathf.MoveTowards(
-            loadingSlider.value, midTarget, progressSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            loadingSlider.value = Mathf.Lerp(0, 1, elapsed / duration);
             yield return null;
         }
-
+        while (!dataLoad)
+        {
+            yield return null;
+        }
         // 데이터 로딩 완료 → 두 번째 로딩 시작
         StartCoroutine(WaitLoadingSecond());
     }
@@ -135,7 +134,6 @@ public class LoadingLogin : MonoBehaviour
         {
             yield return null;
         }
-
 
         while (loadingSlider.value < 1)
         {
