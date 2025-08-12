@@ -26,7 +26,7 @@ public class StageUI : MonoBehaviour
     {
         stageId = id;
         starCount = PlayerPrefs.GetInt("Stage" + stageId + "_star", 0);
-        isPrevActive = PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_star", 0) > 0;
+        isPrevActive = PlayerPrefs.GetInt("Stage" + (stageId - 1) + "_star", 0) > 0 || stageId == 1;
 
         StageText.text = stageId.ToString();
         StageLock.SetActive(stageId != 1 && !isPrevActive);

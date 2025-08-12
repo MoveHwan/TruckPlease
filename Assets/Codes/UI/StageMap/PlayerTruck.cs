@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerTruck : MonoBehaviour
@@ -7,24 +8,38 @@ public class PlayerTruck : MonoBehaviour
     public static PlayerTruck Instance;
 
     public RectTransform rect;
+    public RectTransform target;
     public Transform content;
     public GameObject DeliveryBox;
 
-    public bool moveEnd;
+    public bool moveEnd, check;
 
     static Vector2 defaultDis = Vector2.right * 180 + Vector2.up * 50;
 
+    Vector3 targetPosition;
     int dir;
-
+    bool isleft;
 
     void Awake()
     {
         Instance = this;
     }
 
+    void Update()
+    {
+        if (target != null && targetPosition != target.position)
+        {
+            SetPlayerTruck(isleft, target);
+        }
+    }
 
     public void SetPlayerTruck(bool left, RectTransform target)
     {
+        this.target = target;
+        isleft = left;
+
+        targetPosition = target.position;
+
         Vector3 scale = rect.localScale;
 
         dir = left ? -1 : 1;
@@ -35,6 +50,8 @@ public class PlayerTruck : MonoBehaviour
 
         rect.localPosition = localPos;
         rect.anchoredPosition += dir * defaultDis * Vector2.right - 40 * Vector2.up;
+
+        Debug.LogWarning($"PlayerTruck Target: {target.name}, Pos: {localPos}, pos2: {target.position}");
     }
 
     public void DeliveryBoxOn()
