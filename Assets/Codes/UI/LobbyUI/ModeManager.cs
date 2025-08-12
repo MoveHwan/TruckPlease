@@ -51,8 +51,10 @@ public class ModeManager : MonoBehaviour
             Content.transform.localScale = Vector3.zero;
             Content.alpha = 0;
         }
-        
 
+        if (GoogleAd.instance != null)
+            GoogleAd.instance.LoadAd();
+        
     }
 
     public void SwitchMdoe()

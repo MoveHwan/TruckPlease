@@ -6,6 +6,8 @@ public class AdBackRemove : MonoBehaviour
 {
     public static AdBackRemove instance;
 
+    public GameObject AdBack;
+
     public bool ADEnd;
 
     void Awake()
@@ -16,11 +18,17 @@ public class AdBackRemove : MonoBehaviour
     
     void Update()
     {
-        if (ADEnd && gameObject.activeSelf)
+        if (ADEnd && AdBack.activeSelf)
         {
             ADEnd = false;
-            gameObject.SetActive(false);
+            AdBack.SetActive(false);
         }
             
+    }
+
+    public void AdBackOn()
+    {
+        ADEnd = false;
+        AdBack.SetActive(true);
     }
 }

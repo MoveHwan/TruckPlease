@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -19,13 +20,15 @@ public class DataSettings
     public int Item_Delete = 3;
     public int TopStage = 0;
 
-    public bool RemoveAd = false;
+    public bool RemoveAD = false;
     public bool IsReview = false;
     public bool FreeNick = false;
+    public bool Unlimited_Heart = false;
 
     public string nickname = "";
     public string ProfileImage = "Human_1";
     public string LastFatigueTime = DateTime.Now.ToString();
+    public string RemoveAdsReceipt;
 
     public float BgmVol = 0.5f;
     public float SfxVol = 0.5f;
@@ -34,6 +37,7 @@ public class DataSettings
     public List<int> StageStars = new List<int>();
     public List<string> BuyImages = new List<string>();
 }
+
 
 public class GameDatas : MonoBehaviour
 {
@@ -47,6 +51,7 @@ public class GameDatas : MonoBehaviour
     {
         if (instance == null)
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -54,8 +59,6 @@ public class GameDatas : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        instance = this;
 
         StartCoroutine(WaitGoogleLogin());
     }
@@ -158,9 +161,10 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetInt("Item_Delete", dataSettings.Item_Delete);
         PlayerPrefs.SetInt("TopStage", dataSettings.TopStage);
 
-        PlayerPrefs.SetInt("RemoveAd", dataSettings.RemoveAd ? 1 : 0);
+        PlayerPrefs.SetInt("RemoveAD", dataSettings.RemoveAD ? 1 : 0);
         PlayerPrefs.SetInt("ReviewOn", dataSettings.IsReview ? 1 : 0);
         PlayerPrefs.SetInt("FreeNick", dataSettings.FreeNick ? 1 : 0);
+        PlayerPrefs.SetInt("Unlimited_Heart", dataSettings.Unlimited_Heart ? 1 : 0);
 
         PlayerPrefs.SetString("nickname", dataSettings.nickname);
         PlayerPrefs.SetString("ProfileImage", dataSettings.ProfileImage);
@@ -190,16 +194,17 @@ public class GameDatas : MonoBehaviour
     void PlayerPrefs_To_DataSettings()
     {
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
-        dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 10);
+        dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 5);
 
         dataSettings.Item_Save = PlayerPrefs.GetInt("Item_Save", 3);
         dataSettings.Item_Delete = PlayerPrefs.GetInt("Item_Delete", 3);
 
         dataSettings.TopStage = PlayerPrefs.GetInt("TopStage", 0);
 
-        dataSettings.RemoveAd = PlayerPrefs.GetInt("RemoveAd", 0) == 1;
+        dataSettings.RemoveAD = PlayerPrefs.GetInt("RemoveAD", 0) == 1;
         dataSettings.IsReview = PlayerPrefs.GetInt("ReviewOn", 0) == 1;
         dataSettings.FreeNick = PlayerPrefs.GetInt("FreeNick", 0) == 1;
+        dataSettings.Unlimited_Heart = PlayerPrefs.GetInt("Unlimited_Heart", 0) == 1;
 
         dataSettings.nickname = PlayerPrefs.GetString("nickname");
         dataSettings.ProfileImage = PlayerPrefs.GetString("ProfileImage", "Human_1");
@@ -220,7 +225,7 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetString("PlayerID", Social.localUser.id);
 
         PlayerPrefs.SetInt("Gold", 0);
-        PlayerPrefs.SetInt("Fatigue", 10);
+        PlayerPrefs.SetInt("Fatigue", 5);
 
         PlayerPrefs.SetInt("Item_Save", 3);
         PlayerPrefs.SetInt("Item_Delete", 3);
@@ -228,9 +233,10 @@ public class GameDatas : MonoBehaviour
         PlayerPrefs.SetInt("TopStage", 0);
 
         PlayerPrefs.SetInt("Tutorial", 0);
-        PlayerPrefs.SetInt("RemoveAd", 0);
+        PlayerPrefs.SetInt("RemoveAD", 0);
         PlayerPrefs.SetInt("ReviewOn", 0);
         PlayerPrefs.SetInt("FreeNick", 0);
+        PlayerPrefs.SetInt("Unlimited_Heart", 0);
         PlayerPrefs.SetInt("StageIn", 0);
         PlayerPrefs.SetInt("Chapter_Idx", 0);
 

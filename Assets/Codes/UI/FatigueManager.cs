@@ -11,17 +11,18 @@ public class FatigueManager : MonoBehaviour
 
     private const string FatigueKey = "Fatigue";
     private const string LastTimeKey = "LastFatigueTime";
-    private const int MaxFatigue = 10;
-    private const int RecoveryMinutes = 5;
+    private const int MaxFatigue = 5;
+    private const int RecoveryMinutes = 15;
 
     [SerializeField] int currentFatigue, stage;
 
-    bool CheckStageIn;
+    bool CheckStageIn, unlimited;
 
     void Awake()
     {
         if (instance == null)
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -30,13 +31,16 @@ public class FatigueManager : MonoBehaviour
             return;
         }
 
-        instance = this;
-
         LoadFatigue();
         InvokeRepeating(nameof(UpdateFatigue), 1f, 1f); // 1초마다 업데이트
 
         if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
+        {
             StageIn();
+            PlayerPrefs.SetInt("Fatigue", PlayerPrefs.GetInt("Fatigue", 5) + 1);
+            PlayerPrefs.Save();
+        }
+            
     }
 
     void Update()
@@ -93,7 +97,7 @@ public class FatigueManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("isHeartReward", 0);
 
-            currentFatigue += 10;
+            currentFatigue += 5;
 
             SaveFatigue();
         }
@@ -101,6 +105,13 @@ public class FatigueManager : MonoBehaviour
 
     void LoadFatigue()
     {
+        unlimited = PlayerPrefs.GetInt("Unlimited_Heart", 0) == 1;
+        if (unlimited)
+        {
+            currentFatigue = 999;
+            return;
+        }
+
         currentFatigue = PlayerPrefs.GetInt(FatigueKey, MaxFatigue);
 
         string lastTimeStr = PlayerPrefs.GetString(LastTimeKey, "");
@@ -127,6 +138,13 @@ public class FatigueManager : MonoBehaviour
 
     void UpdateFatigue()
     {
+        unlimited = PlayerPrefs.GetInt("Unlimited_Heart", 0) == 1;
+        if (unlimited)
+        {
+            currentFatigue = 999;
+            return;
+        }
+
         if (currentFatigue < MaxFatigue)
         {
             DateTime lastTime = DateTime.Parse(PlayerPrefs.GetString(LastTimeKey, DateTime.Now.ToString()));
@@ -150,6 +168,15 @@ public class FatigueManager : MonoBehaviour
 
     public void UpdateUI(TextMeshProUGUI fatigueText, TextMeshProUGUI timerText)
     {
+        if (unlimited)
+        {
+            fatigueText.text = "<size=350%>∞</size>";
+            timerText.text = "--m --s";
+            return;
+        }
+
+        currentFatigue = PlayerPrefs.GetInt("Fatigue", 5);
+
         fatigueText.text = $"{currentFatigue}/{MaxFatigue}";
 
         if (timerText == null) return;
@@ -165,7 +192,7 @@ public class FatigueManager : MonoBehaviour
             int minutes = timeLeft.Minutes;
             int seconds = timeLeft.Seconds;
 
-            timerText.text = $"{minutes}m {seconds:D2}s";
+            timerText.text = $"{minutes:D2}m {seconds:D2}s";
         }
         else
         {
@@ -191,6 +218,7 @@ public class FatigueManager : MonoBehaviour
 
     public bool CheckFatigue()
     {
+        if (unlimited) return true;
         if (currentFatigue > 0) return true;
         
         return false;
@@ -198,6 +226,7 @@ public class FatigueManager : MonoBehaviour
 
     public bool CheckRetryFatigue()
     {
+        if (unlimited) return true;
         if (currentFatigue > 1) return true;
 
         return false;
@@ -205,6 +234,8 @@ public class FatigueManager : MonoBehaviour
 
     public bool SubFatigue()
     {
+        if (unlimited) return true;
+
         if (currentFatigue > 0) 
         {
             currentFatigue -= 1;

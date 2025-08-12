@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using TMPro;
 
 public class DailyAdManager : MonoBehaviour
 {
@@ -10,17 +11,39 @@ public class DailyAdManager : MonoBehaviour
 
     int MaxTicketsPerDay = 2;
 
+    public GameObject ADButton;
+    public TextMeshProUGUI CountText;
+    public TextMeshProUGUI NextTimeText;
+
     public string name;
+
+    public bool isLobbyAd;
 
     void OnEnable()
     {
+        this.enabled = !isLobbyAd;
+
+        if (ADButton == null) ADButton = gameObject;
+        if (name == "ShopGold") MaxTicketsPerDay = 3;
+
         LastAdDateKey = defaultDateKey + "_" + name;
         AdTicketKey = defaultTicketKey + "_" + name;
 
         if (!CanWatchAd())
         {
-            gameObject.SetActive(false);
+            ADButton.SetActive(false);
+            return;
         }
+    }
+
+    void Update()
+    {
+        if (CanWatchAd() && !ADButton.activeSelf) 
+        {
+            ADButton.SetActive(true);
+        }
+
+        RefreshText();
     }
 
     // 광고 볼 수 있는지 확인
@@ -54,6 +77,9 @@ public class DailyAdManager : MonoBehaviour
             case "Heart":
                 GoogleAd.instance.ShowRewardedAdHeart(this);
                 break;
+            case "ShopGold":
+                GoogleAd.instance.ShowRewardedAdShopCoin(this);
+                break;
             default:
                 return;
                     
@@ -69,7 +95,7 @@ public class DailyAdManager : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log($"광고 시청 완료! 남은 티켓: {tickets}/{MaxTicketsPerDay}");
 
-        if (name == "Heart") transform.parent.parent.gameObject.SetActive(false);
+        if (name == "Heart") gameObject.SetActive(false);
     }
 
     // 날짜가 바뀌면 티켓을 리셋
@@ -92,5 +118,21 @@ public class DailyAdManager : MonoBehaviour
     {
         RefreshTicketsIfNewDay();
         return PlayerPrefs.GetInt(AdTicketKey, MaxTicketsPerDay);
+    }
+
+    void RefreshText()
+    {
+        if (ADButton.activeSelf && CountText != null)
+        {
+            CountText.text = PlayerPrefs.GetInt(AdTicketKey, MaxTicketsPerDay) + "/" + MaxTicketsPerDay;
+        }
+
+        if (!ADButton.activeSelf && NextTimeText != null)
+        {
+            // 남은 시간 계산
+            TimeSpan remainingTime = DateTime.Now.Date.AddDays(1) - DateTime.Now;
+
+            NextTimeText.text = $"{remainingTime.Hours:D2}h {remainingTime.Minutes:D2}m {remainingTime.Seconds:D2}s";
+        }
     }
 }

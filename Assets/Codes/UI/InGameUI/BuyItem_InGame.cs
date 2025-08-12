@@ -8,14 +8,13 @@ public class BuyItem_InGame : MonoBehaviour
 {
     public static BuyItem_InGame instance;
 
-    public Button ADButton;
+    public DailyAdManager DailyAdManager;
     public Button[] CancelBtns;
 
     [Header("[ Image ]")]
     public Image ItemBack;
     public Image ItemBaclPattern;
     public Image ItemIcon;
-    public Image ItemIcon2;
 
     [Header("[ Text ]")]
     public TextMeshProUGUI ItemName;
@@ -44,9 +43,7 @@ public class BuyItem_InGame : MonoBehaviour
         ItemBack.sprite = item.GetComponent<Image>().sprite;
         ItemBaclPattern.sprite = item.transform.GetChild(0).GetComponent<Image>().sprite;
         ItemIcon.sprite = item.transform.GetChild(1).GetComponent<Image>().sprite;
-        ItemIcon2.sprite = item.transform.GetChild(1).GetComponent<Image>().sprite;
         ItemIcon.color = item.transform.GetChild(1).GetComponent<Image>().color;
-        ItemIcon2.color = item.transform.GetChild(1).GetComponent<Image>().color;
 
         ItemName.text = name;
         ItemInfo.text = info;
@@ -58,9 +55,7 @@ public class BuyItem_InGame : MonoBehaviour
             CancelBtns[i].onClick.AddListener(() => item.ItemCancel());
         }
 
-
-        ADButton.GetComponent<DailyAdManager>().name = name;
-        ADButton.gameObject.SetActive(true);
+        DailyAdManager.name = name;
 
         GameManager.Instance.GamePause();
 

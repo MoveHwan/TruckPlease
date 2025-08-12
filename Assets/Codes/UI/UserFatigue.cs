@@ -21,7 +21,7 @@ public class UserFatigue : MonoBehaviour
 
     void SetText()
     {
-        fatigue = PlayerPrefs.GetInt("Fatigue", 0);
+        fatigue = PlayerPrefs.GetInt("Fatigue", 5);
 
         if (isNoMore)
             fatigueStr = "<color=#FF9432>" + fatigue.ToString() + "</color>/10";
