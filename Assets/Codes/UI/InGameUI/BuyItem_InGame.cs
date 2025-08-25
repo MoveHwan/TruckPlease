@@ -79,6 +79,9 @@ public class BuyItem_InGame : MonoBehaviour
 
         GameManager.Instance.GameResume();
 
+        if (item.currentItems.ToString() == "Item_Save")
+            item.ItemCheck();
+        
         gameObject.SetActive(false);
     }
 
@@ -94,6 +97,9 @@ public class BuyItem_InGame : MonoBehaviour
         PlayerPrefs.Save();
 
         item.SetText();
+
+        if (item.currentItems.ToString() == "Item_Save")
+            item.ItemCheck();
 
         ClosePopUp();
     }

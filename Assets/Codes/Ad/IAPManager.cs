@@ -42,6 +42,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         /* 구글 플레이 상품들 추가 */
         //builder.AddProduct(productId_test_id, ProductType.NonConsumable, new IDs() { { productId_test_id, GooglePlay.Name } });
         builder.AddProduct(productId_test_id, ProductType.NonConsumable);
+        builder.AddProduct("removeads_sale", ProductType.NonConsumable);
         builder.AddProduct("removeads_gold_pack", ProductType.NonConsumable);
         builder.AddProduct("removeads_premium_pack", ProductType.NonConsumable);
         builder.AddProduct("gold_2000", ProductType.Consumable);

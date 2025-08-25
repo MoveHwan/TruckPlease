@@ -14253,7 +14253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &723515814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34325,7 +34325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f58c05479cb14f588efcdfcbdab347c, type: 2}
   m_sharedMaterial: {fileID: 7423409246693961632, guid: 5f58c05479cb14f588efcdfcbdab347c,
@@ -38740,6 +38740,7 @@ MonoBehaviour:
   ProfileName: {fileID: 2777734829448978159}
   ProfileTotalStar: {fileID: 7184031144451268581}
   ProfileTotalWeight: {fileID: 3638428366538881179}
+  ProfileLevel: {fileID: 1506696047}
   FreeMessage: {fileID: 976765800}
   PopupInput: {fileID: 1692749623}
   PopupPID: {fileID: 437258609}
@@ -41815,7 +41816,7 @@ PrefabInstance:
     - target: {fileID: 4291750945617484326, guid: 56eae5912d19ac646b6f4429cd666cc8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1168.6155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4744093913580383704, guid: 56eae5912d19ac646b6f4429cd666cc8,
         type: 3}
@@ -71442,7 +71443,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 132.9, y: -55.6}
-  m_SizeDelta: {x: 262.85, y: 48.05}
+  m_SizeDelta: {x: 190, y: 48.05}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &2490852554156418310
 RectTransform:

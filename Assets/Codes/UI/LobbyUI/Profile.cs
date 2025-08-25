@@ -18,6 +18,7 @@ public class Profile : MonoBehaviour
     public TextMeshProUGUI ProfileName;
     public TextMeshProUGUI ProfileTotalStar;
     public TextMeshProUGUI ProfileTotalWeight;
+    public TextMeshProUGUI ProfileLevel;
     public GameObject FreeMessage;
 
     [Header("Profile Popup")]
@@ -70,6 +71,8 @@ public class Profile : MonoBehaviour
             //FreeMessage.SetActive(false);
             NickPrice.text = "200";
         }
+
+        ProfileLevel.text = (PlayerPrefs.GetInt("UserExp", 0) / 100).ToString();
 
         Cancel(true);
     }

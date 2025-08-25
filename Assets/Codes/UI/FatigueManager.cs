@@ -34,13 +34,18 @@ public class FatigueManager : MonoBehaviour
         LoadFatigue();
         InvokeRepeating(nameof(UpdateFatigue), 1f, 1f); // 1초마다 업데이트
 
+#if !UNITY_EDITOR
+
         if (PlayerPrefs.GetInt("Tutorial", 0) == 0)
         {
             StageIn();
             PlayerPrefs.SetInt("Fatigue", PlayerPrefs.GetInt("Fatigue", 5) + 1);
             PlayerPrefs.Save();
         }
-            
+
+#endif
+
+
     }
 
     void Update()
@@ -162,6 +167,10 @@ public class FatigueManager : MonoBehaviour
 
                 SaveFatigue();
             }
+        }
+        else
+        {
+            PlayerPrefs.SetString(LastTimeKey, DateTime.Now.ToString());
         }
     }
 

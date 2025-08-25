@@ -258,10 +258,6 @@ public class StageTruckCanvas : MonoBehaviour
 
         CourierActive();
 
-        ButtonsUpMove(Buttons);
-
-        LeftMoveAndNumbering(LobbyButton, null, 0);
-
         resultSeq.AppendCallback(() => GameManager.StackIntAdClear())
             .AppendInterval(0.1f);
 
@@ -285,6 +281,10 @@ public class StageTruckCanvas : MonoBehaviour
             }
 
         });
+
+        ButtonsUpMove(Buttons);
+
+        LeftMoveAndNumbering(LobbyButton, null, 0);
 
         PlayerPrefs.Save();
 
@@ -404,16 +404,9 @@ public class StageTruckCanvas : MonoBehaviour
                 ClearConfetti.SetActive(newTopScore);
             });
 
-        // 버튼
-        ButtonsUpMove(IfnButtons);
-
-        resultSeq.AppendInterval(0.1f);
-
-        LeftMoveAndNumbering(IfnLobbyButton, null, 0);
-
         // 광고 or 리뷰
-        resultSeq.AppendCallback(() => GameManager.EternalAd())
-            .AppendInterval(0.1f);
+        /*resultSeq.AppendCallback(() => GameManager.EternalAd())
+            .AppendInterval(0.1f);*/
 
         resultSeq.AppendCallback(() =>
         {
@@ -431,6 +424,13 @@ public class StageTruckCanvas : MonoBehaviour
             }
 
         });
+
+        // 버튼
+        ButtonsUpMove(IfnButtons);
+
+        resultSeq.AppendInterval(0.1f);
+
+        LeftMoveAndNumbering(IfnLobbyButton, null, 0);
 
         PlayerPrefs.Save();
 

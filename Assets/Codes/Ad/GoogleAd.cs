@@ -143,6 +143,9 @@ public class GoogleAd : MonoBehaviour
             }
             else
             {
+                if (Application.internetReachability != NetworkReachability.NotReachable)
+                    RegisterReloadHandler(_interstitialAd);
+
                 Debug.LogError("Interstitial ad is not ready yet.");
             }
         }

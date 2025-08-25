@@ -13,6 +13,7 @@ public class DataSettings
 {
     public string ID = "None";
 
+    public int UserExp = 0;
     public int Gold = 0;
     public int Fatigue = 0;
 
@@ -154,6 +155,7 @@ public class GameDatas : MonoBehaviour
     {
         PlayerPrefs.SetString("PlayerID", dataSettings.ID);
 
+        PlayerPrefs.SetInt("UserExp", dataSettings.UserExp);
         PlayerPrefs.SetInt("Gold", dataSettings.Gold);
         PlayerPrefs.SetInt("Fatigue", dataSettings.Fatigue);
 
@@ -193,6 +195,7 @@ public class GameDatas : MonoBehaviour
     // 플레이어프렙 현재 데이터 dataSettings에 저장
     void PlayerPrefs_To_DataSettings()
     {
+        dataSettings.UserExp = PlayerPrefs.GetInt("UserExp", 0);
         dataSettings.Gold = PlayerPrefs.GetInt("Gold", 0);
         dataSettings.Fatigue = PlayerPrefs.GetInt("Fatigue", 5);
 
@@ -224,6 +227,7 @@ public class GameDatas : MonoBehaviour
 
         PlayerPrefs.SetString("PlayerID", Social.localUser.id);
 
+        PlayerPrefs.SetInt("UserExp", 0);
         PlayerPrefs.SetInt("Gold", 0);
         PlayerPrefs.SetInt("Fatigue", 5);
 
