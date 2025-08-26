@@ -30,6 +30,7 @@ public class LevelUpPopUp : MonoBehaviour
 
     public void PopUpOn(int level)
     {
+        ThrowTouchPanel.Instance.LevelUPDragDone();
         if (LevelUpView.activeSelf)
         {
             LevelText.text = level.ToString();

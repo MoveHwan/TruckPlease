@@ -230,4 +230,25 @@ public class ThrowTouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (endCircle != null)
             endCircle.GetComponent<RectTransform>().anchoredPosition = localPoint;
     }
+
+    public void LevelUPDragDone()
+    {
+        if (dragStarted)
+        {
+            dragStarted = false;
+
+            throwAble = true;
+            isPressing = false;
+
+            Debug.Log("Pointer Up: " + dragEndPos);
+
+            isDragging = false;
+
+            if (startCircle) Destroy(startCircle);
+            if (endCircle) Destroy(endCircle);
+
+            foreach (var c in circlePool)
+                c.SetActive(false);
+        }
+    }
 }
