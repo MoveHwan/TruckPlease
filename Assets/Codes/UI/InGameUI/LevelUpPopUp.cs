@@ -67,7 +67,7 @@ public class LevelUpPopUp : MonoBehaviour
 
             GameManager.Instance.EternalAd();
 
-            InGameRemoveAds.instance.RemoveAdsOn();
+            RemoveAdsController.instance.RemoveAdsOn();
         }
 
         LevelUpView.SetActive(false);
