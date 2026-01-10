@@ -1,10 +1,13 @@
-🚚 Truck Please  
+https://play.google.com/store/apps/details?id=com.LBStudio.TruckPlease&hl=ko
+Truck Please => Merge Box : 3D Puzzle Game 이름 변경
+
+Merge Box : 3D Puzzle Game
 택배 상자를 드래그로 트럭에 집어넣어 일정 무게 이상을 쌓는 게임  
 Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
 
 ---
 
-🎮 특징  
+특징  
 
 - **드래그 조작 기반 상자 조립**  
   다양한 크기와 무게를 가진 택배 상자를 드래그로 이동시켜 트럭에 넣는 방식입니다.  
