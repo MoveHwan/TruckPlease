@@ -1,9 +1,13 @@
+
 Truck Please => Merge Box : 3D Puzzle Game 이름 변경
 
+<br />
 
 ## 📦 Merge Box : 3D Puzzle Game
 택배 상자를 드래그로 트럭에 집어넣어 일정 무게 이상을 쌓는 게임  
 Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
+
+<br />
 
 ## 🎮 특징  
 
@@ -20,6 +24,7 @@ Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
 - **광고 수익화 적용**  
   배너 광고, 코인 추가 획득을 원할 시 보상 광고를 적용했습니다.
 
+<br />
 
 ## 🛠 제작 정보
 
@@ -27,6 +32,8 @@ Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
 - **개발 인원**: 2명  
 - **개발 도구**: Unity 2022.3.40f1, C#  
 - **플랫폼**: Android
+  
+<br />
 
 ## 👥 개발 역할 분담
 
@@ -36,5 +43,7 @@ Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
 | 배선률(ryulcoder)   | 인게임 물리엔진 & API 연결 | - 박스 드래그 및 배치 시스템 구현<br>- 무게 누적 계산 및 물리 기반 처리<br>- 구글 애드몹, 플레이 스토어 연결<br>- 유니티 리더보드 & Analytics 연결 |
 | 이동환(MoveHwan)   | UI 전 영역 & 데이터 및 리소스 관리| - UI/UX 전반 구현 및 시스템 연동<br>- 클라우드 기반 데이터 처리<br>- 게임 정보 및 재화 UI 표현 처리<br>- 외부 이미지 리소스 관리 및 적용 |
 
-## 출시 링크 <br />
+<br />
+
+## 🔗 출시 링크 <br />
 https://play.google.com/store/apps/details?id=com.LBStudio.TruckPlease&hl=ko
