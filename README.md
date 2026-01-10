@@ -1,5 +1,3 @@
-https://play.google.com/store/apps/details?id=com.LBStudio.TruckPlease&hl=ko
-
 Truck Please => Merge Box : 3D Puzzle Game 이름 변경
 
 Merge Box : 3D Puzzle Game
@@ -7,6 +5,9 @@ Merge Box : 3D Puzzle Game
 Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
 
 ---
+https://play.google.com/store/apps/details?id=com.LBStudio.TruckPlease&hl=ko
+---
+
 
 특징  
 
