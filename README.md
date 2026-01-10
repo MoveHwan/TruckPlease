@@ -4,8 +4,8 @@ Truck Please => Merge Box : 3D Puzzle Game 이름 변경
 <br />
 
 ## 📦 Merge Box : 3D Puzzle Game
-택배 상자를 드래그로 트럭에 집어넣어 일정 무게 이상을 쌓는 게임  
-Unity 3D 기반의 하이퍼 캐주얼 스타일 게임입니다.
+택배 상자를 드래그로 트럭에 집어넣어 같은 무게의 상자를 합쳐 최대한 상자를 많이 채우는 게임으로  
+Unity 3D 기반의 캐주얼 게임입니다.
 
 <br />
 
